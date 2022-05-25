@@ -31,7 +31,6 @@ void Game::Run()
         DeltaTime = clock.restart().asSeconds();
         Tick();
         Draw();
-        Logger::Warning(std::to_string(frameRate));
         }
 }
 
