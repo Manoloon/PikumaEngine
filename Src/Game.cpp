@@ -2,14 +2,13 @@
 // Created by Manoloon on 13/05/2022.
 //
 #include "Game.h"
+#include "ECS/ECS.h"
 #include "Logger.h"
 
 void Game::BeginPlay()
 {
     //define player
-    texPlayer.loadFromFile("assets/images/tank-panther-right.png");
-    sprPlayer.setTexture(texPlayer);
-    sprPlayer.setPosition(200,200);
+    // Registry.AddEntity();
     // window
     window.create(sf::VideoMode(800,600),"");
     window.setFramerateLimit(60);
@@ -36,9 +35,8 @@ void Game::Run()
 
 void Game::Tick()
 {
-    sprPlayer.setRotation(sprPlayer.getRotation()+(90 * DeltaTime));
-    sprPlayer.setPosition(sprPlayer.getPosition().x+ (Velocity.x*DeltaTime),
-                          sprPlayer.getPosition().y+ (Velocity.y*DeltaTime));
+    // movementSystem.Update(DeltaTime);
+    // collisionSystem.Update(DeltaTime);
 }
 
 void Game::Inputs()

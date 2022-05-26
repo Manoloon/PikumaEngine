@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.22)
 project(PikumaEngine)
 set(CMAKE_CXX_STANDARD 17)
 SET(SFML_STATIC_LIBRARIES TRUE)
-add_executable(PikumaEngine main.cpp Src/Game.cpp Src/Game.h Src/Logger.h)
+add_executable(PikumaEngine main.cpp Src/Game.cpp Src/Game.h Src/Logger.h Src/Components/TransformComp.h Src/Systems/MovementSystem.h Src/ECS/ECS.h Src/ECS/ECS.cpp)
 include_directories (Includes/)
 #Lua
 find_library(LUA lua53 libraries)
