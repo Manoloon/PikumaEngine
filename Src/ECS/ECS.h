@@ -42,7 +42,7 @@ class System
     Signature componentSignature;
     std::vector<Entity> entities;
 public:
-    void AddEntityToSystem(Entity newEntity);
+    void AddEntityToSystem(const Entity& newEntity);
 
     void RemoveEntityFromSystem(Entity EntityRef);
 
