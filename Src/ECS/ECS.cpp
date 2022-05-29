@@ -23,7 +23,7 @@ void System::RemoveEntityFromSystem(Entity EntityRef)
     entities.erase(std::remove_if(entities.begin(), entities.end(),
                                   [&EntityRef](Entity other)
                                   {
-                                    return EntityRef.GetId() == other.GetId();
+                                    return EntityRef == other;
                                   }),entities.end());
 }
 
