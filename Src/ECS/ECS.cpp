@@ -36,3 +36,26 @@ const Signature& System::GetComponentSignature() const
 {
     return componentSignature;
 }
+
+Entity Registry::CreateEntity()
+{
+    int entityID = numEntities++;
+    if(entityID >= componentSignatures.size())
+    {
+        componentSignatures.resize(entityID+1);
+    }
+    Entity entity(entityID);
+    entitiesToAdd.insert(entity);
+    Logger::Warning("Entity added"+ std::to_string(entityID));
+    return entity;
+}
+
+void Registry::Update()
+{
+
+}
+
+void Registry::AddEntityToSystem(Entity entity)
+{
+
+}

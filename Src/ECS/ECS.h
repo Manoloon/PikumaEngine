@@ -7,6 +7,10 @@
 
 #include <bitset>
 #include <vector>
+#include <set>
+#include <unordered_map>
+#include <typeindex>
+#include "../Src/Logger.h"
 
 const unsigned int MAX_COMPONENTS =32;
 typedef std::bitset<MAX_COMPONENTS> Signature;
@@ -58,28 +62,37 @@ public:
 
 // interface para las pools
 class IPool
-        {
+{
 public:
-            virtual ~IPool(){}
-        };
+    virtual ~IPool() = default;
+};
 
 template<class T>
-class Pool:public IPool
+class Pool : public IPool
 {
 private:
     std::vector<T> data;
 public:
-    Pool(int size=100){data.resize(size);}
-    virtual ~Pool()=default;
+    explicit Pool(int size = 100)
+    { data.resize(size); }
 
-    bool IsEmpty() const {return data.empty();}
-    int GetSize() const {return data.size();}
-    void Resize(int size){data.resize(size);}
-    void Clear() {data.clear();}
-    void Add(T object){data.push_back(object);}
-    void Set(int index, T object){data[index]=object;}
-    T& Get(int index) const {return static_cast<T>(data[index]);}
-    T& operator[](unsigned int index){return data[index];}
+    virtual ~Pool() = default;
+
+    bool IsEmpty() const { return data.empty(); }
+
+    int GetSize() const  { return data.size(); }
+
+    void Resize(int size) { data.resize(size); }
+
+    void Clear() { data.clear(); }
+
+    void Add(T object) { data.push_back(object); }
+
+    void Set(int index, T object) { data[index] = object; }
+
+    T &Get(int index) const { return static_cast<T>(data[index]); }
+
+    T &operator[](unsigned int index) { return data[index]; }
 };
 
 class Registry
@@ -87,12 +100,18 @@ class Registry
     int numEntities=0;
     // vector index = component type ID
     // Pool index = Identity ID
-    std::vector<IPool*> ComponentsPool;
+    std::vector<IPool*> componentsPool;
+    std::vector<Signature> componentSignatures;
+    std::set<Entity> entitiesToAdd;
+    std::set<Entity> entitiesToKill;
+    std::unordered_map<std::type_index,System*> Systems;
 public:
-    // add entity
     // remove entity
     // add component
     // remove component
+    Entity CreateEntity();
+    void AddEntityToSystem(Entity entity);
+    void Update();
 };
 
 // the impl of a template goes on the Header file.
