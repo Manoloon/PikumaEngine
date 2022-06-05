@@ -56,9 +56,43 @@ public:
     template<typename TComponent>void RequireComponent();
 };
 
+// interface para las pools
+class IPool
+        {
+public:
+            virtual ~IPool(){}
+        };
+
+template<class T>
+class Pool:public IPool
+{
+private:
+    std::vector<T> data;
+public:
+    Pool(int size=100){data.resize(size);}
+    virtual ~Pool()=default;
+
+    bool IsEmpty() const {return data.empty();}
+    int GetSize() const {return data.size();}
+    void Resize(int size){data.resize(size);}
+    void Clear() {data.clear();}
+    void Add(T object){data.push_back(object);}
+    void Set(int index, T object){data[index]=object;}
+    T& Get(int index) const {return static_cast<T>(data[index]);}
+    T& operator[](unsigned int index){return data[index];}
+};
+
 class Registry
 {
-
+    int numEntities=0;
+    // vector index = component type ID
+    // Pool index = Identity ID
+    std::vector<IPool*> ComponentsPool;
+public:
+    // add entity
+    // remove entity
+    // add component
+    // remove component
 };
 
 // the impl of a template goes on the Header file.
