@@ -109,8 +109,16 @@ class Registry
     std::unordered_map<std::type_index,System*> Systems;
 public:
     // remove entity
-    // add component
-    // remove component
+    template <typename T,typename ...TArgs>
+    void AddComponent(Entity entity, TArgs&& ...args);
+
+    template<typename T>
+    void RemoveComponent(Entity entity);
+
+    template<typename T>
+    bool HasComponent(Entity entity) const;
+    template<typename T>
+    T& GetComponent(Entity entity) const;
     Entity CreateEntity();
     void AddEntityToSystem(Entity entity);
     void Update();
