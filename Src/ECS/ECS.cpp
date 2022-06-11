@@ -60,6 +60,17 @@ void Registry::Update()
 
 void Registry::AddEntityToSystem(Entity entity)
 {
-
+    const auto entityId = entity.GetId();
+    const auto& entityCompSignature = componentSignatures[entityId];
+    for(auto& system : Systems)
+    {
+        const auto& systemCompSignature = system.second->GetComponentSignature();
+        // a bitwise compare
+        bool isInteresting = (entityCompSignature & systemCompSignature) == systemCompSignature;
+        if(isInteresting)
+        {
+            system.second->AddEntityToSystem(entity);
+        }
+    }
 }
 

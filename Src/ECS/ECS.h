@@ -10,6 +10,7 @@
 #include <set>
 #include <unordered_map>
 #include <typeindex>
+#include <memory>
 #include "../Src/Logger.h"
 
 const unsigned int MAX_COMPONENTS =32;
@@ -123,6 +124,16 @@ public:
     Entity CreateEntity();
     void AddEntityToSystem(Entity entity);
     void Update();
+
+    // systems
+    template<typename TSystem, typename ...TArgs>
+        void AddSystem(TArgs&& ...args);
+    template<typename TSystem>
+        void RemoveSystem();
+    template<typename TSystem>
+        bool HasSystem() const;
+    template<typename TSystem>
+        TSystem& GetSystem() const;
 };
 
 // Templates //
@@ -183,6 +194,35 @@ bool Registry::HasComponent(Entity entity) const
     const auto componentId = Component<TComponent>::GetId();
     const auto entityId = entity.GetId();
     return componentSignatures[entityId].test(componentId);
+}
+
+template<typename TSystem, typename... TArgs>
+void Registry::AddSystem(TArgs &&... args)
+{
+    //TODO : use smartptr
+ TSystem* newSystem(new TSystem(std::forward<TArgs>(args)...));
+ Systems.insert(std::make_pair(std::type_index(typeid(TSystem)),newSystem));
+}
+
+template<typename TSystem>
+void Registry::RemoveSystem()
+{
+    auto system = Systems.find(std::type_index(typeid(TSystem)));
+    Systems.erase(system);
+}
+
+template<typename TSystem>
+bool Registry::HasSystem() const
+{
+    return Systems.find(std::type_index(typeid(TSystem))) != Systems.end();
+}
+
+template<typename TSystem>
+TSystem &Registry::GetSystem() const
+{
+    auto system = Systems.find(std::type_index(typeid(TSystem)));
+    // I need to dereference the iterator of the system I found
+    return *(std::static_pointer_cast<TSystem>(system->second));
 }
 
 #endif //PIKUMAENGINE_ECS_H
