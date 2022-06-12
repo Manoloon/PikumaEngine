@@ -35,7 +35,6 @@ public:
         return id;
     }
 };
-
 class Entity
 {
     int id;
@@ -49,6 +48,19 @@ public:
     bool operator != (const Entity& other) const {return id != other.GetId();}
     bool operator >(const Entity& other) const { return id > other.id; }
     bool operator <(const Entity& other) const { return id < other.id; }
+
+    template<typename TComponent,typename  ...TArgs>
+        void AddComponent(TArgs&& ...args);
+
+    template<typename TComponent>
+        void RemoveComponent();
+
+    template<typename TComponent>
+        bool HasComponent() const ;
+
+    template<typename TComponent>
+        TComponent& GetComponent();
+    class Registry* registry;
 };
 class System
 {
@@ -112,16 +124,15 @@ class Registry
     std::set<Entity> entitiesToKill;
     std::unordered_map<std::type_index,std::shared_ptr<System>> Systems;
 public:
-    // remove entity
     template <typename TComponent,typename ...TArgs>
         void AddComponent(Entity entity, TArgs&& ...args);
-
     template<typename TComponent>
         void RemoveComponent(Entity entity);
     template<typename TComponent>
         bool HasComponent(Entity entity) const;
     template<typename TComponent>
         TComponent& GetComponent(Entity entity) const;
+
     Entity CreateEntity();
     void AddEntityToSystem(Entity entity);
     void Tick();
@@ -197,6 +208,15 @@ bool Registry::HasComponent(Entity entity) const
     return componentSignatures[entityId].test(componentId);
 }
 
+template<typename TComponent>
+TComponent& Registry::GetComponent(Entity entity) const
+{
+    const auto componentId = Component<TComponent>::GetId();
+    const auto entityId = entity.GetId();
+    auto newCompPool = std::static_pointer_cast<Pool<TComponent>>(componentsPool[componentId]);
+    return newCompPool->Get(entityId);
+}
+
 template<typename TSystem, typename... TArgs>
 void Registry::AddSystem(TArgs &&... args)
 {
@@ -224,4 +244,29 @@ TSystem &Registry::GetSystem() const
     // I need to dereference the iterator of the system I found
     return *(std::static_pointer_cast<TSystem>(system->second));
 }
+
+template<typename TComponent, typename... TArgs>
+void Entity::AddComponent(TArgs &&... args)
+{
+
+}
+
+template<typename TComponent>
+void Entity::RemoveComponent()
+{
+
+}
+
+template<typename TComponent>
+bool Entity::HasComponent() const
+{
+    return 0;
+}
+
+template<typename TComponent>
+TComponent &Entity::GetComponent()
+{
+    return registry->GetComponent<TComponent>(this);
+}
+
 #endif //PIKUMAENGINE_ECS_H

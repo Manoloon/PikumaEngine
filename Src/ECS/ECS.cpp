@@ -11,7 +11,6 @@ int Entity::GetId() const
 {
     return id;
 }
-
 void System::AddEntityToSystem(const Entity& newEntity)
 {
    entities.push_back(newEntity);
@@ -49,6 +48,7 @@ Entity Registry::CreateEntity()
         componentSignatures.resize(entityID+1);
     }
     Entity entity(entityID);
+    entity.registry = this;
     entitiesToAdd.insert(entity);
     if(entityID >=componentSignatures.size())
     {
