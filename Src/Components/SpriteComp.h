@@ -1,0 +1,8 @@
+//
+// Created by Manoloon on 12/06/2022.
+//
+
+#ifndef PIKUMAENGINE_SPRITECOMP_H
+#define PIKUMAENGINE_SPRITECOMP_H
+
+#endif //PIKUMAENGINE_SPRITECOMP_H

@@ -6,6 +6,7 @@
 #define PIKUMAENGINE_GAME_H
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "ECS/ECS.h"
 
 class Game
 {
@@ -16,7 +17,9 @@ class Game
     sf::Texture texPlayer;
     sf::Sprite sprPlayer;
     sf::Vector2f Velocity{0,0};
+    std::unique_ptr<Registry> registry;
     bool isRunning =false;
+    Game();
     void BeginPlay();
     void EndPlay();
     void Tick();

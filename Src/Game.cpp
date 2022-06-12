@@ -4,11 +4,18 @@
 #include "Game.h"
 #include "ECS/ECS.h"
 #include "Logger.h"
+#include "Components/TransformComp.h"
+
+Game::Game()
+{
+     registry = std::make_unique<Registry>();
+}
 
 void Game::BeginPlay()
 {
     //define player
-    // Registry.AddEntity();
+    Entity Tank = registry->CreateEntity();
+    registry->AddComponent<TransformComp>(Tank,sf::Vector2i(100.0,100.0),sf::Vector2i(2.0,2.0),40);
     // window
     window.create(sf::VideoMode(800,600),"");
     window.setFramerateLimit(60);
@@ -35,8 +42,8 @@ void Game::Run()
 
 void Game::Tick()
 {
-    // movementSystem.Update(DeltaTime);
-    // collisionSystem.Update(DeltaTime);
+    // movementSystem.Tick(DeltaTime);
+    // collisionSystem.Tick(DeltaTime);
 }
 
 void Game::Inputs()

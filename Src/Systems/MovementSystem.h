@@ -16,7 +16,7 @@ public:
     {
         // for(auto entity : GetEntities())
         // {
-        // Update entity position based on its velocity
+        // Tick entity position based on its velocity
         //}
     }
         };

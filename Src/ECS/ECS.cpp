@@ -42,34 +42,42 @@ const Signature& System::GetComponentSignature() const
 
 Entity Registry::CreateEntity()
 {
-    int entityID = numEntities++;
+    int entityID;
+    entityID = numEntities++;
     if(entityID >= componentSignatures.size())
     {
         componentSignatures.resize(entityID+1);
     }
     Entity entity(entityID);
     entitiesToAdd.insert(entity);
-    Logger::Warning("Entity added"+ std::to_string(entityID));
+    if(entityID >=componentSignatures.size())
+    {
+        componentSignatures.resize(entityID +1);
+    }
     return entity;
 }
 
-void Registry::Update()
+void Registry::Tick()
 {
-
+    for(auto entity : entitiesToAdd)
+    {
+        AddEntityToSystem(entity);
+    }
+    entitiesToAdd.clear();
 }
 
 void Registry::AddEntityToSystem(Entity entity)
 {
     const auto entityId = entity.GetId();
     const auto& entityCompSignature = componentSignatures[entityId];
-    for(auto& system : Systems)
+    for(auto const& [key,system] : Systems)
     {
-        const auto& systemCompSignature = system.second->GetComponentSignature();
+        const auto& systemCompSignature = system->GetComponentSignature();
         // a bitwise compare
         bool isInteresting = (entityCompSignature & systemCompSignature) == systemCompSignature;
         if(isInteresting)
         {
-            system.second->AddEntityToSystem(entity);
+            system->AddEntityToSystem(entity);
         }
     }
 }

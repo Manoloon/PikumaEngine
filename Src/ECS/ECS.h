@@ -28,6 +28,7 @@ protected:
 template<typename TComponent>
 class Component : public IComponent
 {
+public:
     static int GetId()
     {
         static auto id = nextId++;
@@ -85,9 +86,9 @@ public:
 
     bool IsEmpty() const { return data.empty(); }
 
-    int GetSize() const  { return data.size(); }
+    size_t GetSize() const  { return data.size(); }
 
-    void Resize(int size) { data.resize(size); }
+    void Resize(size_t size) { data.resize(size); }
 
     void Clear() { data.clear(); }
 
@@ -105,11 +106,11 @@ class Registry
     int numEntities=0;
     // vector index = component type ID
     // Pool index = Identity ID
-    std::vector<IPool*> componentsPool;
+    std::vector<std::shared_ptr<IPool>> componentsPool;
     std::vector<Signature> componentSignatures;
     std::set<Entity> entitiesToAdd;
     std::set<Entity> entitiesToKill;
-    std::unordered_map<std::type_index,System*> Systems;
+    std::unordered_map<std::type_index,std::shared_ptr<System>> Systems;
 public:
     // remove entity
     template <typename TComponent,typename ...TArgs>
@@ -123,7 +124,7 @@ public:
         TComponent& GetComponent(Entity entity) const;
     Entity CreateEntity();
     void AddEntityToSystem(Entity entity);
-    void Update();
+    void Tick();
 
     // systems
     template<typename TSystem, typename ...TArgs>
@@ -161,12 +162,12 @@ void Registry::AddComponent(Entity entity, TArgs &&... args)
     // create a new one and place it in the ComponentsPool
     if(!componentsPool[componentId])
     {
-        // TODO : change to smartptr
-        auto newCompPool = new Pool<TComponent>();
+        std::shared_ptr<Pool<TComponent>> newCompPool = std::make_shared<Pool<TComponent>>();
         componentsPool[componentId] = newCompPool;
     }
     // get the pool of components for that component value
-    Pool<TComponent>* newCompPool = Pool<TComponent>(componentsPool[componentId]);
+    std::shared_ptr<Pool<TComponent>> newCompPool = std::static_pointer_cast<Pool<TComponent>>
+                                                                    (componentsPool[componentId]);
     // if the entity id is greater than the current size of the pool , resize the pool
     if(entityId >= newCompPool->GetSize())
     {
@@ -199,8 +200,7 @@ bool Registry::HasComponent(Entity entity) const
 template<typename TSystem, typename... TArgs>
 void Registry::AddSystem(TArgs &&... args)
 {
-    //TODO : use smartptr
- TSystem* newSystem(new TSystem(std::forward<TArgs>(args)...));
+ std::shared_ptr<TSystem*> newSystem = std::make_shared<TSystem>(std::forward<TArgs>(args)...);
  Systems.insert(std::make_pair(std::type_index(typeid(TSystem)),newSystem));
 }
 
@@ -224,5 +224,4 @@ TSystem &Registry::GetSystem() const
     // I need to dereference the iterator of the system I found
     return *(std::static_pointer_cast<TSystem>(system->second));
 }
-
 #endif //PIKUMAENGINE_ECS_H
