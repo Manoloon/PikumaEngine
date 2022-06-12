@@ -15,7 +15,7 @@ void Game::BeginPlay()
 {
     //define player
     Entity Tank = registry->CreateEntity();
-    registry->AddComponent<TransformComp>(Tank,sf::Vector2i(100.0,100.0),sf::Vector2i(2.0,2.0),40);
+    Tank.AddComponent<TransformComp>(sf::Vector2i(100,100),sf::Vector2i(2,2),40);
     // window
     window.create(sf::VideoMode(800,600),"");
     window.setFramerateLimit(60);
