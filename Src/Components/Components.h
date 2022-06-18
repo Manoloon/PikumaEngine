@@ -20,4 +20,14 @@ struct TransformComp
         this->rotation = rotation;
     }
 };
+
+struct RigidBodyComp
+{
+    sf::Vector2i velocity;
+
+    explicit RigidBodyComp(const sf::Vector2i velocity = sf::Vector2i(0.0, 0.0))
+    {
+        this->velocity = velocity;
+    }
+};
 #endif //PIKUMAENGINE_COMPONENTS_H

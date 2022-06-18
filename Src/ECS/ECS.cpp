@@ -11,7 +11,7 @@ int Entity::GetId() const
 {
     return id;
 }
-void System::AddEntityToSystem(const Entity& newEntity)
+void System::AddEntityToSystem(Entity newEntity)
 {
    entities.push_back(newEntity);
 }
@@ -29,7 +29,7 @@ void System::RemoveEntityFromSystem(Entity EntityRef)
                                   }),entities.end());
 }
 
-std::vector<Entity> System::GetEntities() const
+std::vector<Entity> System::GetSystemEntities() const
 {
     return entities;
 }
@@ -57,7 +57,7 @@ Entity Registry::CreateEntity()
     return entity;
 }
 
-void Registry::Tick()
+void Registry::Update()
 {
     for(auto entity : entitiesToAdd)
     {

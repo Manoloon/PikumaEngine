@@ -4,28 +4,11 @@
 #include "Game.h"
 #include "ECS/ECS.h"
 #include "Logger.h"
-#include "Components/TransformComp.h"
+#include "Systems/MovementSystem.h"
 
 Game::Game()
 {
      registry = std::make_unique<Registry>();
-}
-
-void Game::BeginPlay()
-{
-    //define player
-    Entity Tank = registry->CreateEntity();
-    Tank.AddComponent<TransformComp>(sf::Vector2i(100,100),sf::Vector2i(2,2),40);
-    // window
-    window.create(sf::VideoMode(800,600),"");
-    window.setFramerateLimit(60);
-    isRunning =true;
-}
-
-void Game::EndPlay()
-{
-    isRunning = false;
-    window.close();
 }
 
 void Game::Run()
@@ -35,15 +18,39 @@ void Game::Run()
     {
         Inputs();
         DeltaTime = clock.restart().asSeconds();
-        Tick();
+        Update();
         Draw();
-        }
+    }
 }
 
-void Game::Tick()
+void Game::BeginPlay()
 {
-    // movementSystem.Tick(DeltaTime);
-    // collisionSystem.Tick(DeltaTime);
+    //Add system needed to processed.
+    registry->AddSystem<MovementSystem>();
+    //define player
+    Entity Tank = registry->CreateEntity();
+    Tank.AddComponent<TransformComp>(sf::Vector2i(100,100),sf::Vector2i(2,2),40);
+    Tank.AddComponent<RigidBodyComp>(sf::Vector2i(10,50));
+    // window
+    window.create(sf::VideoMode(800,600),"");
+    window.setFramerateLimit(60);
+    isRunning =true;
+}
+
+void Game::Update()
+{
+    //TODO FALTA DEFINIR
+    float DeltaTime;
+    registry->GetSystem<MovementSystem>().Update(DeltaTime);
+    // collisionSystem.Update(DeltaTime);
+    //run this at the end of the frame.
+    registry->Update();
+}
+
+void Game::EndPlay()
+{
+    isRunning = false;
+    window.close();
 }
 
 void Game::Inputs()

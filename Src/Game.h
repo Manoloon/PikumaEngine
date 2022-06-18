@@ -19,15 +19,15 @@ class Game
     sf::Vector2f Velocity{0,0};
     std::unique_ptr<Registry> registry;
     bool isRunning =false;
-    Game();
-    void BeginPlay();
-    void EndPlay();
-    void Tick();
-    void Inputs();
-    void Draw();
 
 public:
+    Game();
     void Run();
+    void BeginPlay();
+    void EndPlay();
+    void Update();
+    void Inputs();
+    void Draw();
 };
 
 
