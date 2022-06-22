@@ -8,12 +8,12 @@
 
 struct TransformComp
 {
-    sf::Vector2i position;
-    sf::Vector2i scale;
+    sf::Vector2f position;
+    sf::Vector2f scale;
     double rotation;
 
-    explicit TransformComp(sf::Vector2i position=sf::Vector2i (0,0),sf::Vector2i scale =
-    sf::Vector2i (1,1),double rotation = 0.0f)
+    explicit TransformComp(sf::Vector2f position=sf::Vector2f (0,0),sf::Vector2f scale =
+    sf::Vector2f (1,1),double rotation = 0.0f)
     {
         this->position = position;
         this->scale = scale;
@@ -23,9 +23,9 @@ struct TransformComp
 
 struct RigidBodyComp
 {
-    sf::Vector2i velocity;
+    sf::Vector2f velocity;
 
-    explicit RigidBodyComp(const sf::Vector2i velocity = sf::Vector2i(0.0, 0.0))
+    explicit RigidBodyComp(const sf::Vector2f velocity = sf::Vector2f(0.0, 0.0))
     {
         this->velocity = velocity;
     }

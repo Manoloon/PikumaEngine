@@ -46,7 +46,7 @@ class Entity
     int id;
 public:
     Entity(const Entity& entity)=default;
-    explicit Entity(int newId) : id(newId){}
+    explicit Entity(int newId,class Registry* registry= nullptr) : id(newId),registry(registry){}
 
     int GetId() const;
     Entity& operator = (const Entity& other) = default;
