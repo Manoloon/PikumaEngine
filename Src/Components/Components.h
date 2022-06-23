@@ -30,4 +30,13 @@ struct RigidBodyComp
         this->velocity = velocity;
     }
 };
+
+struct SpriteComp
+{
+    sf::Vector2f scale;
+    explicit SpriteComp(sf::Vector2f scale =sf::Vector2f(0,0))
+    {
+        this->scale = scale;
+    }
+};
 #endif //PIKUMAENGINE_COMPONENTS_H

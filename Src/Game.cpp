@@ -5,6 +5,7 @@
 #include "ECS/ECS.h"
 #include "Logger.h"
 #include "Systems/MovementSystem.h"
+#include "Systems/RenderSystem.h"
 
 Game::Game()
 {
@@ -17,7 +18,6 @@ void Game::Run()
     while (isRunning)
     {
         Inputs();
-        DeltaTime = clock.restart().asSeconds();
         Update();
         Draw();
     }
@@ -25,12 +25,19 @@ void Game::Run()
 
 void Game::BeginPlay()
 {
+    // Fix time step
+    timeSinceLastTick = sf::Time::Zero;
+    DeltaTime = sf::seconds(1.f/60.f); //TODO : not fixed to 60!
+    tickDuration= sf::Time::Zero;
+    /////////////////////////////////////
     //Add system needed to processed.
     registry->AddSystem<MovementSystem>();
+    registry->AddSystem<RenderSystem>();
     //define player
     Entity Tank = registry->CreateEntity();
     Tank.AddComponent<TransformComp>(sf::Vector2f(100,100),sf::Vector2f(2,2),40);
     Tank.AddComponent<RigidBodyComp>(sf::Vector2f(10,50));
+    Tank.AddComponent<SpriteComp>(sf::Vector2f(10,10));
     // window
     window.create(sf::VideoMode(800,600),"");
     window.setFramerateLimit(60);
@@ -40,11 +47,17 @@ void Game::BeginPlay()
 void Game::Update()
 {
     //TODO FALTA DEFINIR
-    float DeltaTime;
-    registry->GetSystem<MovementSystem>().Update(DeltaTime);
-    // collisionSystem.Update(DeltaTime);
-    //run this at the end of the frame.
-    registry->Update();
+    timeSinceLastTick +=clock.restart();
+    while (timeSinceLastTick > DeltaTime)
+    {
+        timeSinceLastTick -= DeltaTime;
+
+        registry->GetSystem<MovementSystem>().Update(DeltaTime.asSeconds());
+        registry->GetSystem<RenderSystem>().Update(DeltaTime.asSeconds(),window);
+        // collisionSystem.Update(DeltaTime);
+        //run this at the end of the frame.
+        registry->Update();
+    }
 }
 
 void Game::EndPlay()

@@ -11,8 +11,12 @@
 class Game
 {
     sf::RenderWindow window;
+    //Fix time step
     sf::Clock clock;
-    float DeltaTime;
+    sf::Time DeltaTime;
+    sf::Time timeSinceLastTick;
+    sf::Time tickDuration;
+
     int frameRate=60;
     sf::Texture texPlayer;
     sf::Sprite sprPlayer;
