@@ -11,7 +11,11 @@ struct TransformComp
     sf::Vector2f position;
     sf::Vector2f scale;
     double rotation;
-
+    /*
+     * @position
+     * @scale
+     * @rotation
+     * */
     explicit TransformComp(sf::Vector2f position=sf::Vector2f (0,0),sf::Vector2f scale =
     sf::Vector2f (1,1),double rotation = 0.0f)
     {

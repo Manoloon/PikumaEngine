@@ -19,15 +19,19 @@ void Game::Run()
     {
         Inputs();
         Update();
-        Draw();
+       // Draw();
     }
 }
 
 void Game::BeginPlay()
 {
+    // window
+    window.create(sf::VideoMode(800,600),"");
+    float fps = 60.0f;
+    window.setFramerateLimit(fps);
     // Fix time step
     timeSinceLastTick = sf::Time::Zero;
-    DeltaTime = sf::seconds(1.f/60.f); //TODO : not fixed to 60!
+    DeltaTime = sf::seconds(1.f/fps);
     tickDuration= sf::Time::Zero;
     /////////////////////////////////////
     //Add system needed to processed.
@@ -36,24 +40,19 @@ void Game::BeginPlay()
     //define player
     Entity Tank = registry->CreateEntity();
     Tank.AddComponent<TransformComp>(sf::Vector2f(100,100),sf::Vector2f(2,2),40);
-    Tank.AddComponent<RigidBodyComp>(sf::Vector2f(10,50));
+    Tank.AddComponent<RigidBodyComp>(sf::Vector2f(10.f,50.f));
     Tank.AddComponent<SpriteComp>(sf::Vector2f(10,10));
-    // window
-    window.create(sf::VideoMode(800,600),"");
-    window.setFramerateLimit(60);
     isRunning =true;
 }
 
 void Game::Update()
 {
-    //TODO FALTA DEFINIR
     timeSinceLastTick +=clock.restart();
     while (timeSinceLastTick > DeltaTime)
     {
         timeSinceLastTick -= DeltaTime;
-
         registry->GetSystem<MovementSystem>().Update(DeltaTime.asSeconds());
-        registry->GetSystem<RenderSystem>().Update(DeltaTime.asSeconds(),window);
+        registry->GetSystem<RenderSystem>().Update(DeltaTime.asSeconds(), window);
         // collisionSystem.Update(DeltaTime);
         //run this at the end of the frame.
         registry->Update();
@@ -95,19 +94,19 @@ void Game::Inputs()
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            Velocity={0,-100};
+
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
-            Velocity={0,100};
+
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-            Velocity={100,0};
+
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-            Velocity={-100,0};
+
         }
     }
 }
@@ -115,6 +114,5 @@ void Game::Inputs()
 void Game::Draw()
 {
     window.clear(sf::Color(18,33,43));
-    window.draw(sprPlayer);
     window.display();
 }

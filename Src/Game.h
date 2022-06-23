@@ -18,9 +18,6 @@ class Game
     sf::Time tickDuration;
 
     int frameRate=60;
-    sf::Texture texPlayer;
-    sf::Sprite sprPlayer;
-    sf::Vector2f Velocity{0,0};
     std::unique_ptr<Registry> registry;
     bool isRunning =false;
 

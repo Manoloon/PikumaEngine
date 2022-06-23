@@ -24,9 +24,15 @@ public:
             const auto transform = entity.GetComponent<TransformComp>();
             const auto sprite = entity.GetComponent<SpriteComp>();
             sf::RectangleShape rectangle;
+            rectangle.setFillColor(sf::Color(255, 255, 255,255));
+            rectangle.setOrigin(rectangle.getSize().x/2,rectangle.getSize().y/2);
+            rectangle.setOutlineColor(sf::Color(3,63,81,255));
+            rectangle.setOutlineThickness(2.f);
             rectangle.setSize(sprite.scale);
             rectangle.setPosition(transform.position);
+            window.clear(sf::Color(18,33,43));
             window.draw(rectangle);
+            window.display();
         }
 
     }
