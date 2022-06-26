@@ -7,6 +7,7 @@
 
 #include "../ECS/ECS.h"
 #include "../Components/Components.h"
+#include "../ECS/AssetStore.h"
 #include <SFML/Graphics.hpp>
 
 class RenderSystem : public System
@@ -17,24 +18,21 @@ public:
         RequireComponent<TransformComp>();
         RequireComponent<SpriteComp>();
     }
-    void Update(float DeltaTime,sf::RenderWindow& window)
+    void Update(float DeltaTime,sf::RenderWindow& window,std::unique_ptr<AssetStore>& assetStore)
     {
         for(auto entity : GetSystemEntities())
         {
-            const auto transform = entity.GetComponent<TransformComp>();
-            const auto sprite = entity.GetComponent<SpriteComp>();
-            sf::RectangleShape rectangle;
-            rectangle.setFillColor(sf::Color(255, 255, 255,255));
-            rectangle.setOrigin(rectangle.getSize().x/2,rectangle.getSize().y/2);
-            rectangle.setOutlineColor(sf::Color(3,63,81,255));
-            rectangle.setOutlineThickness(2.f);
-            rectangle.setSize(sprite.scale);
-            rectangle.setPosition(transform.position);
-            window.clear(sf::Color(18,33,43));
-            window.draw(rectangle);
-            window.display();
+            const auto transformComp = entity.GetComponent<TransformComp>();
+            const auto spriteComp = entity.GetComponent<SpriteComp>();
+            // set the source rect for the origin for the sprite
+            sf::IntRect srcRect = spriteComp.GetSourceRectangle();
+            sf::Sprite sprite;
+            sprite.setTexture(*assetStore->GetTexture(spriteComp.assetId));
+            sprite.setPosition(transformComp.position);
+            sprite.setRotation(transformComp.rotation);
+            sprite.setScale(transformComp.scale);
+            window.draw(sprite);
         }
-
     }
 };
 #endif //PIKUMAENGINE_RENDERSYSTEM_H

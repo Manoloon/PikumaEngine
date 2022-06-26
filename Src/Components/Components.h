@@ -4,6 +4,7 @@
 
 #ifndef PIKUMAENGINE_COMPONENTS_H
 #define PIKUMAENGINE_COMPONENTS_H
+#include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 
 struct TransformComp
@@ -38,9 +39,19 @@ struct RigidBodyComp
 struct SpriteComp
 {
     sf::Vector2f scale;
-    explicit SpriteComp(sf::Vector2f scale =sf::Vector2f(0,0))
+    std::string_view assetId;
+    sf::IntRect spriteRect;
+    explicit SpriteComp(std::string_view assetId = "",sf::Vector2f newScale =sf::Vector2f(0,0),
+                        sf::Vector2f position={0,0})
     {
-        this->scale = scale;
+        this->assetId = assetId;
+        this->scale = newScale;
+        this->spriteRect= {static_cast<int>(position.x),
+                           static_cast<int>(position.y),
+                           static_cast<int>(scale.x),
+                           static_cast<int>(scale.y)};
     }
+public:
+    sf::IntRect GetSourceRectangle()const{return spriteRect;}
 };
 #endif //PIKUMAENGINE_COMPONENTS_H

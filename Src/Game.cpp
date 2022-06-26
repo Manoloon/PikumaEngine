@@ -3,13 +3,14 @@
 //
 #include "Game.h"
 #include "ECS/ECS.h"
-#include "Logger.h"
+#include "ECS/AssetStore.h"
 #include "Systems/MovementSystem.h"
 #include "Systems/RenderSystem.h"
 
 Game::Game()
 {
      registry = std::make_unique<Registry>();
+     assetStore = std::make_unique<AssetStore>();
 }
 
 void Game::Run()
@@ -19,7 +20,7 @@ void Game::Run()
     {
         Inputs();
         Update();
-       // Draw();
+        //Draw();
     }
 }
 
@@ -27,21 +28,27 @@ void Game::BeginPlay()
 {
     // window
     window.create(sf::VideoMode(800,600),"");
-    float fps = 60.0f;
-    window.setFramerateLimit(fps);
+    const float FPS = 60.0f;
+    //window.setFramerateLimit(FPS);
     // Fix time step
     timeSinceLastTick = sf::Time::Zero;
-    DeltaTime = sf::seconds(1.f/fps);
+    DeltaTime = sf::seconds(1.f / FPS);
     tickDuration= sf::Time::Zero;
     /////////////////////////////////////
     //Add system needed to processed.
     registry->AddSystem<MovementSystem>();
     registry->AddSystem<RenderSystem>();
+    assetStore->AddTexture("tank-image","./assets/images/tank-panther-right.png");
+    assetStore->AddTexture("truck-image","./assets/images/truck-ford-right.png");
     //define player
     Entity Tank = registry->CreateEntity();
-    Tank.AddComponent<TransformComp>(sf::Vector2f(100,100),sf::Vector2f(2,2),40);
+    Tank.AddComponent<TransformComp>(sf::Vector2f(100,100),sf::Vector2f(2.0,2.0),45.0);
     Tank.AddComponent<RigidBodyComp>(sf::Vector2f(10.f,50.f));
-    Tank.AddComponent<SpriteComp>(sf::Vector2f(10,10));
+    Tank.AddComponent<SpriteComp>("tank-image",sf::Vector2f(32.f,32.f));
+    Entity Truck = registry->CreateEntity();
+    Truck.AddComponent<TransformComp>(sf::Vector2f(10,50),sf::Vector2f(1.0,1.0),10.0);
+    Truck.AddComponent<RigidBodyComp>(sf::Vector2f(50.f,10.f));
+    Truck.AddComponent<SpriteComp>("truck-image",sf::Vector2f(32.f,32.f));
     isRunning =true;
 }
 
@@ -52,7 +59,9 @@ void Game::Update()
     {
         timeSinceLastTick -= DeltaTime;
         registry->GetSystem<MovementSystem>().Update(DeltaTime.asSeconds());
-        registry->GetSystem<RenderSystem>().Update(DeltaTime.asSeconds(), window);
+        window.clear(sf::Color(18,33,43));
+        registry->GetSystem<RenderSystem>().Update(DeltaTime.asSeconds(), window,assetStore);
+        window.display();
         // collisionSystem.Update(DeltaTime);
         //run this at the end of the frame.
         registry->Update();
@@ -114,5 +123,6 @@ void Game::Inputs()
 void Game::Draw()
 {
     window.clear(sf::Color(18,33,43));
+    // get all sprites to be rendered in this frame.
     window.display();
 }

@@ -6,6 +6,7 @@
 #define PIKUMAENGINE_GAME_H
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "ECS/AssetStore.h"
 #include "ECS/ECS.h"
 
 class Game
@@ -19,6 +20,7 @@ class Game
 
     int frameRate=60;
     std::unique_ptr<Registry> registry;
+    std::unique_ptr<AssetStore> assetStore;
     bool isRunning =false;
 
 public:
