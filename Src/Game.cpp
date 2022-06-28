@@ -1,6 +1,7 @@
 //
 // Created by Manoloon on 13/05/2022.
 //
+#include <fstream>
 #include "Game.h"
 #include "ECS/ECS.h"
 #include "ECS/AssetStore.h"
@@ -24,6 +25,58 @@ void Game::Run()
     }
 }
 
+void Game::LoadLevel(int)
+{
+    registry->AddSystem<MovementSystem>();
+    registry->AddSystem<RenderSystem>();
+    assetStore->AddTexture("tank-image","./assets/images/tank-panther-right.png");
+    assetStore->AddTexture("truck-image","./assets/images/truck-ford-right.png");
+    assetStore->AddTexture("jungleTS-image","./assets/tilemaps/jungle.png");
+    // load tilemap
+    // load the tilemap map from ./assets/tilemaps/jungle.map
+    // could I use rect as the switcher for every tile
+    // consider creating an entity per tile
+    int tileSize = 32;
+    float tileScale = 1.0f;
+    int mapNumCols = 25;
+    int mapNumRows = 20;
+    //read the file map.
+    std::fstream mapFile;
+    mapFile.open("../assets/tilemaps/jungle.map");
+    for(int y=0;y<mapNumRows;y++)
+    {
+        for(int x=0;x<mapNumCols;x++)
+        {
+            char ch;
+            mapFile.get(ch);
+            int srcRectY=std::atoi(&ch) * tileSize;
+            mapFile.get(ch);
+            int srcRectX=std::atoi(&ch) * tileSize;
+            mapFile.ignore();
+
+            Entity tile = registry->CreateEntity();
+            tile.AddComponent<TransformComp>(sf::Vector2f(x*(tileScale*tileSize),y*
+                            (tileScale*tileSize)),sf::Vector2f(tileScale,tileScale),0.0f);
+            tile.AddComponent<SpriteComp>("jungleTS-image",
+                                          sf::Vector2f(tileSize,tileSize),
+                                          sf::Vector2f(srcRectX,srcRectY));
+        }
+    }
+    mapFile.close();
+    //////////////////////
+
+
+    //define player
+    Entity Tank = registry->CreateEntity();
+    Tank.AddComponent<TransformComp>(sf::Vector2f(100,100),sf::Vector2f(2.0,2.0),45.0);
+    Tank.AddComponent<RigidBodyComp>(sf::Vector2f(10.f,50.f));
+    Tank.AddComponent<SpriteComp>("tank-image",sf::Vector2f(32.f,32.f));
+    Entity Truck = registry->CreateEntity();
+    Truck.AddComponent<TransformComp>(sf::Vector2f(10,50),sf::Vector2f(1.0,1.0),10.0);
+    Truck.AddComponent<RigidBodyComp>(sf::Vector2f(50.f,10.f));
+    Truck.AddComponent<SpriteComp>("truck-image",sf::Vector2f(32.f,32.f));
+}
+
 void Game::BeginPlay()
 {
     // window
@@ -34,22 +87,8 @@ void Game::BeginPlay()
     timeSinceLastTick = sf::Time::Zero;
     DeltaTime = sf::seconds(1.f / FPS);
     tickDuration= sf::Time::Zero;
-    /////////////////////////////////////
-    //Add system needed to processed.
-    registry->AddSystem<MovementSystem>();
-    registry->AddSystem<RenderSystem>();
-    assetStore->AddTexture("tank-image","./assets/images/tank-panther-right.png");
-    assetStore->AddTexture("truck-image","./assets/images/truck-ford-right.png");
-    //define player
-    Entity Tank = registry->CreateEntity();
-    Tank.AddComponent<TransformComp>(sf::Vector2f(100,100),sf::Vector2f(2.0,2.0),45.0);
-    Tank.AddComponent<RigidBodyComp>(sf::Vector2f(10.f,50.f));
-    Tank.AddComponent<SpriteComp>("tank-image",sf::Vector2f(32.f,32.f));
-    Entity Truck = registry->CreateEntity();
-    Truck.AddComponent<TransformComp>(sf::Vector2f(10,50),sf::Vector2f(1.0,1.0),10.0);
-    Truck.AddComponent<RigidBodyComp>(sf::Vector2f(50.f,10.f));
-    Truck.AddComponent<SpriteComp>("truck-image",sf::Vector2f(32.f,32.f));
     isRunning =true;
+    LoadLevel(1);
 }
 
 void Game::Update()
