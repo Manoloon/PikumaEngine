@@ -7,25 +7,34 @@
 
 #include "../ECS/ECS.h"
 #include "../Components/Components.h"
+#include <algorithm>
 #include "../ECS/AssetStore.h"
 #include <SFML/Graphics.hpp>
 
 class RenderSystem : public System
 {
+
 public:
     RenderSystem()
     {
         RequireComponent<TransformComp>();
         RequireComponent<SpriteComp>();
     }
+    static bool CompareByIndex(const Entity &a,const Entity &b)
+    {
+        return a.GetComponent<SpriteComp>().GetLayerIndex() <
+               b.GetComponent<SpriteComp>().GetLayerIndex();
+    }
     void Update(float DeltaTime,sf::RenderWindow& window,std::unique_ptr<AssetStore>& assetStore)
     {
-        for(auto entity : GetSystemEntities())
+        // Sort all entities by the LayerIndex;
+        std::vector<Entity> newEntities = GetSystemEntities();
+        std::sort(newEntities.begin(),newEntities.end(), CompareByIndex);
+        for(auto entity : newEntities)
         {
             const auto transformComp = entity.GetComponent<TransformComp>();
             const auto spriteComp = entity.GetComponent<SpriteComp>();
             // set the source rect for the origin for the sprite
-            sf::IntRect srcRect = spriteComp.GetSourceRectangle();
             sf::Sprite sprite;
             sprite.setTexture(*assetStore->GetTexture(spriteComp.assetId));
             sprite.setTextureRect(spriteComp.GetSourceRectangle());

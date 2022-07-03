@@ -31,6 +31,7 @@ void Game::LoadLevel(int)
     registry->AddSystem<RenderSystem>();
     assetStore->AddTexture("tank-image","./assets/images/tank-panther-right.png");
     assetStore->AddTexture("truck-image","./assets/images/truck-ford-right.png");
+    assetStore->AddTexture("player-image","./assets/images/chopper.png");
     assetStore->AddTexture("tilemap-image","./assets/tilemaps/jungle.png");
     // load tilemap
     // load the tilemap map from ./assets/tilemaps/jungle.map
@@ -57,10 +58,8 @@ void Game::LoadLevel(int)
                 char ch[2]={0,0};
                 mapFile.get(ch[0]);
                 int srcRectY=std::atoi(&ch[0]) * tileSize;
-                Logger::Warning("Y :" + std::to_string(srcRectY));
                 mapFile.get(ch[0]);
                 int srcRectX=std::atoi(&ch[0]) * tileSize;
-                Logger::Warning("X :" + std::to_string(srcRectX));
                 mapFile.ignore();
 
                 Entity tile = registry->CreateEntity();
@@ -70,6 +69,7 @@ void Game::LoadLevel(int)
                                                  0.0f);
                 tile.AddComponent<SpriteComp>("tilemap-image",
                                               sf::Vector2f(tileSize,tileSize),
+                                              ERenderLayers::LAYER_TILEMAP,
                                               sf::Vector2f(srcRectX,srcRectY));
             }
         }
@@ -81,11 +81,17 @@ void Game::LoadLevel(int)
     Entity Tank = registry->CreateEntity();
     Tank.AddComponent<TransformComp>(sf::Vector2f(100,100),sf::Vector2f(2.0,2.0),45.0);
     Tank.AddComponent<RigidBodyComp>(sf::Vector2f(10.f,50.f));
-    Tank.AddComponent<SpriteComp>("tank-image",sf::Vector2f(32.f,32.f));
+    Tank.AddComponent<SpriteComp>("tank-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_ENEMIES);
+
     Entity Truck = registry->CreateEntity();
     Truck.AddComponent<TransformComp>(sf::Vector2f(10,50),sf::Vector2f(1.0,1.0),10.0);
     Truck.AddComponent<RigidBodyComp>(sf::Vector2f(50.f,10.f));
-    Truck.AddComponent<SpriteComp>("truck-image",sf::Vector2f(32.f,32.f));
+    Truck.AddComponent<SpriteComp>("truck-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_ENEMIES);
+
+    Entity Player = registry->CreateEntity();
+    Player.AddComponent<TransformComp>(sf::Vector2f(10,50),sf::Vector2f(1.0,1.0),10.0);
+    Player.AddComponent<RigidBodyComp>(sf::Vector2f(50.f,10.f));
+    Player.AddComponent<SpriteComp>("player-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_PLAYER);
 }
 
 void Game::BeginPlay()

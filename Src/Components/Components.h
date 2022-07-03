@@ -5,6 +5,7 @@
 #ifndef PIKUMAENGINE_COMPONENTS_H
 #define PIKUMAENGINE_COMPONENTS_H
 #include <SFML/Graphics.hpp>
+#include "../Enums/render_Layers.h"
 #include <SFML/System/Vector2.hpp>
 
 struct TransformComp
@@ -41,17 +42,22 @@ struct SpriteComp
     sf::Vector2f scale;
     std::string_view assetId;
     sf::IntRect spriteRect;
-    explicit SpriteComp(std::string_view assetId = "",sf::Vector2f newScale =sf::Vector2f(0,0),
-                        sf::Vector2f position={0,0})
+    ERenderLayers renderLayer;
+    explicit SpriteComp(std::string_view assetId = "",
+                        sf::Vector2f newScale =sf::Vector2f(0,0),
+                        ERenderLayers newRenderLayers=ERenderLayers::LAYER_PLAYER,
+                        sf::Vector2f RectPos=sf::Vector2f(0,0))
     {
         this->assetId = assetId;
         this->scale = newScale;
-        this->spriteRect= {static_cast<int>(position.x),
-                           static_cast<int>(position.y),
+        this->renderLayer=newRenderLayers;
+        this->spriteRect= {static_cast<int>(RectPos.x),
+                           static_cast<int>(RectPos.y),
                            static_cast<int>(scale.x),
                            static_cast<int>(scale.y)};
     }
 public:
-    sf::IntRect GetSourceRectangle()const{return spriteRect;}
+    [[nodiscard]] sf::IntRect GetSourceRectangle()const{return spriteRect;}
+    int GetLayerIndex() const {return renderLayer;}
 };
 #endif //PIKUMAENGINE_COMPONENTS_H
