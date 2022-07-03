@@ -28,6 +28,7 @@ public:
             sf::IntRect srcRect = spriteComp.GetSourceRectangle();
             sf::Sprite sprite;
             sprite.setTexture(*assetStore->GetTexture(spriteComp.assetId));
+            sprite.setTextureRect(spriteComp.GetSourceRectangle());
             sprite.setPosition(transformComp.position);
             sprite.setRotation(transformComp.rotation);
             sprite.setScale(transformComp.scale);

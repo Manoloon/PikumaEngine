@@ -31,41 +31,52 @@ void Game::LoadLevel(int)
     registry->AddSystem<RenderSystem>();
     assetStore->AddTexture("tank-image","./assets/images/tank-panther-right.png");
     assetStore->AddTexture("truck-image","./assets/images/truck-ford-right.png");
-    assetStore->AddTexture("jungleTS-image","./assets/tilemaps/jungle.png");
+    assetStore->AddTexture("tilemap-image","./assets/tilemaps/jungle.png");
     // load tilemap
     // load the tilemap map from ./assets/tilemaps/jungle.map
     // could I use rect as the switcher for every tile
     // consider creating an entity per tile
     int tileSize = 32;
-    float tileScale = 1.0f;
+    float tileScale = 1.0;
     int mapNumCols = 25;
     int mapNumRows = 20;
     //read the file map.
     std::fstream mapFile;
     mapFile.open("../assets/tilemaps/jungle.map");
-    for(int y=0;y<mapNumRows;y++)
+    if(mapFile.fail())
     {
-        for(int x=0;x<mapNumCols;x++)
-        {
-            char ch;
-            mapFile.get(ch);
-            int srcRectY=std::atoi(&ch) * tileSize;
-            mapFile.get(ch);
-            int srcRectX=std::atoi(&ch) * tileSize;
-            mapFile.ignore();
-
-            Entity tile = registry->CreateEntity();
-            tile.AddComponent<TransformComp>(sf::Vector2f(x*(tileScale*tileSize),y*
-                            (tileScale*tileSize)),sf::Vector2f(tileScale,tileScale),0.0f);
-            tile.AddComponent<SpriteComp>("jungleTS-image",
-                                          sf::Vector2f(tileSize,tileSize),
-                                          sf::Vector2f(srcRectX,srcRectY));
-        }
+        Logger::Error("Failed to read the tilemap.map file");
+        exit(1);
     }
-    mapFile.close();
+    else
+    {
+        for(int y=0;y<mapNumRows;y++)
+        {
+            for(int x=0;x<mapNumCols;x++)
+            {
+                char ch[2]={0,0};
+                mapFile.get(ch[0]);
+                int srcRectY=std::atoi(&ch[0]) * tileSize;
+                Logger::Warning("Y :" + std::to_string(srcRectY));
+                mapFile.get(ch[0]);
+                int srcRectX=std::atoi(&ch[0]) * tileSize;
+                Logger::Warning("X :" + std::to_string(srcRectX));
+                mapFile.ignore();
+
+                Entity tile = registry->CreateEntity();
+                tile.AddComponent<TransformComp>(sf::Vector2f(x * (tileScale * tileSize),
+                                                              y * (tileScale * tileSize)),
+                                                 sf::Vector2f(tileScale,tileScale),
+                                                 0.0f);
+                tile.AddComponent<SpriteComp>("tilemap-image",
+                                              sf::Vector2f(tileSize,tileSize),
+                                              sf::Vector2f(srcRectX,srcRectY));
+            }
+        }
+        mapFile.close();
+    }
+
     //////////////////////
-
-
     //define player
     Entity Tank = registry->CreateEntity();
     Tank.AddComponent<TransformComp>(sf::Vector2f(100,100),sf::Vector2f(2.0,2.0),45.0);
