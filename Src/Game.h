@@ -16,7 +16,7 @@ class Game
 
     sf::RenderWindow window;
     //Fix time step
-    sf::Clock clock;
+    sf::Clock gameClock;
     sf::Time DeltaTime;
     sf::Time timeSinceLastTick;
 

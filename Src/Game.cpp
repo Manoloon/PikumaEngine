@@ -93,16 +93,16 @@ void Game::LoadLevel(int)
     Truck.AddComponent<SpriteComp>("truck-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_ENEMIES);
 
     Entity Player = registry->CreateEntity();
-    Player.AddComponent<TransformComp>(sf::Vector2f(10,50),sf::Vector2f(1.0,1.0),10.0);
+    Player.AddComponent<TransformComp>(sf::Vector2f(400,400),sf::Vector2f(2.0,2.0),0.0);
     Player.AddComponent<RigidBodyComp>(sf::Vector2f(0.f,0.f));
     Player.AddComponent<SpriteComp>("player-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_PLAYER);
-    Player.AddComponent<AnimationComp>(2,5,clock.getElapsedTime().asMilliseconds());
+    Player.AddComponent<AnimationComp>(2, 5, gameClock.getElapsedTime().asSeconds());
 /*
     Entity UI_Radar = registry->CreateEntity();
     UI_Radar.AddComponent<TransformComp>(sf::Vector2f(100,100));
     UI_Radar.AddComponent<SpriteComp>("radar-image",sf::Vector2f(64.f,64.f),
                                       ERenderLayers::LAYER_GUI);
-    UI_Radar.AddComponent<AnimationComp>(8,5,clock.getElapsedTime().asMilliseconds());
+    UI_Radar.AddComponent<AnimationComp>(8,5,gameClock.getElapsedTime().asMilliseconds());
     */
 }
 
@@ -110,8 +110,6 @@ void Game::BeginPlay()
 {
     // window
     window.create(sf::VideoMode(800,600),"");
-
-    //window.setFramerateLimit(FPS);
     // Fix time step
     timeSinceLastTick = sf::Time::Zero;
     DeltaTime = sf::seconds(1.f / FPS);
@@ -121,18 +119,14 @@ void Game::BeginPlay()
 
 void Game::Update()
 {
-    int timeToWait = 1000 / FPS;
-   timeSinceLastTick +=clock.restart();
+   timeSinceLastTick +=gameClock.restart();
     while (timeSinceLastTick > DeltaTime)
     {
         timeSinceLastTick -= DeltaTime;
-        //Logger::Warning("Delta time : " + std::to_string(DeltaTime.asSeconds()));
-        //Logger::Warning("timeSinceLastTick : " + std::to_string(clock.getElapsedTime().asSeconds
-        //()));
         registry->GetSystem<MovementSystem>().Update(DeltaTime.asSeconds());
         window.clear(sf::Color(18,33,43));
         registry->GetSystem<RenderSystem>().Update(DeltaTime.asSeconds(), window,assetStore);
-        registry->GetSystem<AnimationSystem>().Update(clock.getElapsedTime().asMilliseconds());
+        registry->GetSystem<AnimationSystem>().Update(gameClock.getElapsedTime().asMilliseconds());
         window.display();
         // collisionSystem.Update(DeltaTime);
         //run this at the end of the frame.
