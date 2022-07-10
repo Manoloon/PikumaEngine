@@ -56,8 +56,28 @@ struct SpriteComp
                            static_cast<int>(scale.x),
                            static_cast<int>(scale.y)};
     }
-public:
-    [[nodiscard]] sf::IntRect GetSourceRectangle()const{return spriteRect;}
-    int GetLayerIndex() const {return renderLayer;}
 };
+struct AnimationComp
+        {
+            int numFrames;
+            int currentFrame;
+            int frameRateSpeed;
+            bool bShouldLoop;
+            int startTime;
+            /*
+             * @newNumFrames(int) = number of frames
+             * @newFrameRateSpeed(int)
+             * @newStartTime(int32)
+             * @bLoop
+             */
+            explicit AnimationComp(int NFrames = 1, int FRateSpeed= 1,int StartTime=0,bool bLoop= true)
+            {
+                this->numFrames=NFrames;
+                this->currentFrame =1;
+                this->frameRateSpeed=FRateSpeed;
+                this->bShouldLoop=bLoop;
+                this->startTime = StartTime;
+                Logger::Error("Animcomp startTime = " + std::to_string(startTime));
+            }
+        };
 #endif //PIKUMAENGINE_COMPONENTS_H

@@ -22,8 +22,8 @@ public:
     }
     static bool CompareByIndex(const Entity &a,const Entity &b)
     {
-        return a.GetComponent<SpriteComp>().GetLayerIndex() <
-               b.GetComponent<SpriteComp>().GetLayerIndex();
+        return a.GetComponent<SpriteComp>().renderLayer <
+               b.GetComponent<SpriteComp>().renderLayer;
     }
     void Update(float DeltaTime,sf::RenderWindow& window,std::unique_ptr<AssetStore>& assetStore)
     {
@@ -37,7 +37,7 @@ public:
             // set the source rect for the origin for the sprite
             sf::Sprite sprite;
             sprite.setTexture(*assetStore->GetTexture(spriteComp.assetId));
-            sprite.setTextureRect(spriteComp.GetSourceRectangle());
+            sprite.setTextureRect(spriteComp.spriteRect);
             sprite.setPosition(transformComp.position);
             sprite.setRotation(transformComp.rotation);
             sprite.setScale(transformComp.scale);

@@ -7,6 +7,7 @@
 #include "ECS/AssetStore.h"
 #include "Systems/MovementSystem.h"
 #include "Systems/RenderSystem.h"
+#include "Systems/AnimationSystem.h"
 
 Game::Game()
 {
@@ -29,9 +30,12 @@ void Game::LoadLevel(int)
 {
     registry->AddSystem<MovementSystem>();
     registry->AddSystem<RenderSystem>();
+    registry->AddSystem<AnimationSystem>();
+
     assetStore->AddTexture("tank-image","./assets/images/tank-panther-right.png");
     assetStore->AddTexture("truck-image","./assets/images/truck-ford-right.png");
     assetStore->AddTexture("player-image","./assets/images/chopper.png");
+    assetStore->AddTexture("radar-image","../assets/images/radar.png");
     assetStore->AddTexture("tilemap-image","./assets/tilemaps/jungle.png");
     // load tilemap
     // load the tilemap map from ./assets/tilemaps/jungle.map
@@ -90,33 +94,45 @@ void Game::LoadLevel(int)
 
     Entity Player = registry->CreateEntity();
     Player.AddComponent<TransformComp>(sf::Vector2f(10,50),sf::Vector2f(1.0,1.0),10.0);
-    Player.AddComponent<RigidBodyComp>(sf::Vector2f(50.f,10.f));
+    Player.AddComponent<RigidBodyComp>(sf::Vector2f(0.f,0.f));
     Player.AddComponent<SpriteComp>("player-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_PLAYER);
+    Player.AddComponent<AnimationComp>(2,5,clock.getElapsedTime().asMilliseconds());
+/*
+    Entity UI_Radar = registry->CreateEntity();
+    UI_Radar.AddComponent<TransformComp>(sf::Vector2f(100,100));
+    UI_Radar.AddComponent<SpriteComp>("radar-image",sf::Vector2f(64.f,64.f),
+                                      ERenderLayers::LAYER_GUI);
+    UI_Radar.AddComponent<AnimationComp>(8,5,clock.getElapsedTime().asMilliseconds());
+    */
 }
 
 void Game::BeginPlay()
 {
     // window
     window.create(sf::VideoMode(800,600),"");
-    const float FPS = 60.0f;
+
     //window.setFramerateLimit(FPS);
     // Fix time step
     timeSinceLastTick = sf::Time::Zero;
     DeltaTime = sf::seconds(1.f / FPS);
-    tickDuration= sf::Time::Zero;
     isRunning =true;
     LoadLevel(1);
 }
 
 void Game::Update()
 {
-    timeSinceLastTick +=clock.restart();
+    int timeToWait = 1000 / FPS;
+   timeSinceLastTick +=clock.restart();
     while (timeSinceLastTick > DeltaTime)
     {
         timeSinceLastTick -= DeltaTime;
+        //Logger::Warning("Delta time : " + std::to_string(DeltaTime.asSeconds()));
+        //Logger::Warning("timeSinceLastTick : " + std::to_string(clock.getElapsedTime().asSeconds
+        //()));
         registry->GetSystem<MovementSystem>().Update(DeltaTime.asSeconds());
         window.clear(sf::Color(18,33,43));
         registry->GetSystem<RenderSystem>().Update(DeltaTime.asSeconds(), window,assetStore);
+        registry->GetSystem<AnimationSystem>().Update(clock.getElapsedTime().asMilliseconds());
         window.display();
         // collisionSystem.Update(DeltaTime);
         //run this at the end of the frame.

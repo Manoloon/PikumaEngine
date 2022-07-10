@@ -11,12 +11,14 @@
 
 class Game
 {
+    const float FPS = 60.0f;
+    const int MILLISECS_PER_FRAME = 1000 / FPS;
+
     sf::RenderWindow window;
     //Fix time step
     sf::Clock clock;
     sf::Time DeltaTime;
     sf::Time timeSinceLastTick;
-    sf::Time tickDuration;
 
     int frameRate=60;
     std::unique_ptr<Registry> registry;
