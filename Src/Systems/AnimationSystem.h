@@ -14,22 +14,20 @@ public:
         RequireComponent<SpriteComp>();
         RequireComponent<AnimationComp>();
     }
-    void Update(int DeltaTime)
+    void Update()
     {
         for(auto entity : GetSystemEntities())
         {
             auto& animation = entity.GetComponent<AnimationComp>();
             auto& sprite = entity.GetComponent<SpriteComp>();
 
-            animation.currentFrame =(DeltaTime - animation.startTime *
-                    animation.frameRateSpeed/1000) % animation.numFrames;
-            Logger::Warning("startTime = " + std::to_string(animation.startTime));
-            Logger::Error("time = " + std::to_string((DeltaTime - animation.startTime *
-                                                                         animation
-                                                                         .frameRateSpeed/1000)));
-            Logger::Warning("Current frame : " + std::to_string(animation.currentFrame));
-            sprite.spriteRect = {32 * animation.currentFrame,0,
-                    sprite.spriteRect.width,sprite.spriteRect.height};
+            animation.currentFrame++;
+            size_t frame = (animation.currentFrame / animation.frameRateSpeed) % animation
+                    .numFrames;
+            const auto FrameW = sprite.scale.x;
+            const auto FrameH = sprite.scale.y;
+            const auto rect = sf::IntRect(frame * FrameW,0,FrameW,FrameH);
+            sprite.spriteRect=rect;
         }
     }
 };

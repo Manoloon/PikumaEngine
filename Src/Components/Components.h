@@ -58,26 +58,45 @@ struct SpriteComp
     }
 };
 struct AnimationComp
-        {
-            int numFrames;
-            int currentFrame;
-            int frameRateSpeed;
-            bool bShouldLoop;
-            int startTime;
-            /*
-             * @newNumFrames(int) = number of frames
-             * @newFrameRateSpeed(int)
-             * @newStartTime(int32)
-             * @bLoop
-             */
-            explicit AnimationComp(int NFrames = 1, int FRateSpeed= 1,int StartTime=0,bool bLoop= true)
-            {
-                this->numFrames=NFrames;
-                this->currentFrame =1;
-                this->frameRateSpeed=FRateSpeed;
-                this->bShouldLoop=bLoop;
-                this->startTime = StartTime;
-                Logger::Error("Animcomp startTime = " + std::to_string(startTime));
-            }
-        };
+{
+    int numFrames;
+    int currentFrame;
+    int frameRateSpeed;
+    bool bShouldLoop;
+   // int startTime;
+
+    /*
+     * @newNumFrames(int) = number of frames
+     * @newFrameRateSpeed(int)
+    // * @newStartTime(int32)
+     * @bLoop
+     */
+    explicit AnimationComp(int NFrames = 1, int FRateSpeed = 1,
+                           bool bLoop = true)
+    {
+        this->numFrames = NFrames;
+        this->currentFrame = 1;
+        this->frameRateSpeed = FRateSpeed;
+        this->bShouldLoop = bLoop;
+      //  this->startTime = StartTime;
+    }
+};
+struct BoxCollisionComp
+{
+    /*
+    * @width(int) = Width of box collision
+    * @height(int) = Height of box collision
+    * @offset(sf::Vector2i) = Offset from origin.
+    */
+    int width;
+    int height;
+    sf::RectangleShape Body;
+    sf::Vector2i offset;
+    explicit BoxCollisionComp(int Width=32,int Height=32,sf::Vector2i Offset={0,0})
+    {
+        this->width=Width;
+        this->height=Height;
+        this->offset = Offset;
+    }
+};
 #endif //PIKUMAENGINE_COMPONENTS_H
