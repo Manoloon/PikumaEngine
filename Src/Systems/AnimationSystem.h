@@ -22,10 +22,10 @@ public:
             auto& sprite = entity.GetComponent<SpriteComp>();
 
             animation.currentFrame++;
-            size_t frame = (animation.currentFrame / animation.frameRateSpeed) % animation
+            int frame = (animation.currentFrame / animation.frameRateSpeed) % animation
                     .numFrames;
-            const auto FrameW = sprite.scale.x;
-            const auto FrameH = sprite.scale.y;
+            const int FrameW = sprite.scale.x;
+            const int FrameH = sprite.scale.y;
             const auto rect = sf::IntRect(frame * FrameW,0,FrameW,FrameH);
             sprite.spriteRect=rect;
         }
