@@ -84,19 +84,14 @@ struct AnimationComp
 struct BoxCollisionComp
 {
     /*
-    * @width(int) = Width of box collision
-    * @height(int) = Height of box collision
+    * @Size(sf::Vector2f) = Size of the rectangle
     * @offset(sf::Vector2i) = Offset from origin.
     */
-    int width;
-    int height;
-    sf::RectangleShape Body;
+    sf::Vector2f size;
     sf::Vector2i offset;
-    explicit BoxCollisionComp(int Width=32,int Height=32,sf::Vector2i Offset={0,0})
-    {
-        this->width=Width;
-        this->height=Height;
-        this->offset = Offset;
-    }
+    explicit BoxCollisionComp(sf::Vector2f Size=sf::Vector2f(32.f,32.f),
+                              sf::Vector2i Offset=sf::Vector2i(0,0))
+                              : size(Size),offset(Offset)
+    {}
 };
 #endif //PIKUMAENGINE_COMPONENTS_H

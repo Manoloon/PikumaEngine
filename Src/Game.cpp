@@ -8,6 +8,7 @@
 #include "Systems/MovementSystem.h"
 #include "Systems/RenderSystem.h"
 #include "Systems/AnimationSystem.h"
+#include "Systems/CollisionSystem.h"
 
 Game::Game()
 {
@@ -31,6 +32,7 @@ void Game::LoadLevel(int)
     registry->AddSystem<MovementSystem>();
     registry->AddSystem<RenderSystem>();
     registry->AddSystem<AnimationSystem>();
+    registry->AddSystem<CollisionSystem>();
 
     assetStore->AddTexture("tank-image","./assets/images/tank-panther-right.png");
     assetStore->AddTexture("truck-image","./assets/images/truck-ford-right.png");
@@ -81,15 +83,16 @@ void Game::LoadLevel(int)
     }
 
     //////////////////////
-
     Entity Tank = registry->CreateEntity();
-    Tank.AddComponent<TransformComp>(sf::Vector2f(100,100),sf::Vector2f(2.0,2.0),45.0);
-    Tank.AddComponent<RigidBodyComp>(sf::Vector2f(10.f,50.f));
+    Tank.AddComponent<TransformComp>(sf::Vector2f(10,50),sf::Vector2f(2.0,2.0),0.0);
+    Tank.AddComponent<RigidBodyComp>(sf::Vector2f(30.f,0.f));
+    Tank.AddComponent<BoxCollisionComp>(sf::Vector2f(64.f,64.f));
     Tank.AddComponent<SpriteComp>("tank-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_ENEMIES);
 
     Entity Truck = registry->CreateEntity();
-    Truck.AddComponent<TransformComp>(sf::Vector2f(10,50),sf::Vector2f(1.0,1.0),10.0);
-    Truck.AddComponent<RigidBodyComp>(sf::Vector2f(50.f,10.f));
+    Truck.AddComponent<TransformComp>(sf::Vector2f(200,50),sf::Vector2f(1.0,1.0),0.0);
+    Truck.AddComponent<RigidBodyComp>(sf::Vector2f(-30.f,0.f));
+    Truck.AddComponent<BoxCollisionComp>(sf::Vector2f(32.f,32.f));
     Truck.AddComponent<SpriteComp>("truck-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_ENEMIES);
 
     Entity Player = registry->CreateEntity();
@@ -110,12 +113,12 @@ void Game::LoadLevel(int)
     chop1.AddComponent<SpriteComp>("player-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_PLAYER);
     chop1.AddComponent<AnimationComp>(2, 2);
 
-/*
+
     Entity UI_Radar = registry->CreateEntity();
     UI_Radar.AddComponent<TransformComp>(sf::Vector2f(100,100));
     UI_Radar.AddComponent<SpriteComp>("radar-image",sf::Vector2f(64.f,64.f),
                                       ERenderLayers::LAYER_GUI);
-    UI_Radar.AddComponent<AnimationComp>(8,60,gameClock.getElapsedTime().asMilliseconds());*/
+    UI_Radar.AddComponent<AnimationComp>(8,5);
 }
 
 void Game::BeginPlay()
@@ -138,6 +141,7 @@ void Game::Update()
         window.clear(sf::Color(18,33,43));
         registry->GetSystem<RenderSystem>().Update(timeSinceLastTick.asSeconds(), window,assetStore);
         registry->GetSystem<AnimationSystem>().Update();
+        registry->GetSystem<CollisionSystem>().Update(timeSinceLastTick.asSeconds());
         window.display();
         // collisionSystem.Update(DeltaTime);
         //run this at the end of the frame.

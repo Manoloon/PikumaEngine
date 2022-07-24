@@ -12,7 +12,6 @@
 class Game
 {
     const float FPS = 60.0f;
-    const int MILLISECS_PER_FRAME = 1000 / FPS;
 
     sf::RenderWindow window;
     //Fix time step
