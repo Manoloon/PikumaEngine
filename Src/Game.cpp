@@ -23,11 +23,11 @@ void Game::Run()
     {
         Inputs();
         Update();
-        //Draw();
+        Draw();
     }
 }
 
-void Game::LoadLevel(int)
+void Game::LoadLevel(int) const
 {
     registry->AddSystem<MovementSystem>();
     registry->AddSystem<RenderSystem>();
@@ -143,7 +143,6 @@ void Game::Update()
         registry->GetSystem<AnimationSystem>().Update();
         registry->GetSystem<CollisionSystem>().Update(timeSinceLastTick.asSeconds());
         window.display();
-        // collisionSystem.Update(DeltaTime);
         //run this at the end of the frame.
         registry->Update();
         timeSinceLastTick -= DeltaTime;
@@ -185,26 +184,26 @@ void Game::Inputs()
         }
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-
+            /* Noncompliant - the following nested block is empty */
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
-
+            /* Noncompliant - the following nested block is empty */
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-
+            /* Noncompliant - the following nested block is empty */
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-
+            /* Noncompliant - the following nested block is empty */
         }
     }
 }
 
 void Game::Draw()
 {
-    window.clear(sf::Color(18,33,43));
+    //window.clear(sf::Color(18,33,43));
     // get all sprites to be rendered in this frame.
-    window.display();
+    //window.display();
 }

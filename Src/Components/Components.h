@@ -18,68 +18,50 @@ struct TransformComp
      * @scale
      * @rotation
      * */
-    explicit TransformComp(sf::Vector2f position=sf::Vector2f (0,0),sf::Vector2f scale =
-    sf::Vector2f (1,1),double rotation = 0.0f)
-    {
-        this->position = position;
-        this->scale = scale;
-        this->rotation = rotation;
-    }
+    explicit TransformComp(sf::Vector2f Position=sf::Vector2f(0.f,0.f),sf::Vector2f Scale =
+    sf::Vector2f (1,1),double Rotation = 0.0f)
+    : position(Position),scale(Scale),rotation(Rotation){}
 };
 
 struct RigidBodyComp
 {
     sf::Vector2f velocity;
 
-    explicit RigidBodyComp(const sf::Vector2f velocity = sf::Vector2f(0.0, 0.0))
-    {
-        this->velocity = velocity;
-    }
+    explicit RigidBodyComp(const sf::Vector2f Velocity = sf::Vector2f(0.0, 0.0))
+                            : velocity(Velocity){}
 };
 
 struct SpriteComp
 {
-    sf::Vector2f scale;
     std::string_view assetId;
-    sf::IntRect spriteRect;
+    sf::Vector2f scale;
     ERenderLayers renderLayer;
-    explicit SpriteComp(std::string_view assetId = "",
-                        sf::Vector2f newScale =sf::Vector2f(0,0),
-                        ERenderLayers newRenderLayers=ERenderLayers::LAYER_PLAYER,
-                        sf::Vector2f RectPos=sf::Vector2f(0,0))
-    {
-        this->assetId = assetId;
-        this->scale = newScale;
-        this->renderLayer=newRenderLayers;
-        this->spriteRect= {static_cast<int>(RectPos.x),
-                           static_cast<int>(RectPos.y),
-                           static_cast<int>(scale.x),
-                           static_cast<int>(scale.y)};
-    }
+    sf::IntRect spriteRect;
+    explicit SpriteComp(std::string_view AssetId = "",
+                        sf::Vector2f Scale =sf::Vector2f(0,0),
+                        ERenderLayers RenderLayers=ERenderLayers::LAYER_PLAYER,
+                        sf::Vector2f RectPos=sf::Vector2f(0,0)) : assetId(AssetId),
+                        scale(Scale), renderLayer(RenderLayers),
+                        spriteRect({static_cast<int>(RectPos.x),
+                                    static_cast<int>(RectPos.y),
+                                    static_cast<int>(scale.x),
+                                    static_cast<int>(scale.y)}){}
 };
 struct AnimationComp
 {
     int numFrames;
-    int currentFrame;
+    int currentFrame =1;
     int frameRateSpeed;
     bool bShouldLoop;
-   // int startTime;
 
     /*
      * @newNumFrames(int) = number of frames
      * @newFrameRateSpeed(int)
-    // * @newStartTime(int32)
      * @bLoop
      */
     explicit AnimationComp(int NFrames = 1, int FRateSpeed = 1,
                            bool bLoop = true)
-    {
-        this->numFrames = NFrames;
-        this->currentFrame = 1;
-        this->frameRateSpeed = FRateSpeed;
-        this->bShouldLoop = bLoop;
-      //  this->startTime = StartTime;
-    }
+                           : numFrames(NFrames), frameRateSpeed(FRateSpeed),bShouldLoop(bLoop){}
 };
 struct BoxCollisionComp
 {

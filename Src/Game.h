@@ -27,7 +27,7 @@ class Game
 public:
     Game();
     void Run();
-    void LoadLevel(int newLevel);
+    void LoadLevel(int newLevel) const;
     void BeginPlay();
     void EndPlay();
     void Update();
