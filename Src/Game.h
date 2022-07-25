@@ -23,6 +23,7 @@ class Game
     std::unique_ptr<Registry> registry;
     std::unique_ptr<AssetStore> assetStore;
     bool isRunning =false;
+    bool bDebug= false;
 
 public:
     Game();

@@ -13,7 +13,6 @@
 
 class RenderSystem : public System
 {
-
 public:
     RenderSystem()
     {
@@ -25,15 +24,15 @@ public:
         return a.GetComponent<SpriteComp>().renderLayer <
                b.GetComponent<SpriteComp>().renderLayer;
     }
-    void Update(float DeltaTime,sf::RenderWindow& window,std::unique_ptr<AssetStore>& assetStore)
+    void Update([[maybe_unused]]float DeltaTime,sf::RenderWindow& window,
+                                    const std::unique_ptr<AssetStore>& assetStore) const
     {
-        // Sort all entities by the LayerIndex;
         std::vector<Entity> newEntities = GetSystemEntities();
         std::sort(newEntities.begin(),newEntities.end(), CompareByIndex);
         for(auto entity : newEntities)
         {
-            const auto transformComp = entity.GetComponent<TransformComp>();
-            const auto spriteComp = entity.GetComponent<SpriteComp>();
+            const auto& transformComp = entity.GetComponent<TransformComp>();
+            const auto& spriteComp = entity.GetComponent<SpriteComp>();
             // set the source rect for the origin for the sprite
             sf::Sprite sprite;
             sprite.setTexture(*assetStore->GetTexture(spriteComp.assetId));
@@ -44,5 +43,10 @@ public:
             window.draw(sprite);
         }
     }
+    /*
+    void Draw(sf::RenderWindow& window)
+    {
+        window.draw(spr)
+    }*/
 };
 #endif //PIKUMAENGINE_RENDERSYSTEM_H

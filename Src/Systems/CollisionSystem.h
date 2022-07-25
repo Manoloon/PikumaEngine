@@ -10,10 +10,10 @@
 
 class CollisionSystem: public System
 {
-bool CheckAABBCollision(const sf::Vector2f& aPosition,
-                        const sf::Vector2f& aCollisionScale,
-                        const sf::Vector2f& bPosition,
-                        const sf::Vector2f& bCollisionScale) const
+[[nodiscard]] bool CheckAABBCollision(const sf::Vector2f& aPosition,
+                                      const sf::Vector2f& aCollisionScale,
+                                      const sf::Vector2f& bPosition,
+                                      const sf::Vector2f& bCollisionScale) const
 {
     float aHorArea = aPosition.x + aCollisionScale.x;
     float bHorArea = bPosition.x + bCollisionScale.x;
@@ -24,16 +24,17 @@ bool CheckAABBCollision(const sf::Vector2f& aPosition,
             aPosition.y < bVerArea &&
             aVerArea > bPosition.y);
 }
+    sf::Color HitColor = sf::Color::Green;
 public:
     CollisionSystem()
     {
         RequireComponent<TransformComp>();
         RequireComponent<BoxCollisionComp>();
     }
-    void Update(float DeltaTime)
+    [[nodiscard]] sf::Color GetHitColor()const{return HitColor;}
+
+    void Update([[maybe_unused]] float DeltaTime)
     {
-      //check all entities that have a boxCollider
-      //to see if they are colliding with each other
       auto entities = GetSystemEntities();
       for(auto i = entities.begin(); i != entities.end(); i++)
       {
@@ -46,14 +47,10 @@ public:
               const auto& bTransform = EntityB.GetComponent<TransformComp>();
               const auto& bCollision = EntityB.GetComponent<BoxCollisionComp>();
               if(i == j){ continue;}
-              if(CheckAABBCollision(aTransform.position,
-                                    aCollision.size,
-                                    bTransform.position,
-                                    bCollision.size))
-              {
-                  Logger::Warning("Colliding :" + std::to_string(EntityB.GetId()) + "With : " +
-                  std::to_string(entityA.GetId()));
-              }
+              HitColor = (CheckAABBCollision(aTransform.position,
+                                            aCollision.size,
+                                            bTransform.position,
+                                            bCollision.size)) ? sf::Color::Red : sf::Color::Green;
           }
       }
     }

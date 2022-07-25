@@ -9,6 +9,7 @@
 #include "Systems/RenderSystem.h"
 #include "Systems/AnimationSystem.h"
 #include "Systems/CollisionSystem.h"
+#include "Systems/DebugRenderSystem.h"
 
 Game::Game()
 {
@@ -33,6 +34,7 @@ void Game::LoadLevel(int) const
     registry->AddSystem<RenderSystem>();
     registry->AddSystem<AnimationSystem>();
     registry->AddSystem<CollisionSystem>();
+    registry->AddSystem<DebugRenderSystem>();
 
     assetStore->AddTexture("tank-image","./assets/images/tank-panther-right.png");
     assetStore->AddTexture("truck-image","./assets/images/truck-ford-right.png");
@@ -43,7 +45,7 @@ void Game::LoadLevel(int) const
     // load the tilemap map from ./assets/tilemaps/jungle.map
     // could I use rect as the switcher for every tile
     // consider creating an entity per tile
-    int tileSize = 32;
+    float tileSize = 32.f;
     float tileScale = 1.0;
     int mapNumCols = 25;
     int mapNumRows = 20;
@@ -63,9 +65,9 @@ void Game::LoadLevel(int) const
             {
                 char ch[2]={0,0};
                 mapFile.get(ch[0]);
-                int srcRectY=std::atoi(&ch[0]) * tileSize;
+                int srcRectY=std::atoi(&ch[0]) * (int)tileSize;
                 mapFile.get(ch[0]);
-                int srcRectX=std::atoi(&ch[0]) * tileSize;
+                int srcRectX=std::atoi(&ch[0]) * (int)tileSize;
                 mapFile.ignore();
 
                 Entity tile = registry->CreateEntity();
@@ -142,11 +144,28 @@ void Game::Update()
         registry->GetSystem<RenderSystem>().Update(timeSinceLastTick.asSeconds(), window,assetStore);
         registry->GetSystem<AnimationSystem>().Update();
         registry->GetSystem<CollisionSystem>().Update(timeSinceLastTick.asSeconds());
+        if(bDebug)
+        {
+            registry->GetSystem<DebugRenderSystem>().Update(window,
+                                                            registry->GetSystem<CollisionSystem>
+                                                                    ().GetHitColor());
+        }
+
         window.display();
         //run this at the end of the frame.
         registry->Update();
         timeSinceLastTick -= DeltaTime;
     }
+}
+void Game::Draw()
+{
+    //window.clear(sf::Color(18,33,43));
+    //if(bDebug)
+    //{
+      //  registry->GetSystem<DebugRenderSystem>().Draw(window);
+    //}
+    // get all sprites to be rendered in this frame.
+    //window.display();
 }
 
 void Game::EndPlay()
@@ -194,16 +213,17 @@ void Game::Inputs()
         {
             /* Noncompliant - the following nested block is empty */
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
             /* Noncompliant - the following nested block is empty */
         }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+        {
+            bDebug = true;
+        }
+        else
+        {
+            bDebug= false;
+        }
     }
-}
-
-void Game::Draw()
-{
-    //window.clear(sf::Color(18,33,43));
-    // get all sprites to be rendered in this frame.
-    //window.display();
 }
