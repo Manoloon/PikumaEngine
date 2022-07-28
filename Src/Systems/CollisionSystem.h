@@ -13,7 +13,7 @@ class CollisionSystem: public System
 [[nodiscard]] bool CheckAABBCollision(const sf::Vector2f& aPosition,
                                       const sf::Vector2f& aCollisionScale,
                                       const sf::Vector2f& bPosition,
-                                      const sf::Vector2f& bCollisionScale) const
+                                      const sf::Vector2f& bCollisionScale)  const
 {
     float aHorArea = aPosition.x + aCollisionScale.x;
     float bHorArea = bPosition.x + bCollisionScale.x;
@@ -43,14 +43,24 @@ public:
           const auto& aCollision = entityA.GetComponent<BoxCollisionComp>();
           for(auto j=i;j!=entities.end();j++)
           {
-              auto EntityB = *j;
-              const auto& bTransform = EntityB.GetComponent<TransformComp>();
-              const auto& bCollision = EntityB.GetComponent<BoxCollisionComp>();
+              auto entityB = *j;
+              const auto& bTransform = entityB.GetComponent<TransformComp>();
+              const auto& bCollision = entityB.GetComponent<BoxCollisionComp>();
               if(i == j){ continue;}
-              HitColor = (CheckAABBCollision(aTransform.position,
+              if(CheckAABBCollision(aTransform.position,
                                             aCollision.size,
                                             bTransform.position,
-                                            bCollision.size)) ? sf::Color::Red : sf::Color::Green;
+                                            bCollision.size))
+              {
+                  HitColor = sf::Color::Red;
+
+                  entityA.Destroy();
+                  entityB.Destroy();
+              }
+              else
+              {
+                  HitColor = sf::Color::Green;
+              }
           }
       }
     }

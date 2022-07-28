@@ -12,7 +12,7 @@ struct TransformComp
 {
     sf::Vector2f position;
     sf::Vector2f scale;
-    double rotation;
+    float rotation;
     /*
      * @position
      * @scale

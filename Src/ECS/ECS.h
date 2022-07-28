@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <typeindex>
 #include <memory>
+#include <deque>
 #include "../Src/Logger.h"
 #include "../Components/Components.h"
 
@@ -47,7 +48,7 @@ class Entity
 public:
     Entity(const Entity& entity)=default;
     explicit Entity(int newId,class Registry* registry= nullptr) : id(newId),registry(registry){}
-
+    void Destroy();
     int GetId() const;
     Entity& operator = (const Entity& other) = default;
     bool operator == (const Entity& other) const {return id == other.GetId();}
@@ -137,14 +138,18 @@ class Registry
     std::vector<std::shared_ptr<IPool>> componentsPool;
     std::vector<Signature> componentSignatures;
     std::set<Entity> entitiesToAdd;
-    std::set<Entity> entitiesToKill;
+    std::set<Entity> entitiesToDestroy;
     std::unordered_map<std::type_index,std::shared_ptr<System>> Systems;
+    std::deque<int> freeEntityIds;
 public:
+    //TODO : delete this lines
     Registry() {Logger::Warning("Registry constructor called");}
     ~Registry() {Logger::Warning("Registry destructor called");}
 
     Entity CreateEntity();
+    void DestroyEntity(Entity entity);
     void AddEntityToSystem(Entity entity);
+    void RemoveEntityFromSystems(Entity entity) const;
     void Update();
 
     template <typename TComponent,typename ...TArgs>

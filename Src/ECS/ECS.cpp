@@ -6,11 +6,18 @@
 
 // initialize the interface variable for the static function.
 int IComponent::nextId =0;
+////////////// Entity ///////////////////////////////
+void Entity::Destroy()
+{
+    registry->DestroyEntity(*this);
+}
 
 int Entity::GetId() const
 {
     return id;
 }
+
+////////////// SYSTEMS ///////////////////////////////
 void System::AddEntityToSystem(Entity newEntity)
 {
    entities.push_back(newEntity);
@@ -42,21 +49,29 @@ const Signature& System::GetComponentSignature() const
 Entity Registry::CreateEntity()
 {
     int entityID;
-    entityID = numEntities++;
-    if(entityID >= componentSignatures.size())
+    if(freeEntityIds.empty())
     {
-        componentSignatures.resize(entityID+1);
+        entityID = numEntities++;
+        if(entityID >= componentSignatures.size())
+        {
+            componentSignatures.resize(entityID+1);
+        }
+    }
+    else
+    {
+        entityID = freeEntityIds.front();
+        freeEntityIds.pop_front();
     }
     Entity entity(entityID);
     entity.registry = this;
     entitiesToAdd.insert(entity);
-    if(entityID >=componentSignatures.size())
-    {
-        componentSignatures.resize(entityID +1);
-    }
     return entity;
 }
 
+void Registry::DestroyEntity(Entity entity)
+{
+    entitiesToDestroy.insert(entity);
+}
 void Registry::Update()
 {
     for(auto entity : entitiesToAdd)
@@ -64,6 +79,13 @@ void Registry::Update()
         AddEntityToSystem(entity);
     }
     entitiesToAdd.clear();
+    for(auto entity : entitiesToDestroy)
+    {
+        RemoveEntityFromSystems(entity);
+        componentSignatures[entity.GetId()].reset();
+        freeEntityIds.push_back(entity.GetId());
+    }
+    entitiesToDestroy.clear();
 }
 
 void Registry::AddEntityToSystem(Entity entity)
@@ -81,4 +103,10 @@ void Registry::AddEntityToSystem(Entity entity)
         }
     }
 }
-
+void Registry::RemoveEntityFromSystems(Entity entity) const
+{
+    for(const auto& system : Systems)
+    {
+        system.second->RemoveEntityFromSystem(entity);
+    }
+}
