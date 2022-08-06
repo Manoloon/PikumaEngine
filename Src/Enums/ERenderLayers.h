@@ -2,9 +2,9 @@
 // Created by Manoloon on 03/07/2022.
 //
 
-#ifndef PIKUMAENGINE_RENDER_LAYERS_H
-#define PIKUMAENGINE_RENDER_LAYERS_H
-enum ERenderLayers
+#ifndef PIKUMAENGINE_ERENDERLAYERS_H
+#define PIKUMAENGINE_ERENDERLAYERS_H
+enum class ERenderLayers
         {
             LAYER_TILEMAP,
             LAYER_VEGETATION,
@@ -13,4 +13,4 @@ enum ERenderLayers
             LAYER_PLAYER,
             LAYER_GUI
         };
-#endif //PIKUMAENGINE_RENDER_LAYERS_H
+#endif //PIKUMAENGINE_ERENDERLAYERS_H

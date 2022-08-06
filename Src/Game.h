@@ -8,6 +8,7 @@
 #include <vector>
 #include "ECS/AssetStore.h"
 #include "ECS/ECS.h"
+#include "ECS/EventBus.h"
 
 class Game
 {
@@ -22,6 +23,7 @@ class Game
     int frameRate=60;
     std::unique_ptr<Registry> registry;
     std::unique_ptr<AssetStore> assetStore;
+    std::unique_ptr<EventBus> eventBus;
     bool isRunning =false;
     bool bDebug= false;
 

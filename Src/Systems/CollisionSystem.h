@@ -7,6 +7,7 @@
 
 #include "../ECS/ECS.h"
 #include "../Components/Components.h"
+#include "../Events/CollisionEvent.h"
 
 class CollisionSystem: public System
 {
@@ -33,7 +34,7 @@ public:
     }
     [[nodiscard]] sf::Color GetHitColor()const{return HitColor;}
 
-    void Update([[maybe_unused]] float DeltaTime)
+    void Update([[maybe_unused]] float DeltaTime,std::unique_ptr<EventBus>& eventBus)
     {
       auto entities = GetSystemEntities();
       for(auto i = entities.begin(); i != entities.end(); i++)
@@ -53,9 +54,7 @@ public:
                                             bCollision.size))
               {
                   HitColor = sf::Color::Red;
-
-                  entityA.Destroy();
-                  entityB.Destroy();
+                  eventBus->EmitEvent<CollisionEvent>(entityA,entityB);
               }
               else
               {

@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 SET(SFML_STATIC_LIBRARIES TRUE)
 add_executable(PikumaEngine main.cpp Src/Game.cpp Src/Game.h Src/Logger.h Src/Systems/MovementSystem.h
         Src/ECS/ECS.h Src/ECS/ECS.cpp Src/Components/Components.h Src/Systems/RenderSystem.h
-                                                        Src/ECS/AssetStore.cpp Src/ECS/AssetStore.h Src/Enums/render_Layers.h Src/Systems/AnimationSystem.h Src/Systems/CollisionSystem.h Src/Systems/DebugRenderSystem.h)
+                                                        Src/ECS/AssetStore.cpp Src/ECS/AssetStore.h Src/Enums/ERenderLayers.h Src/Systems/AnimationSystem.h Src/Systems/CollisionSystem.h Src/Systems/DebugRenderSystem.h Src/ECS/EventBus.h Src/Events/CollisionEvent.h Src/Events/Event.h Src/Systems/DamageSystem.h Src/Systems/InputSystem.h Src/Events/KeyPressedEvent.h)
 include_directories (Includes/)
 #Lua
 find_library(LUA lua53 libraries)

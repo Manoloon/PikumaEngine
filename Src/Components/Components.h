@@ -5,7 +5,7 @@
 #ifndef PIKUMAENGINE_COMPONENTS_H
 #define PIKUMAENGINE_COMPONENTS_H
 #include <SFML/Graphics.hpp>
-#include "../Enums/render_Layers.h"
+#include "../Enums/ERenderLayers.h"
 #include <SFML/System/Vector2.hpp>
 
 struct TransformComp

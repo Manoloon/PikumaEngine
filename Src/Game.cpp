@@ -9,12 +9,15 @@
 #include "Systems/RenderSystem.h"
 #include "Systems/AnimationSystem.h"
 #include "Systems/CollisionSystem.h"
+#include "Systems/InputSystem.h"
 #include "Systems/DebugRenderSystem.h"
+#include "Systems/DamageSystem.h"
 
 Game::Game()
 {
      registry = std::make_unique<Registry>();
      assetStore = std::make_unique<AssetStore>();
+     eventBus = std::make_unique<EventBus>();
 }
 
 void Game::Run()
@@ -35,6 +38,8 @@ void Game::LoadLevel(int) const
     registry->AddSystem<AnimationSystem>();
     registry->AddSystem<CollisionSystem>();
     registry->AddSystem<DebugRenderSystem>();
+    registry->AddSystem<DamageSystem>();
+    registry->AddSystem<InputSystem>();
 
     assetStore->AddTexture("tank-image","./assets/images/tank-panther-right.png");
     assetStore->AddTexture("truck-image","./assets/images/truck-ford-right.png");
@@ -141,19 +146,23 @@ void Game::Update()
     {
         registry->GetSystem<MovementSystem>().Update(timeSinceLastTick.asSeconds());
         window.clear(sf::Color(18,33,43));
-        registry->GetSystem<RenderSystem>().Update(timeSinceLastTick.asSeconds(), window,assetStore);
-        registry->GetSystem<AnimationSystem>().Update();
-        registry->GetSystem<CollisionSystem>().Update(timeSinceLastTick.asSeconds());
+
         if(bDebug)
         {
-            registry->GetSystem<DebugRenderSystem>().Update(window,
-                                                            registry->GetSystem<CollisionSystem>
-                                                                    ().GetHitColor());
+            registry->GetSystem<DebugRenderSystem>().
+                    Update(window,registry->GetSystem<CollisionSystem>().GetHitColor());
         }
-
-        window.display();
+        //housecleaning subscribers
+        eventBus->Reset();
+        // the subscribing would be frame by frame
+        registry->GetSystem<DamageSystem>().SubscribeToEvents(eventBus);
+        registry->GetSystem<InputSystem>().SubscribeToEvents(eventBus);
         //run this at the end of the frame.
         registry->Update();
+        registry->GetSystem<RenderSystem>().Update(timeSinceLastTick.asSeconds(), window,assetStore);
+        registry->GetSystem<AnimationSystem>().Update();
+        registry->GetSystem<CollisionSystem>().Update(timeSinceLastTick.asSeconds(),eventBus);
+        window.display();
         timeSinceLastTick -= DeltaTime;
     }
 }
@@ -207,7 +216,7 @@ void Game::Inputs()
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
-            /* Noncompliant - the following nested block is empty */
+            eventBus->EmitEvent<KeyPressedEvent>(sf::Keyboard::S);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
