@@ -18,9 +18,10 @@ struct TransformComp
      * @scale
      * @rotation
      * */
-    explicit TransformComp(sf::Vector2f Position=sf::Vector2f(0.f,0.f),sf::Vector2f Scale =
-    sf::Vector2f (1,1),double Rotation = 0.0f)
-    : position(Position),scale(Scale),rotation(Rotation){}
+    explicit TransformComp(sf::Vector2f Position = sf::Vector2f(0.f,0.f),
+                           sf::Vector2f Scale = sf::Vector2f (1.0,1.0),
+                           double Rotation = 0.0f)
+                            : position(Position),scale(Scale),rotation(Rotation){}
 };
 
 struct RigidBodyComp
@@ -36,16 +37,19 @@ struct SpriteComp
     std::string_view assetId;
     sf::Vector2f scale;
     ERenderLayers renderLayer;
+    bool bIsUI;
     sf::IntRect spriteRect;
     explicit SpriteComp(std::string_view AssetId = "",
-                        sf::Vector2f Scale =sf::Vector2f(0,0),
-                        ERenderLayers RenderLayers=ERenderLayers::LAYER_PLAYER,
-                        sf::Vector2f RectPos=sf::Vector2f(0,0)) : assetId(AssetId),
-                        scale(Scale), renderLayer(RenderLayers),
+                        sf::Vector2f Scale =sf::Vector2f(1,1),
+                        ERenderLayers RenderLayers=ERenderLayers::LAYER_PLAYER,bool isUI=false,
+                        sf::Vector2f RectPos=sf::Vector2f(0,0))
+                        : assetId(AssetId),
+                        scale(Scale), renderLayer(RenderLayers),bIsUI(isUI),
                         spriteRect({static_cast<int>(RectPos.x),
                                     static_cast<int>(RectPos.y),
                                     static_cast<int>(scale.x),
-                                    static_cast<int>(scale.y)}){}
+                                    static_cast<int>(scale.y)})
+                        {};
 };
 struct AnimationComp
 {
@@ -70,10 +74,32 @@ struct BoxCollisionComp
     * @offset(sf::Vector2i) = Offset from origin.
     */
     sf::Vector2f size;
-    sf::Vector2i offset;
-    explicit BoxCollisionComp(sf::Vector2f Size=sf::Vector2f(32.f,32.f),
-                              sf::Vector2i Offset=sf::Vector2i(0,0))
-                              : size(Size),offset(Offset)
-    {}
+    sf::Vector2f offset;
+    explicit BoxCollisionComp(sf::Vector2f Size=sf::Vector2f(32,32),
+                              sf::Vector2f Offset=sf::Vector2f(0,0))
+                              : size(Size),offset(Offset){}
+};
+
+struct KeyboardControlledComp
+{
+    sf::Vector2f upVelocity;
+    sf::Vector2f rightVelocity;
+    sf::Vector2f downVelocity;
+    sf::Vector2f leftVelocity;
+    KeyboardControlledComp(sf::Vector2f UpVelocity=sf::Vector2f(0,0),
+                           sf::Vector2f RightVelocity=sf::Vector2f(0,0),
+                           sf::Vector2f DownVelocity=sf::Vector2f(0,0),
+                           sf::Vector2f LeftVelocity=sf::Vector2f(0,0))
+    {
+        this->upVelocity=UpVelocity;
+        this->rightVelocity=RightVelocity;
+        this->downVelocity=DownVelocity;
+        this->leftVelocity=LeftVelocity;
+    }
+};
+
+struct CameraFollowComp
+{
+
 };
 #endif //PIKUMAENGINE_COMPONENTS_H

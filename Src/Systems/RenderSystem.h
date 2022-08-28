@@ -25,7 +25,8 @@ public:
                b.GetComponent<SpriteComp>().renderLayer;
     }
     void Update([[maybe_unused]]float DeltaTime,sf::RenderWindow& window,
-                                    const std::unique_ptr<AssetStore>& assetStore) const
+                                    const std::unique_ptr<AssetStore>& assetStore,
+                                    const sf::RectangleShape& camera) const
     {
         std::vector<Entity> newEntities = GetSystemEntities();
         std::sort(newEntities.begin(),newEntities.end(), CompareByIndex);
@@ -37,7 +38,14 @@ public:
             sf::Sprite sprite;
             sprite.setTexture(*assetStore->GetTexture(spriteComp.assetId));
             sprite.setTextureRect(spriteComp.spriteRect);
-            sprite.setPosition(transformComp.position);
+            if(!spriteComp.bIsUI)
+            {
+                sprite.setPosition(transformComp.position - camera.getPosition());
+            }
+            else
+            {
+                sprite.setPosition(transformComp.position);
+            }
             sprite.setRotation(transformComp.rotation);
             sprite.setScale(transformComp.scale);
             window.draw(sprite);

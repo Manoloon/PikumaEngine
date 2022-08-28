@@ -49,9 +49,9 @@ public:
               const auto& bCollision = entityB.GetComponent<BoxCollisionComp>();
               if(i == j){ continue;}
               if(CheckAABBCollision(aTransform.position,
-                                            aCollision.size,
+                                    aCollision.size,
                                             bTransform.position,
-                                            bCollision.size))
+                                    bCollision.size))
               {
                   HitColor = sf::Color::Red;
                   eventBus->EmitEvent<CollisionEvent>(entityA,entityB);

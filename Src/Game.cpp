@@ -12,6 +12,10 @@
 #include "Systems/InputSystem.h"
 #include "Systems/DebugRenderSystem.h"
 #include "Systems/DamageSystem.h"
+#include "Systems/CameraSystem.h"
+
+float Game::mapWidth;
+float Game::mapHeight;
 
 Game::Game()
 {
@@ -40,10 +44,11 @@ void Game::LoadLevel(int) const
     registry->AddSystem<DebugRenderSystem>();
     registry->AddSystem<DamageSystem>();
     registry->AddSystem<InputSystem>();
+    registry->AddSystem<CameraSystem>();
 
     assetStore->AddTexture("tank-image","./assets/images/tank-panther-right.png");
     assetStore->AddTexture("truck-image","./assets/images/truck-ford-right.png");
-    assetStore->AddTexture("player-image","./assets/images/chopper.png");
+    assetStore->AddTexture("player-image","./assets/images/chopper-spritesheet.png");
     assetStore->AddTexture("radar-image","../assets/images/radar.png");
     assetStore->AddTexture("tilemap-image","./assets/tilemaps/jungle.png");
     // load tilemap
@@ -82,11 +87,13 @@ void Game::LoadLevel(int) const
                                                  0.0f);
                 tile.AddComponent<SpriteComp>("tilemap-image",
                                               sf::Vector2f(tileSize,tileSize),
-                                              ERenderLayers::LAYER_TILEMAP,
+                                              ERenderLayers::LAYER_TILEMAP,false,
                                               sf::Vector2f(srcRectX,srcRectY));
             }
         }
         mapFile.close();
+        mapWidth = mapNumCols * tileSize * tileScale;
+        mapHeight = mapNumRows * tileSize * tileScale;
     }
 
     //////////////////////
@@ -107,6 +114,12 @@ void Game::LoadLevel(int) const
     Player.AddComponent<RigidBodyComp>(sf::Vector2f(0.f,0.f));
     Player.AddComponent<SpriteComp>("player-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_PLAYER);
     Player.AddComponent<AnimationComp>(2, 6);
+    Player.AddComponent<CameraFollowComp>();
+    Player.AddComponent<KeyboardControlledComp>(sf::Vector2f(0,-20),
+                                                sf::Vector2f(20,0),
+                                                sf::Vector2f(0,20),
+                                                sf::Vector2f(-20,0));
+
 
     Entity chop2 = registry->CreateEntity();
     chop2.AddComponent<TransformComp>(sf::Vector2f(150,150),sf::Vector2f(2.0,2.0),0.0);
@@ -122,21 +135,23 @@ void Game::LoadLevel(int) const
 
 
     Entity UI_Radar = registry->CreateEntity();
-    UI_Radar.AddComponent<TransformComp>(sf::Vector2f(100,100));
+    UI_Radar.AddComponent<TransformComp>(sf::Vector2f(screenResolution.x-100,50));
     UI_Radar.AddComponent<SpriteComp>("radar-image",sf::Vector2f(64.f,64.f),
-                                      ERenderLayers::LAYER_GUI);
+                                      ERenderLayers::LAYER_GUI,true);
     UI_Radar.AddComponent<AnimationComp>(8,5);
 }
 
 void Game::BeginPlay()
 {
     // window
-    window.create(sf::VideoMode(800,600),"");
+    window.create(sf::VideoMode(screenResolution.x,screenResolution.y),"");
     // Fix time step
     timeSinceLastTick = sf::Time::Zero;
     DeltaTime = sf::seconds(1.f / FPS);
     isRunning =true;
     LoadLevel(1);
+    cameraActor.setPosition(0,0);
+    cameraActor.setScale(window.getSize().x,window.getSize().y);
 }
 
 void Game::Update()
@@ -150,7 +165,7 @@ void Game::Update()
         if(bDebug)
         {
             registry->GetSystem<DebugRenderSystem>().
-                    Update(window,registry->GetSystem<CollisionSystem>().GetHitColor());
+                    Update(window,cameraActor,registry->GetSystem<CollisionSystem>().GetHitColor());
         }
         //housecleaning subscribers
         eventBus->Reset();
@@ -159,9 +174,11 @@ void Game::Update()
         registry->GetSystem<InputSystem>().SubscribeToEvents(eventBus);
         //run this at the end of the frame.
         registry->Update();
-        registry->GetSystem<RenderSystem>().Update(timeSinceLastTick.asSeconds(), window,assetStore);
+        registry->GetSystem<RenderSystem>().Update(timeSinceLastTick.asSeconds(),
+                                                   window,assetStore,cameraActor);
         registry->GetSystem<AnimationSystem>().Update();
         registry->GetSystem<CollisionSystem>().Update(timeSinceLastTick.asSeconds(),eventBus);
+        registry->GetSystem<CameraSystem>().Update(timeSinceLastTick.asSeconds(),cameraActor);
         window.display();
         timeSinceLastTick -= DeltaTime;
     }
