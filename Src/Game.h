@@ -20,6 +20,7 @@ class Game
     sf::Time DeltaTime;
     sf::Time timeSinceLastTick;
     sf::Vector2i screenResolution={800,600};
+    float playerVelocity = 60.0;
     int frameRate=60;
     std::unique_ptr<Registry> registry;
     std::unique_ptr<AssetStore> assetStore;

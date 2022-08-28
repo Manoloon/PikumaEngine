@@ -110,16 +110,17 @@ void Game::LoadLevel(int) const
     Truck.AddComponent<SpriteComp>("truck-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_ENEMIES);
 
     Entity Player = registry->CreateEntity();
-    Player.AddComponent<TransformComp>(sf::Vector2f(50,50),sf::Vector2f(2.0,2.0),0.0);
+    Player.AddComponent<TransformComp>(sf::Vector2f(50,50),sf::Vector2f(4.0,4.0),0.0);
     Player.AddComponent<RigidBodyComp>(sf::Vector2f(0.f,0.f));
     Player.AddComponent<SpriteComp>("player-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_PLAYER);
+    //Frames , Velocity of frames
     Player.AddComponent<AnimationComp>(2, 6);
     Player.AddComponent<CameraFollowComp>();
-    Player.AddComponent<KeyboardControlledComp>(sf::Vector2f(0,-20),
-                                                sf::Vector2f(20,0),
-                                                sf::Vector2f(0,20),
-                                                sf::Vector2f(-20,0));
-
+    // UP, RIGHT, DOWN, LEFT
+    Player.AddComponent<KeyboardControlledComp>(sf::Vector2f(0,-playerVelocity),
+                                                sf::Vector2f(playerVelocity,0),
+                                                sf::Vector2f(0,playerVelocity),
+                                                sf::Vector2f(-playerVelocity,0));
 
     Entity chop2 = registry->CreateEntity();
     chop2.AddComponent<TransformComp>(sf::Vector2f(150,150),sf::Vector2f(2.0,2.0),0.0);
@@ -159,39 +160,31 @@ void Game::Update()
    timeSinceLastTick +=gameClock.restart();
     while (timeSinceLastTick > DeltaTime)
     {
-        registry->GetSystem<MovementSystem>().Update(timeSinceLastTick.asSeconds());
-        window.clear(sf::Color(18,33,43));
-
-        if(bDebug)
-        {
-            registry->GetSystem<DebugRenderSystem>().
-                    Update(window,cameraActor,registry->GetSystem<CollisionSystem>().GetHitColor());
-        }
         //housecleaning subscribers
         eventBus->Reset();
         // the subscribing would be frame by frame
         registry->GetSystem<DamageSystem>().SubscribeToEvents(eventBus);
         registry->GetSystem<InputSystem>().SubscribeToEvents(eventBus);
+
         //run this at the end of the frame.
         registry->Update();
-        registry->GetSystem<RenderSystem>().Update(timeSinceLastTick.asSeconds(),
-                                                   window,assetStore,cameraActor);
+        registry->GetSystem<MovementSystem>().Update(timeSinceLastTick.asSeconds());
+        registry->GetSystem<CameraSystem>().Update(timeSinceLastTick.asSeconds(),cameraActor);
         registry->GetSystem<AnimationSystem>().Update();
         registry->GetSystem<CollisionSystem>().Update(timeSinceLastTick.asSeconds(),eventBus);
-        registry->GetSystem<CameraSystem>().Update(timeSinceLastTick.asSeconds(),cameraActor);
-        window.display();
         timeSinceLastTick -= DeltaTime;
     }
 }
 void Game::Draw()
 {
-    //window.clear(sf::Color(18,33,43));
-    //if(bDebug)
-    //{
-      //  registry->GetSystem<DebugRenderSystem>().Draw(window);
-    //}
-    // get all sprites to be rendered in this frame.
-    //window.display();
+    window.clear(sf::Color(18,33,43));
+    registry->GetSystem<RenderSystem>().Update(window,assetStore,cameraActor);
+    if(bDebug)
+    {
+        registry->GetSystem<DebugRenderSystem>().
+                Update(window,cameraActor,registry->GetSystem<CollisionSystem>().GetHitColor());
+    }
+    window.display();
 }
 
 void Game::EndPlay()
@@ -227,9 +220,10 @@ void Game::Inputs()
             (frameRate>10)?frameRate-=5 : frameRate=5;
             window.setFramerateLimit(frameRate);
         }
+       // eventBus->EmitEvent<KeyPressedEvent>(sf::Keyboard::isKeyPressed(sf::key))
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            /* Noncompliant - the following nested block is empty */
+            eventBus->EmitEvent<KeyPressedEvent>(sf::Keyboard::W);
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
@@ -237,13 +231,13 @@ void Game::Inputs()
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
-            /* Noncompliant - the following nested block is empty */
+            eventBus->EmitEvent<KeyPressedEvent>(sf::Keyboard::D);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
-            /* Noncompliant - the following nested block is empty */
+            eventBus->EmitEvent<KeyPressedEvent>(sf::Keyboard::A);
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
         {
             bDebug = true;
         }

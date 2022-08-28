@@ -33,20 +33,20 @@ public:
                     // multiply the height (32 px) times 0,1,2,3
                     switch(event.keySymbol)
                     {
-                        case sf::Keyboard::Key::Up:
+                        case sf::Keyboard::Key::W:
                             rigidBodyComp.velocity = keyboardComp.upVelocity;
                             spriteComp.spriteRect.top = spriteComp.spriteRect.height *0;
                             break;
-                        case sf::Keyboard::Key::Right:
-                            rigidBodyComp.velocity = keyboardComp.upVelocity;
+                        case sf::Keyboard::Key::D:
+                            rigidBodyComp.velocity = keyboardComp.rightVelocity;
                             spriteComp.spriteRect.top = spriteComp.spriteRect.height *1;
                             break;
-                        case sf::Keyboard::Key::Down:
-                            rigidBodyComp.velocity = keyboardComp.upVelocity;
+                        case sf::Keyboard::Key::S:
+                            rigidBodyComp.velocity = keyboardComp.downVelocity;
                             spriteComp.spriteRect.top = spriteComp.spriteRect.height *2;
                             break;
-                        case sf::Keyboard::Key::Left:
-                            rigidBodyComp.velocity = keyboardComp.upVelocity;
+                        case sf::Keyboard::Key::A:
+                            rigidBodyComp.velocity = keyboardComp.leftVelocity;
                             spriteComp.spriteRect.top = spriteComp.spriteRect.height *3;
                             break;
 

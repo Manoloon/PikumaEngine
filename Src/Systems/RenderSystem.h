@@ -24,8 +24,7 @@ public:
         return a.GetComponent<SpriteComp>().renderLayer <
                b.GetComponent<SpriteComp>().renderLayer;
     }
-    void Update([[maybe_unused]]float DeltaTime,sf::RenderWindow& window,
-                                    const std::unique_ptr<AssetStore>& assetStore,
+    void Update(sf::RenderWindow& window,const std::unique_ptr<AssetStore>& assetStore,
                                     const sf::RectangleShape& camera) const
     {
         std::vector<Entity> newEntities = GetSystemEntities();
