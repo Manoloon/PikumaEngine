@@ -4,26 +4,28 @@
 
 #ifndef PIKUMAENGINE_COMPONENTS_H
 #define PIKUMAENGINE_COMPONENTS_H
+
 #include <SFML/Graphics.hpp>
 #include "../Enums/ERenderLayers.h"
 #include <SFML/System/Vector2.hpp>
-
+/**
+* \brief Component for actors with presence in the world.
+* \param Position sf::Vector2f.
+* \param Scale sf::Vector2f.
+* \param Rotation float.
+*/
 struct CTransform
 {
     sf::Vector2f position;
     sf::Vector2f scale;
     float rotation;
-    /**
-* \brief Component for actors with presence in the world.
-* \param Position sf::Vector2f.
-     * \param Scale sf::Vector2f.
-     * \param Rotation float.
-*/
+
     explicit CTransform(sf::Vector2f Position = sf::Vector2f(0.f, 0.f),
-                        sf::Vector2f Scale = sf::Vector2f (1.0,1.0),
+                        sf::Vector2f Scale = sf::Vector2f(1.0, 1.0),
                         double Rotation = 0.0f)
-                            : position(Position),scale(Scale),rotation(Rotation){}
+            : position(Position), scale(Scale), rotation(Rotation){}
 };
+
 /**
 * \brief Component for actors that have movement.
 * \param Velocity sf::Vector2f.
@@ -33,9 +35,16 @@ struct CRigidBody
     sf::Vector2f velocity;
 
     explicit CRigidBody(const sf::Vector2f Velocity = sf::Vector2f(0.0, 0.0))
-                            : velocity(Velocity){}
+            : velocity(Velocity){}
 };
-
+/**
+* \brief component for actors with sprites.
+* \param AssetID string_view.
+* \param Scale sf::Vector2f.
+* \param RenderLayer ERenderLayers.
+* \param isUI bool
+* \param RectPos sf::Vector2f
+*/
 struct CSprite
 {
     std::string_view assetId;
@@ -43,79 +52,71 @@ struct CSprite
     ERenderLayers renderLayer;
     bool bIsUI;
     sf::IntRect spriteRect;
-    /**
-* \brief component for actors with sprites.
-* \param AssetID string_view.
- * \param Scale sf::Vector2f.
- * \param RenderLayer ERenderLayers.
- * \param isUI bool
- * \param RectPos sf::Vector2f
-*/
-    explicit CSprite(std::string_view AssetId = "",
-                     sf::Vector2f Scale =sf::Vector2f(1,1),
-                     ERenderLayers RenderLayers=ERenderLayers::LAYER_PLAYER, bool isUI=false,
-                     sf::Vector2f RectPos=sf::Vector2f(0,0))
-                        : assetId(AssetId),
-                        scale(Scale), renderLayer(RenderLayers),bIsUI(isUI),
-                        spriteRect({static_cast<int>(RectPos.x),
-                                    static_cast<int>(RectPos.y),
-                                    static_cast<int>(scale.x),
-                                    static_cast<int>(scale.y)})
-                        {};
-};
 
-struct CAnimation
-{
-    int numFrames;
-    int currentFrame =1;
-    int frameRateSpeed;
-    bool bShouldLoop;
+    explicit CSprite(std::string_view AssetId = "",
+                     sf::Vector2f Scale = sf::Vector2f(1, 1),
+                     ERenderLayers RenderLayers = ERenderLayers::LAYER_PLAYER, bool isUI = false,
+                     sf::Vector2f RectPos = sf::Vector2f(0, 0))
+            : assetId(AssetId),
+              scale(Scale), renderLayer(RenderLayers), bIsUI(isUI),
+              spriteRect({static_cast<int>(RectPos.x),
+                          static_cast<int>(RectPos.y),
+                          static_cast<int>(scale.x),
+                          static_cast<int>(scale.y)})
+    {};
+};
 /**
 * \brief component for actors with animation.
 * \param NFrames int.
- * \param FRateSpeed int.
- * \param ShouldLoop bool.
+* \param FRateSpeed int.
+* \param ShouldLoop bool.
 */
-    explicit CAnimation(int NFrames = 1, int FRateSpeed = 1,
-                        bool ShouldLoop = true)
-                           : numFrames(NFrames), frameRateSpeed(FRateSpeed),bShouldLoop(ShouldLoop){}
-};
-struct CBoxCollision
+struct CAnimation
 {
-    sf::Vector2f size;
-    sf::Vector2f offset;
-    /**
+    int numFrames;
+    int currentFrame = 1;
+    int frameRateSpeed;
+    bool bShouldLoop;
+
+    explicit CAnimation(int NFrames = 1, int FRateSpeed = 1,bool ShouldLoop = true)
+            : numFrames(NFrames), frameRateSpeed(FRateSpeed), bShouldLoop(ShouldLoop){}
+};
+/**
 * \brief component for actors with Collision.
 * \param Size sf::Vector2f.
 * \param Offset sf::Vector2f.
 */
-    explicit CBoxCollision(sf::Vector2f Size=sf::Vector2f(32, 32),
-                           sf::Vector2f Offset=sf::Vector2f(0,0))
-                              : size(Size),offset(Offset){}
-};
-
-struct CKeyboardControlled
+struct CBoxCollision
 {
-    sf::Vector2f upVelocity;
-    sf::Vector2f rightVelocity;
-    sf::Vector2f downVelocity;
-    sf::Vector2f leftVelocity;
-    /**
+    sf::Vector2f size;
+    sf::Vector2f offset;
+    explicit CBoxCollision(sf::Vector2f Size = sf::Vector2f(32, 32),
+                           sf::Vector2f Offset = sf::Vector2f(0, 0))
+            : size(Size), offset(Offset){}
+};
+/**
 * \brief component for actors controlled by keyboard.
 * \param UpVelocity sf::Vector2f.
 * \param RightVelocity sf::Vector2f.
 * \param DownVelocity sf::Vector2f.
 * \param LeftVelocity sf::Vector2f.
 */
-    CKeyboardControlled(sf::Vector2f UpVelocity=sf::Vector2f(0, 0),
-                        sf::Vector2f RightVelocity=sf::Vector2f(0,0),
-                        sf::Vector2f DownVelocity=sf::Vector2f(0,0),
-                        sf::Vector2f LeftVelocity=sf::Vector2f(0,0))
+struct CKeyboardControlled
+{
+    sf::Vector2f upVelocity;
+    sf::Vector2f rightVelocity;
+    sf::Vector2f downVelocity;
+    sf::Vector2f leftVelocity;
+
+    CKeyboardControlled(sf::Vector2f UpVelocity = sf::Vector2f(0, 0),
+                        sf::Vector2f RightVelocity = sf::Vector2f(0, 0),
+                        sf::Vector2f DownVelocity = sf::Vector2f(0, 0),
+                        sf::Vector2f LeftVelocity = sf::Vector2f(0, 0))
     {
-        this->upVelocity=UpVelocity;
-        this->rightVelocity=RightVelocity;
-        this->downVelocity=DownVelocity;
-        this->leftVelocity=LeftVelocity;
+        this->upVelocity = UpVelocity;
+        this->rightVelocity = RightVelocity;
+        this->downVelocity = DownVelocity;
+        this->leftVelocity = LeftVelocity;
     }
 };
 
@@ -123,9 +124,39 @@ struct CCameraFollow
 {
 
 };
-
+/**
+* \brief component for actors that spawn projectiles.
+* \param Velocity sf::Vector2f.
+* \param LoopFrequency int.
+* \param LifeSpan int.
+* \param DamagePercent int.
+* \param bIsFriendly bool.
+* \param lastEmissionTime int. in milliseconds
+*/
 struct CShootEmitter
 {
+    sf::Vector2f velocity;
+    int loopFrequency;
+    int lifeSpan;
+    int damagePercentage;
+    bool bIsFriendly;
+    int lastEmissionTime;
 
+    explicit CShootEmitter(sf::Vector2f Velocity = {0, 0}, int LoopFrequency = 1, int LifeSpan = 3,
+                           int DamagePercent = 40, bool IsFriendly = false,
+                           int LastEmissionTime = 0.0) :
+            velocity(Velocity), loopFrequency(LoopFrequency), lifeSpan(LifeSpan),
+            damagePercentage(DamagePercent), bIsFriendly(IsFriendly),
+            lastEmissionTime(LastEmissionTime)
+    {}
 };
+/**
+* \brief component for actors that handle Health.
+* \param Health int. in percentage
+*/
+struct CHealth
+        {
+            int health;
+            CHealth(int Health = 100): health(Health){}
+        };
 #endif //PIKUMAENGINE_COMPONENTS_H

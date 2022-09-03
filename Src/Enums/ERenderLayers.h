@@ -11,6 +11,7 @@ enum class ERenderLayers
             LAYER_OBSTACLES,
             LAYER_ENEMIES,
             LAYER_PLAYER,
+            LAYER_PROJECTILE,
             LAYER_GUI
         };
 #endif //PIKUMAENGINE_ERENDERLAYERS_H

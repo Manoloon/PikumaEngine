@@ -13,6 +13,7 @@
 #include "Systems/SDebugRender.h"
 #include "Systems/SDamage.h"
 #include "Systems/SCamera.h"
+#include "Systems/SProjectileEmitter.h"
 
 float Game::mapWidth;
 float Game::mapHeight;
@@ -45,12 +46,14 @@ void Game::LoadLevel(int) const
     registry->AddSystem<SDamage>();
     registry->AddSystem<SInput>();
     registry->AddSystem<SCamera>();
+    registry->AddSystem<SProjectileEmitter>();
 
     assetStore->AddTexture("tank-image","./assets/images/tank-panther-right.png");
     assetStore->AddTexture("truck-image","./assets/images/truck-ford-right.png");
     assetStore->AddTexture("player-image","./assets/images/chopper-spritesheet.png");
     assetStore->AddTexture("radar-image","../assets/images/radar.png");
     assetStore->AddTexture("tilemap-image","./assets/tilemaps/jungle.png");
+    assetStore->AddTexture("bullet-image","./assets/images/bullet.png");
     // load tilemap
     // load the tilemap map from ./assets/tilemaps/jungle.map
     // could I use rect as the switcher for every tile
@@ -99,24 +102,25 @@ void Game::LoadLevel(int) const
     //////////////////////
     Entity Tank = registry->CreateEntity();
     Tank.AddComponent<CTransform>(sf::Vector2f(10, 50), sf::Vector2f(2.0, 2.0), 0.0);
-    Tank.AddComponent<CRigidBody>(sf::Vector2f(30.f, 0.f));
+    Tank.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     Tank.AddComponent<CBoxCollision>(sf::Vector2f(64.f, 64.f));
+    Tank.AddComponent<CShootEmitter>(sf::Vector2f(50,10),1,40,false);
     Tank.AddComponent<CSprite>("tank-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_ENEMIES);
 
     Entity Truck = registry->CreateEntity();
     Truck.AddComponent<CTransform>(sf::Vector2f(200, 50), sf::Vector2f(1.0, 1.0), 0.0);
-    Truck.AddComponent<CRigidBody>(sf::Vector2f(-30.f, 0.f));
+    Truck.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     Truck.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
+    Truck.AddComponent<CShootEmitter>(sf::Vector2f(40,0),2,40,false);
     Truck.AddComponent<CSprite>("truck-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_ENEMIES);
 
     Entity Player = registry->CreateEntity();
     Player.AddComponent<CTransform>(sf::Vector2f(50, 50), sf::Vector2f(4.0, 4.0), 0.0);
     Player.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     Player.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_PLAYER);
-    //Frames , Velocity of frames
     Player.AddComponent<CAnimation>(2, 6);
+    Player.AddComponent<CHealth>(100);
     Player.AddComponent<CCameraFollow>();
-    // UP, RIGHT, DOWN, LEFT
     Player.AddComponent<CKeyboardControlled>(sf::Vector2f(0, -playerVelocity),
                                              sf::Vector2f(playerVelocity,0),
                                              sf::Vector2f(0,playerVelocity),
@@ -172,6 +176,7 @@ void Game::Update()
         registry->GetSystem<SCamera>().Update(timeSinceLastTick.asSeconds(), cameraActor);
         registry->GetSystem<SAnimation>().Update();
         registry->GetSystem<SCollision>().Update(timeSinceLastTick.asSeconds(), eventBus);
+        registry->GetSystem<SProjectileEmitter>().Update(timeSinceLastTick.asMilliseconds(),registry);
         timeSinceLastTick -= DeltaTime;
     }
 }
