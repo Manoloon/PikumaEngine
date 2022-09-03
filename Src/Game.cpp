@@ -5,14 +5,14 @@
 #include "Game.h"
 #include "ECS/ECS.h"
 #include "ECS/AssetStore.h"
-#include "Systems/MovementSystem.h"
-#include "Systems/RenderSystem.h"
-#include "Systems/AnimationSystem.h"
-#include "Systems/CollisionSystem.h"
-#include "Systems/InputSystem.h"
-#include "Systems/DebugRenderSystem.h"
-#include "Systems/DamageSystem.h"
-#include "Systems/CameraSystem.h"
+#include "Systems/SMovement.h"
+#include "Systems/SRender.h"
+#include "Systems/SAnimation.h"
+#include "Systems/SCollision.h"
+#include "Systems/SInput.h"
+#include "Systems/SDebugRender.h"
+#include "Systems/SDamage.h"
+#include "Systems/SCamera.h"
 
 float Game::mapWidth;
 float Game::mapHeight;
@@ -37,14 +37,14 @@ void Game::Run()
 
 void Game::LoadLevel(int) const
 {
-    registry->AddSystem<MovementSystem>();
-    registry->AddSystem<RenderSystem>();
-    registry->AddSystem<AnimationSystem>();
-    registry->AddSystem<CollisionSystem>();
-    registry->AddSystem<DebugRenderSystem>();
-    registry->AddSystem<DamageSystem>();
-    registry->AddSystem<InputSystem>();
-    registry->AddSystem<CameraSystem>();
+    registry->AddSystem<SMovement>();
+    registry->AddSystem<SRender>();
+    registry->AddSystem<SAnimation>();
+    registry->AddSystem<SCollision>();
+    registry->AddSystem<SDebugRender>();
+    registry->AddSystem<SDamage>();
+    registry->AddSystem<SInput>();
+    registry->AddSystem<SCamera>();
 
     assetStore->AddTexture("tank-image","./assets/images/tank-panther-right.png");
     assetStore->AddTexture("truck-image","./assets/images/truck-ford-right.png");
@@ -81,14 +81,14 @@ void Game::LoadLevel(int) const
                 mapFile.ignore();
 
                 Entity tile = registry->CreateEntity();
-                tile.AddComponent<TransformComp>(sf::Vector2f(x * (tileScale * tileSize),
+                tile.AddComponent<CTransform>(sf::Vector2f(x * (tileScale * tileSize),
                                                               y * (tileScale * tileSize)),
-                                                 sf::Vector2f(tileScale,tileScale),
-                                                 0.0f);
-                tile.AddComponent<SpriteComp>("tilemap-image",
-                                              sf::Vector2f(tileSize,tileSize),
-                                              ERenderLayers::LAYER_TILEMAP,false,
-                                              sf::Vector2f(srcRectX,srcRectY));
+                                              sf::Vector2f(tileScale,tileScale),
+                                              0.0f);
+                tile.AddComponent<CSprite>("tilemap-image",
+                                           sf::Vector2f(tileSize,tileSize),
+                                           ERenderLayers::LAYER_TILEMAP, false,
+                                           sf::Vector2f(srcRectX,srcRectY));
             }
         }
         mapFile.close();
@@ -98,48 +98,48 @@ void Game::LoadLevel(int) const
 
     //////////////////////
     Entity Tank = registry->CreateEntity();
-    Tank.AddComponent<TransformComp>(sf::Vector2f(10,50),sf::Vector2f(2.0,2.0),0.0);
-    Tank.AddComponent<RigidBodyComp>(sf::Vector2f(30.f,0.f));
-    Tank.AddComponent<BoxCollisionComp>(sf::Vector2f(64.f,64.f));
-    Tank.AddComponent<SpriteComp>("tank-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_ENEMIES);
+    Tank.AddComponent<CTransform>(sf::Vector2f(10, 50), sf::Vector2f(2.0, 2.0), 0.0);
+    Tank.AddComponent<CRigidBody>(sf::Vector2f(30.f, 0.f));
+    Tank.AddComponent<CBoxCollision>(sf::Vector2f(64.f, 64.f));
+    Tank.AddComponent<CSprite>("tank-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_ENEMIES);
 
     Entity Truck = registry->CreateEntity();
-    Truck.AddComponent<TransformComp>(sf::Vector2f(200,50),sf::Vector2f(1.0,1.0),0.0);
-    Truck.AddComponent<RigidBodyComp>(sf::Vector2f(-30.f,0.f));
-    Truck.AddComponent<BoxCollisionComp>(sf::Vector2f(32.f,32.f));
-    Truck.AddComponent<SpriteComp>("truck-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_ENEMIES);
+    Truck.AddComponent<CTransform>(sf::Vector2f(200, 50), sf::Vector2f(1.0, 1.0), 0.0);
+    Truck.AddComponent<CRigidBody>(sf::Vector2f(-30.f, 0.f));
+    Truck.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
+    Truck.AddComponent<CSprite>("truck-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_ENEMIES);
 
     Entity Player = registry->CreateEntity();
-    Player.AddComponent<TransformComp>(sf::Vector2f(50,50),sf::Vector2f(4.0,4.0),0.0);
-    Player.AddComponent<RigidBodyComp>(sf::Vector2f(0.f,0.f));
-    Player.AddComponent<SpriteComp>("player-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_PLAYER);
+    Player.AddComponent<CTransform>(sf::Vector2f(50, 50), sf::Vector2f(4.0, 4.0), 0.0);
+    Player.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
+    Player.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_PLAYER);
     //Frames , Velocity of frames
-    Player.AddComponent<AnimationComp>(2, 6);
-    Player.AddComponent<CameraFollowComp>();
+    Player.AddComponent<CAnimation>(2, 6);
+    Player.AddComponent<CCameraFollow>();
     // UP, RIGHT, DOWN, LEFT
-    Player.AddComponent<KeyboardControlledComp>(sf::Vector2f(0,-playerVelocity),
-                                                sf::Vector2f(playerVelocity,0),
-                                                sf::Vector2f(0,playerVelocity),
-                                                sf::Vector2f(-playerVelocity,0));
+    Player.AddComponent<CKeyboardControlled>(sf::Vector2f(0, -playerVelocity),
+                                             sf::Vector2f(playerVelocity,0),
+                                             sf::Vector2f(0,playerVelocity),
+                                             sf::Vector2f(-playerVelocity,0));
 
     Entity chop2 = registry->CreateEntity();
-    chop2.AddComponent<TransformComp>(sf::Vector2f(150,150),sf::Vector2f(2.0,2.0),0.0);
-    chop2.AddComponent<RigidBodyComp>(sf::Vector2f(0.f,0.f));
-    chop2.AddComponent<SpriteComp>("player-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_PLAYER);
-    chop2.AddComponent<AnimationComp>(2, 12);
+    chop2.AddComponent<CTransform>(sf::Vector2f(150, 150), sf::Vector2f(2.0, 2.0), 0.0);
+    chop2.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
+    chop2.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_PLAYER);
+    chop2.AddComponent<CAnimation>(2, 12);
 
     Entity chop1 = registry->CreateEntity();
-    chop1.AddComponent<TransformComp>(sf::Vector2f(250,250),sf::Vector2f(1.0,1.0),0.0);
-    chop1.AddComponent<RigidBodyComp>(sf::Vector2f(0.f,0.f));
-    chop1.AddComponent<SpriteComp>("player-image",sf::Vector2f(32.f,32.f),ERenderLayers::LAYER_PLAYER);
-    chop1.AddComponent<AnimationComp>(2, 2);
+    chop1.AddComponent<CTransform>(sf::Vector2f(250, 250), sf::Vector2f(1.0, 1.0), 0.0);
+    chop1.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
+    chop1.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_PLAYER);
+    chop1.AddComponent<CAnimation>(2, 2);
 
 
     Entity UI_Radar = registry->CreateEntity();
-    UI_Radar.AddComponent<TransformComp>(sf::Vector2f(screenResolution.x-100,50));
-    UI_Radar.AddComponent<SpriteComp>("radar-image",sf::Vector2f(64.f,64.f),
-                                      ERenderLayers::LAYER_GUI,true);
-    UI_Radar.AddComponent<AnimationComp>(8,5);
+    UI_Radar.AddComponent<CTransform>(sf::Vector2f(screenResolution.x - 100, 50));
+    UI_Radar.AddComponent<CSprite>("radar-image", sf::Vector2f(64.f, 64.f),
+                                   ERenderLayers::LAYER_GUI, true);
+    UI_Radar.AddComponent<CAnimation>(8, 5);
 }
 
 void Game::BeginPlay()
@@ -163,26 +163,26 @@ void Game::Update()
         //housecleaning subscribers
         eventBus->Reset();
         // the subscribing would be frame by frame
-        registry->GetSystem<DamageSystem>().SubscribeToEvents(eventBus);
-        registry->GetSystem<InputSystem>().SubscribeToEvents(eventBus);
+        registry->GetSystem<SDamage>().SubscribeToEvents(eventBus);
+        registry->GetSystem<SInput>().SubscribeToEvents(eventBus);
 
         //run this at the end of the frame.
         registry->Update();
-        registry->GetSystem<MovementSystem>().Update(timeSinceLastTick.asSeconds());
-        registry->GetSystem<CameraSystem>().Update(timeSinceLastTick.asSeconds(),cameraActor);
-        registry->GetSystem<AnimationSystem>().Update();
-        registry->GetSystem<CollisionSystem>().Update(timeSinceLastTick.asSeconds(),eventBus);
+        registry->GetSystem<SMovement>().Update(timeSinceLastTick.asSeconds());
+        registry->GetSystem<SCamera>().Update(timeSinceLastTick.asSeconds(), cameraActor);
+        registry->GetSystem<SAnimation>().Update();
+        registry->GetSystem<SCollision>().Update(timeSinceLastTick.asSeconds(), eventBus);
         timeSinceLastTick -= DeltaTime;
     }
 }
 void Game::Draw()
 {
     window.clear(sf::Color(18,33,43));
-    registry->GetSystem<RenderSystem>().Update(window,assetStore,cameraActor);
+    registry->GetSystem<SRender>().Update(window, assetStore, cameraActor);
     if(bDebug)
     {
-        registry->GetSystem<DebugRenderSystem>().
-                Update(window,cameraActor,registry->GetSystem<CollisionSystem>().GetHitColor());
+        registry->GetSystem<SDebugRender>().
+                Update(window,cameraActor,registry->GetSystem<SCollision>().GetHitColor());
     }
     window.display();
 }

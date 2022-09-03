@@ -2,8 +2,8 @@
 // Created by Manoloon on 22/06/2022.
 //
 
-#ifndef PIKUMAENGINE_RENDERSYSTEM_H
-#define PIKUMAENGINE_RENDERSYSTEM_H
+#ifndef PIKUMAENGINE_SRENDER_H
+#define PIKUMAENGINE_SRENDER_H
 
 #include "../ECS/ECS.h"
 #include "../Components/Components.h"
@@ -11,19 +11,25 @@
 #include "../ECS/AssetStore.h"
 #include <SFML/Graphics.hpp>
 
-class RenderSystem : public System
+class SRender : public System
 {
 public:
-    RenderSystem()
+    SRender()
     {
-        RequireComponent<TransformComp>();
-        RequireComponent<SpriteComp>();
+        RequireComponent<CTransform>();
+        RequireComponent<CSprite>();
     }
     static bool CompareByIndex(const Entity &a,const Entity &b)
     {
-        return a.GetComponent<SpriteComp>().renderLayer <
-               b.GetComponent<SpriteComp>().renderLayer;
+        return a.GetComponent<CSprite>().renderLayer <
+               b.GetComponent<CSprite>().renderLayer;
     }
+  /**
+  * \brief Gets the LoginSession object for the provided accountId, and creates one if necessary.
+  * \param loginSessionId The AccountId for this login session.
+  * \return The login session for that accountId.
+  * \remarks If a new login session is created, then LoginSessions.AfterKeyAdded is raised.</remarks>
+  */
     void Update(sf::RenderWindow& window,const std::unique_ptr<AssetStore>& assetStore,
                                     const sf::RectangleShape& camera) const
     {
@@ -31,8 +37,8 @@ public:
         std::sort(newEntities.begin(),newEntities.end(), CompareByIndex);
         for(auto entity : newEntities)
         {
-            const auto& transformComp = entity.GetComponent<TransformComp>();
-            const auto& spriteComp = entity.GetComponent<SpriteComp>();
+            const auto& transformComp = entity.GetComponent<CTransform>();
+            const auto& spriteComp = entity.GetComponent<CSprite>();
             // set the source rect for the origin for the sprite
             sf::Sprite sprite;
             sprite.setTexture(*assetStore->GetTexture(spriteComp.assetId));
@@ -56,4 +62,4 @@ public:
         window.draw(spr)
     }*/
 };
-#endif //PIKUMAENGINE_RENDERSYSTEM_H
+#endif //PIKUMAENGINE_SRENDER_H

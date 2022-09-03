@@ -2,25 +2,25 @@
 // Created by Manoloon on 31/07/2022.
 //
 
-#ifndef PIKUMAENGINE_DAMAGESYSTEM_H
-#define PIKUMAENGINE_DAMAGESYSTEM_H
+#ifndef PIKUMAENGINE_SDAMAGE_H
+#define PIKUMAENGINE_SDAMAGE_H
 
 #include "../ECS/ECS.h"
 #include "../ECS/EventBus.h"
 #include "../Components/Components.h"
 #include "../Events/CollisionEvent.h"
 
-class DamageSystem : public System
+class SDamage : public System
 {
 public:
-    DamageSystem()
+    SDamage()
     {
-        RequireComponent<BoxCollisionComp>();
+        RequireComponent<CBoxCollision>();
     }
 
     void SubscribeToEvents(std::unique_ptr<EventBus>& eventBus)
     {
-        eventBus->SubscribeToEvent<CollisionEvent>(this, &DamageSystem::onCollision);
+        eventBus->SubscribeToEvent<CollisionEvent>(this, &SDamage::onCollision);
     }
 
     void onCollision(CollisionEvent& event)
@@ -37,4 +37,4 @@ public:
         //Todo
     }
 };
-#endif //PIKUMAENGINE_DAMAGESYSTEM_H
+#endif //PIKUMAENGINE_SDAMAGE_H

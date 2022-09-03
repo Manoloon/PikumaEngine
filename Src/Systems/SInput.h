@@ -2,33 +2,33 @@
 // Created by Manoloon on 31/07/2022.
 //
 
-#ifndef PIKUMAENGINE_INPUTSYSTEM_H
-#define PIKUMAENGINE_INPUTSYSTEM_H
+#ifndef PIKUMAENGINE_SINPUT_H
+#define PIKUMAENGINE_SINPUT_H
 
 #include "../ECS/ECS.h"
 #include "../ECS/EventBus.h"
 #include "../Events/KeyPressedEvent.h"
 
-class InputSystem: public System
+class SInput: public System
         {
 public:
-            InputSystem()
+            SInput()
             {
-                RequireComponent<KeyboardControlledComp>();
-                RequireComponent<SpriteComp>();
-                RequireComponent<RigidBodyComp>();
+                RequireComponent<CKeyboardControlled>();
+                RequireComponent<CSprite>();
+                RequireComponent<CRigidBody>();
             }
             void SubscribeToEvents(std::unique_ptr<EventBus>& eventBus)
             {
-                eventBus->SubscribeToEvent<KeyPressedEvent>(this,&InputSystem::onKeyPressed);
+                eventBus->SubscribeToEvent<KeyPressedEvent>(this,&SInput::onKeyPressed);
             }
             void onKeyPressed(KeyPressedEvent& event)
             {
                 for(auto entity : GetSystemEntities())
                 {
-                    const auto& keyboardComp = entity.GetComponent<KeyboardControlledComp>();
-                    auto& spriteComp = entity.GetComponent<SpriteComp>();
-                    auto& rigidBodyComp = entity.GetComponent<RigidBodyComp>();
+                    const auto& keyboardComp = entity.GetComponent<CKeyboardControlled>();
+                    auto& spriteComp = entity.GetComponent<CSprite>();
+                    auto& rigidBodyComp = entity.GetComponent<CRigidBody>();
 
                     // multiply the height (32 px) times 0,1,2,3
                     switch(event.keySymbol)
@@ -54,4 +54,4 @@ public:
                 }
             }
         };
-#endif //PIKUMAENGINE_INPUTSYSTEM_H
+#endif //PIKUMAENGINE_SINPUT_H

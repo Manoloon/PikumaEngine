@@ -2,24 +2,24 @@
 // Created by Manoloon on 09/07/2022.
 //
 
-#ifndef PIKUMAENGINE_ANIMATIONSYSTEM_H
-#define PIKUMAENGINE_ANIMATIONSYSTEM_H
+#ifndef PIKUMAENGINE_SANIMATION_H
+#define PIKUMAENGINE_SANIMATION_H
 #include "../ECS/ECS.h"
 #include "../Components/Components.h"
-class AnimationSystem: public System
+class SAnimation: public System
 {
 public:
-    AnimationSystem()
+    SAnimation()
     {
-        RequireComponent<SpriteComp>();
-        RequireComponent<AnimationComp>();
+        RequireComponent<CSprite>();
+        RequireComponent<CAnimation>();
     }
     void Update()
     {
         for(auto entity : GetSystemEntities())
         {
-            auto& animation = entity.GetComponent<AnimationComp>();
-            auto& sprite = entity.GetComponent<SpriteComp>();
+            auto& animation = entity.GetComponent<CAnimation>();
+            auto& sprite = entity.GetComponent<CSprite>();
 
             animation.currentFrame++;
             int frame = (animation.currentFrame / animation.frameRateSpeed) % animation.numFrames;
@@ -28,4 +28,4 @@ public:
         }
     }
 };
-#endif //PIKUMAENGINE_ANIMATIONSYSTEM_H
+#endif //PIKUMAENGINE_SANIMATION_H

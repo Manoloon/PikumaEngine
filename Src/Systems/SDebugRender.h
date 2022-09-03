@@ -2,26 +2,26 @@
 // Created by Manoloon on 24/07/2022.
 //
 
-#ifndef PIKUMAENGINE_DEBUGRENDERSYSTEM_H
-#define PIKUMAENGINE_DEBUGRENDERSYSTEM_H
+#ifndef PIKUMAENGINE_SDEBUGRENDER_H
+#define PIKUMAENGINE_SDEBUGRENDER_H
 
 #include "../ECS/ECS.h"
 
-class DebugRenderSystem : public System
+class SDebugRender : public System
 {
 public:
-    DebugRenderSystem()
+    SDebugRender()
     {
-        RequireComponent<TransformComp>();
-        RequireComponent<BoxCollisionComp>();
+        RequireComponent<CTransform>();
+        RequireComponent<CBoxCollision>();
     }
 
     void Update(sf::RenderWindow &window,sf::RectangleShape& camera,
                                     sf::Color color = sf::Color::Green) const
     {
         for (auto entity: GetSystemEntities()) {
-            const auto &transform = entity.GetComponent<TransformComp>();
-            const auto &collider = entity.GetComponent<BoxCollisionComp>();
+            const auto &transform = entity.GetComponent<CTransform>();
+            const auto &collider = entity.GetComponent<CBoxCollision>();
             sf::RectangleShape body;
             float LocalWidth = collider.size.x * transform.scale.x;
             float LocalHeight = collider.size.y * transform.scale.y;
@@ -34,4 +34,4 @@ public:
         }
     }
 };
-#endif //PIKUMAENGINE_DEBUGRENDERSYSTEM_H
+#endif //PIKUMAENGINE_SDEBUGRENDER_H

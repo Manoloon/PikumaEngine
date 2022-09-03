@@ -2,14 +2,14 @@
 // Created by Manoloon on 23/07/2022.
 //
 
-#ifndef PIKUMAENGINE_COLLISIONSYSTEM_H
-#define PIKUMAENGINE_COLLISIONSYSTEM_H
+#ifndef PIKUMAENGINE_SCOLLISION_H
+#define PIKUMAENGINE_SCOLLISION_H
 
 #include "../ECS/ECS.h"
 #include "../Components/Components.h"
 #include "../Events/CollisionEvent.h"
 
-class CollisionSystem: public System
+class SCollision: public System
 {
 [[nodiscard]] bool CheckAABBCollision(const sf::Vector2f& aPosition,
                                       const sf::Vector2f& aCollisionScale,
@@ -27,26 +27,29 @@ class CollisionSystem: public System
 }
     sf::Color HitColor = sf::Color::Green;
 public:
-    CollisionSystem()
+    SCollision()
     {
-        RequireComponent<TransformComp>();
-        RequireComponent<BoxCollisionComp>();
+        RequireComponent<CTransform>();
+        RequireComponent<CBoxCollision>();
     }
     [[nodiscard]] sf::Color GetHitColor()const{return HitColor;}
-
+    /**
+    * \param DeltaTime Delta Time in Milliseconds.
+    * \param eventBus eventBus pointer
+    */
     void Update([[maybe_unused]] float DeltaTime,std::unique_ptr<EventBus>& eventBus)
     {
       auto entities = GetSystemEntities();
       for(auto i = entities.begin(); i != entities.end(); i++)
       {
           auto entityA = *i;
-          const auto& aTransform = entityA.GetComponent<TransformComp>();
-          const auto& aCollision = entityA.GetComponent<BoxCollisionComp>();
+          const auto& aTransform = entityA.GetComponent<CTransform>();
+          const auto& aCollision = entityA.GetComponent<CBoxCollision>();
           for(auto j=i;j!=entities.end();j++)
           {
               auto entityB = *j;
-              const auto& bTransform = entityB.GetComponent<TransformComp>();
-              const auto& bCollision = entityB.GetComponent<BoxCollisionComp>();
+              const auto& bTransform = entityB.GetComponent<CTransform>();
+              const auto& bCollision = entityB.GetComponent<CBoxCollision>();
               if(i == j){ continue;}
               if(CheckAABBCollision(aTransform.position,
                                     aCollision.size,
@@ -64,4 +67,4 @@ public:
       }
     }
 };
-#endif //PIKUMAENGINE_COLLISIONSYSTEM_H
+#endif //PIKUMAENGINE_SCOLLISION_H

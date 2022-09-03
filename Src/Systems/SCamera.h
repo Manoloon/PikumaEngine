@@ -2,19 +2,19 @@
 // Created by Manoloon on 21/08/2022.
 //
 
-#ifndef PIKUMAENGINE_CAMERASYSTEM_H
-#define PIKUMAENGINE_CAMERASYSTEM_H
+#ifndef PIKUMAENGINE_SCAMERA_H
+#define PIKUMAENGINE_SCAMERA_H
 
 #include "../ECS/ECS.h"
 #include "../Game.h"
 
-class CameraSystem : public System
+class SCamera : public System
 {
 public:
-    CameraSystem()
+    SCamera()
     {
-        RequireComponent<CameraFollowComp>();
-        RequireComponent<TransformComp>();
+        RequireComponent<CCameraFollow>();
+        RequireComponent<CTransform>();
 
     }
     void BeginPlay()
@@ -26,7 +26,7 @@ public:
     {
         for(auto entity : GetSystemEntities())
         {
-            auto const& transform = entity.GetComponent<TransformComp>();
+            auto const& transform = entity.GetComponent<CTransform>();
             float locCameraX;
             float locCameraY;
             float locCamPosX=0;
@@ -51,4 +51,4 @@ public:
         }
     }
 };
-#endif //PIKUMAENGINE_CAMERASYSTEM_H
+#endif //PIKUMAENGINE_SCAMERA_H
