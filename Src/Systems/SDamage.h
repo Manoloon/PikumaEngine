@@ -25,9 +25,9 @@ public:
 
     void onCollision(CollisionEvent& event)
     {
-        Logger::Warning("The damage system receive events entity" +
+      /*  Logger::Warning("The damage system receive events entity" +
                 std::to_string(event.entityA.GetId()) + "and entity" +
-                std::to_string(event.entityB.GetId()));
+                std::to_string(event.entityB.GetId()));*/
        // event.entityA.Destroy();
        // event.entityB.Destroy();
     }

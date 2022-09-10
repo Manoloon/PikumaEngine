@@ -141,10 +141,9 @@ struct CShootEmitter
     int damagePercentage;
     bool bIsFriendly;
     int lastEmissionTime;
-
     explicit CShootEmitter(sf::Vector2f Velocity = {0, 0}, int LoopFrequency = 1, int LifeSpan = 3,
                            int DamagePercent = 40, bool IsFriendly = false,
-                           int LastEmissionTime = 0.0) :
+                           int LastEmissionTime = 0) :
             velocity(Velocity), loopFrequency(LoopFrequency), lifeSpan(LifeSpan),
             damagePercentage(DamagePercent), bIsFriendly(IsFriendly),
             lastEmissionTime(LastEmissionTime)

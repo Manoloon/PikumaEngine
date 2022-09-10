@@ -16,18 +16,20 @@ public:
         RequireComponent<CShootEmitter>();
         RequireComponent<CTransform>();
     }
-    void Update(float DeltaTime,std::unique_ptr<Registry>& Registry)
+    void Update(int DeltaTime,std::unique_ptr<Registry>& Registry)
     {
         for(auto entity : GetSystemEntities())
         {
             auto& shootEmitter = entity.GetComponent<CShootEmitter>();
             const auto& transform = entity.GetComponent<CTransform>();
-            if((DeltaTime - shootEmitter.lastEmissionTime) > shootEmitter.loopFrequency)
+            shootEmitter.lastEmissionTime +=DeltaTime;
+            // timer execute
+            if( shootEmitter.lastEmissionTime > shootEmitter.loopFrequency)
             {
                 auto projectilePosition = transform.position;
                 if(entity.HasComponent<CSprite>())
                 {
-                    const auto Sprite = entity.GetComponent<CSprite>();
+                    const auto& Sprite = entity.GetComponent<CSprite>();
                     projectilePosition.x += (transform.scale.x * Sprite.spriteRect.width/2);
                     projectilePosition.y += (transform.scale.y * Sprite.spriteRect.height/2);
                 }
@@ -39,8 +41,7 @@ public:
                 projectile.AddComponent<CSprite>("bullet-image",sf::Vector2f(4.f, 4.f),
                                                  ERenderLayers::LAYER_PROJECTILE);
                 projectile.AddComponent<CBoxCollision>(sf::Vector2f(4.f, 4.f));
-
-                shootEmitter.lastEmissionTime = DeltaTime;
+                shootEmitter.lastEmissionTime = 0;
             }
         }
     }

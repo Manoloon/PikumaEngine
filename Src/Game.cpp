@@ -99,19 +99,18 @@ void Game::LoadLevel(int) const
         mapHeight = mapNumRows * tileSize * tileScale;
     }
 
-    //////////////////////
     Entity Tank = registry->CreateEntity();
     Tank.AddComponent<CTransform>(sf::Vector2f(10, 50), sf::Vector2f(2.0, 2.0), 0.0);
     Tank.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     Tank.AddComponent<CBoxCollision>(sf::Vector2f(64.f, 64.f));
-    Tank.AddComponent<CShootEmitter>(sf::Vector2f(50,10),1,40,false);
+    Tank.AddComponent<CShootEmitter>(sf::Vector2f(50,10),2000,2000,false);
     Tank.AddComponent<CSprite>("tank-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_ENEMIES);
 
     Entity Truck = registry->CreateEntity();
     Truck.AddComponent<CTransform>(sf::Vector2f(200, 50), sf::Vector2f(1.0, 1.0), 0.0);
     Truck.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     Truck.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
-    Truck.AddComponent<CShootEmitter>(sf::Vector2f(40,0),2,40,false);
+    Truck.AddComponent<CShootEmitter>(sf::Vector2f(40,0),5000,1000,false);
     Truck.AddComponent<CSprite>("truck-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_ENEMIES);
 
     Entity Player = registry->CreateEntity();
@@ -178,6 +177,7 @@ void Game::Update()
         registry->GetSystem<SCollision>().Update(timeSinceLastTick.asSeconds(), eventBus);
         registry->GetSystem<SProjectileEmitter>().Update(timeSinceLastTick.asMilliseconds(),registry);
         timeSinceLastTick -= DeltaTime;
+
     }
 }
 void Game::Draw()
