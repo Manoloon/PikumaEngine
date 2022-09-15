@@ -120,6 +120,7 @@ void Game::LoadLevel(int) const
     Player.AddComponent<CAnimation>(2, 6);
     Player.AddComponent<CHealth>(100);
     Player.AddComponent<CCameraFollow>();
+    Player.AddComponent<CShootEmitter>(sf::Vector2f(150,150),0,1000,true,0);
     Player.AddComponent<CKeyboardControlled>(sf::Vector2f(0, -playerVelocity),
                                              sf::Vector2f(playerVelocity,0),
                                              sf::Vector2f(0,playerVelocity),
@@ -168,6 +169,7 @@ void Game::Update()
         // the subscribing would be frame by frame
         registry->GetSystem<SDamage>().SubscribeToEvents(eventBus);
         registry->GetSystem<SInput>().SubscribeToEvents(eventBus);
+        registry->GetSystem<SProjectileEmitter>().SubscribeToEvent(eventBus);
 
         //run this at the end of the frame.
         registry->Update();
@@ -209,6 +211,7 @@ void Game::Inputs()
         {
             EndPlay();
         }
+
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::F))
         {
             window.create(sf::VideoMode::getDesktopMode(), "", sf::Style::Fullscreen);
@@ -225,23 +228,7 @@ void Game::Inputs()
             (frameRate>10)?frameRate-=5 : frameRate=5;
             window.setFramerateLimit(frameRate);
         }
-       // eventBus->EmitEvent<KeyPressedEvent>(sf::Keyboard::isKeyPressed(sf::key))
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-        {
-            eventBus->EmitEvent<KeyPressedEvent>(sf::Keyboard::W);
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-        {
-            eventBus->EmitEvent<KeyPressedEvent>(sf::Keyboard::S);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-        {
-            eventBus->EmitEvent<KeyPressedEvent>(sf::Keyboard::D);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-        {
-            eventBus->EmitEvent<KeyPressedEvent>(sf::Keyboard::A);
-        }
+        eventBus->EmitEvent<KeyPressedEvent>(event.key.code);
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
         {
             bDebug = true;
