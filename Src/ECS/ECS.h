@@ -49,12 +49,18 @@ public:
     Entity(const Entity& entity)=default;
     explicit Entity(int newId,class Registry* registry= nullptr) : id(newId),registry(registry){}
     void Destroy();
-    int GetId() const;
+    [[nodiscard]] int GetId() const;
     Entity& operator = (const Entity& other) = default;
     bool operator == (const Entity& other) const {return id == other.GetId();}
     bool operator != (const Entity& other) const {return id != other.GetId();}
     bool operator >(const Entity& other) const { return id > other.id; }
     bool operator <(const Entity& other) const { return id < other.id; }
+
+    // Tag system
+    void Tag(std::string_view tag);
+    bool HasTag(std::string_view tag) const;
+    void Group(std::string_view group);
+    bool BelongToGroup(std::string_view group)const;
 
     template<typename TComponent,typename  ...TArgs>
         void AddComponent(TArgs&& ...args);
@@ -141,15 +147,31 @@ class Registry
     std::set<Entity> entitiesToDestroy;
     std::unordered_map<std::type_index,std::shared_ptr<System>> Systems;
     std::deque<int> freeEntityIds;
-public:
-    //TODO : delete this lines
-    Registry() {Logger::Warning("Registry constructor called");}
-    ~Registry() {Logger::Warning("Registry destructor called");}
 
+    std::unordered_map<std::string_view, Entity> entityPerTag;
+    std::unordered_map<int,std::string_view> tagPerEntity;
+
+    std::unordered_map<std::string_view, std::set<Entity>> entitiesPerGroup;
+    std::unordered_map<int,std::string_view> groupPerEntity;
+
+public:
     Entity CreateEntity();
     void DestroyEntity(Entity entity);
     void AddEntityToSystem(Entity entity);
     void RemoveEntityFromSystems(Entity entity) const;
+
+    // tag management
+    void TagEntity(Entity entity, std::string_view tag);
+    bool EntityHasTag(Entity entity, std::string_view tag) const;
+    Entity GetEntityByTag(std::string_view tag) const;
+    void RemoveEntityTag(Entity entity);
+
+    // group management
+    void GroupEntity(Entity entity,std::string_view group);
+    bool EntityBelongToGroup(Entity entity,std::string_view group) const;
+    std::vector<Entity> GetEntitiesByGroup(std::string_view group) const;
+    void RemoveEntityGroup(Entity entity);
+
     void Update();
 
     template <typename TComponent,typename ...TArgs>
