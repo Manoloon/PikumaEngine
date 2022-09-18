@@ -78,7 +78,7 @@ void Registry::GroupEntity(Entity entity, std::string_view group)
 bool Registry::EntityBelongToGroup(Entity entity, std::string_view group) const
 {
     auto groupEntities = entitiesPerGroup.at(group);
-    return groupEntities.find(entity.GetId()) != groupEntities.end();
+    return groupEntities.find(entity) != groupEntities.end();
 }
 
 std::vector<Entity> Registry::GetEntitiesByGroup(std::string_view group) const

@@ -71,6 +71,10 @@ public:
             auto& shootEmitter = entity.GetComponent<CShootEmitter>();
             const auto& transform = entity.GetComponent<CTransform>();
             shootEmitter.lastEmissionTime +=DeltaTime;
+            if(shootEmitter.loopFrequency == 0)
+            {
+                continue;
+            }
             // timer execute
             if( shootEmitter.lastEmissionTime > shootEmitter.loopFrequency)
             {
