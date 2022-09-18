@@ -49,7 +49,6 @@ public:
                             rigidBodyComp.velocity = keyboardComp.leftVelocity;
                             spriteComp.spriteRect.top = spriteComp.spriteRect.height *3;
                             break;
-
                     }
                 }
             }

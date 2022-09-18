@@ -84,7 +84,7 @@ bool Registry::EntityBelongToGroup(Entity entity, std::string_view group) const
 std::vector<Entity> Registry::GetEntitiesByGroup(std::string_view group) const
 {
     auto &setOfEntities = entitiesPerGroup.at(group);
-    return std::vector<Entity>(setOfEntities.begin(),setOfEntities.end());
+    return {setOfEntities.begin(),setOfEntities.end()};
 }
 
 void Registry::RemoveEntityGroup(Entity entity)

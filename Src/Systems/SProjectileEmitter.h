@@ -7,7 +7,7 @@
 
 #include "../ECS/ECS.h"
 #include "../Components/Components.h"
-#include "../Events/ShootEvent.h"
+#include "../Events/KeyPressedEvent.h"
 
 class SProjectileEmitter : public System
 {
@@ -20,14 +20,14 @@ public:
 
     void SubscribeToEvent(std::unique_ptr<EventBus>& eventBus)
     {
-        eventBus->SubscribeToEvent<ShootEvent>(this, &SProjectileEmitter::onKeyPressed);
+        eventBus->SubscribeToEvent<KeyPressedEvent>(this, &SProjectileEmitter::onKeyPressed);
     }
 
-    void onKeyPressed(ShootEvent& event)
+    void onKeyPressed(KeyPressedEvent& event)
     {
         Logger::Warning("Shoot");
 
-        if(event.keyCode == sf::Keyboard::Space)
+        if(event.keySymbol == sf::Keyboard::Space)
         {
             for(auto entity : GetSystemEntities())
             {
@@ -45,14 +45,29 @@ public:
                     }
                     // set projectileVelocity due to direction of player
                     sf::Vector2f projectileVelocity = shootEmitter.velocity;
-                    int dirX=0;
+                    int dirX = 0;
                     int dirY = 0;
-                    rigidBody.velocity.x >= 0 ? dirX =1 : dirX =-1;
-                    rigidBody.velocity.y >= 0 ? dirY = 1 : dirY =-1;
+                    if(rigidBody.velocity.x !=0)
+                    {
+                        rigidBody.velocity.x > 0 ? dirX =1 : dirX =-1;
+                    }
+                    else
+                    {
+                        dirX = 0;
+                    }
+                    if(rigidBody.velocity.y != 0)
+                    {
+                        rigidBody.velocity.y > 0 ? dirY = 1 : dirY =-1;
+                    }
+                    else
+                    {
+                        dirY = 0;
+                    }
                     projectileVelocity.x = shootEmitter.velocity.x * dirX;
                     projectileVelocity.y = shootEmitter.velocity.y * dirY;
                   //create projectile
                     Entity projectile = entity.registry->CreateEntity();
+                    projectile.Tag("projectile");
                     projectile.AddComponent<CTransform>(projectilePosition,transform.scale,transform
                             .rotation);
                     projectile.AddComponent<CRigidBody>(projectileVelocity);
@@ -86,6 +101,7 @@ public:
                     projectilePosition.y += (transform.scale.y * Sprite.spriteRect.height/2);
                 }
                 Entity projectile = Registry->CreateEntity();
+                projectile.Tag("projectile");
                 projectile.AddComponent<CTransform>(projectilePosition,transform.scale,transform
                 .rotation);
                 projectile.AddComponent<CRigidBody>(shootEmitter.velocity);

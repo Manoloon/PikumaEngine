@@ -84,6 +84,7 @@ void Game::LoadLevel(int) const
                 mapFile.ignore();
 
                 Entity tile = registry->CreateEntity();
+                tile.Group("tiles");
                 tile.AddComponent<CTransform>(sf::Vector2f(x * (tileScale * tileSize),
                                                               y * (tileScale * tileSize)),
                                               sf::Vector2f(tileScale,tileScale),
@@ -100,20 +101,23 @@ void Game::LoadLevel(int) const
     }
 
     Entity Tank = registry->CreateEntity();
+    Tank.Group("Enemies");
     Tank.AddComponent<CTransform>(sf::Vector2f(10, 50), sf::Vector2f(2.0, 2.0), 0.0);
     Tank.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
-    Tank.AddComponent<CBoxCollision>(sf::Vector2f(64.f, 64.f));
     Tank.AddComponent<CShootEmitter>(sf::Vector2f(50,10),2000,2000,false);
     Tank.AddComponent<CSprite>("tank-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_ENEMIES);
+    Tank.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
     Entity Truck = registry->CreateEntity();
+    Truck.Group("Enemies");
     Truck.AddComponent<CTransform>(sf::Vector2f(200, 50), sf::Vector2f(1.0, 1.0), 0.0);
     Truck.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
-    Truck.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
     Truck.AddComponent<CShootEmitter>(sf::Vector2f(40,0),5000,1000,false);
     Truck.AddComponent<CSprite>("truck-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_ENEMIES);
+    Truck.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
     Entity Player = registry->CreateEntity();
+    Player.Tag("Player");
     Player.AddComponent<CTransform>(sf::Vector2f(50, 50), sf::Vector2f(4.0, 4.0), 0.0);
     Player.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     Player.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_PLAYER);
@@ -127,12 +131,14 @@ void Game::LoadLevel(int) const
                                              sf::Vector2f(-playerVelocity,0));
 
     Entity chop2 = registry->CreateEntity();
+    chop2.Group("Enemies");
     chop2.AddComponent<CTransform>(sf::Vector2f(150, 150), sf::Vector2f(2.0, 2.0), 0.0);
     chop2.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     chop2.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_PLAYER);
     chop2.AddComponent<CAnimation>(2, 12);
 
     Entity chop1 = registry->CreateEntity();
+    chop1.Group("Enemies");
     chop1.AddComponent<CTransform>(sf::Vector2f(250, 250), sf::Vector2f(1.0, 1.0), 0.0);
     chop1.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     chop1.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_PLAYER);
@@ -179,7 +185,6 @@ void Game::Update()
         registry->GetSystem<SCollision>().Update(timeSinceLastTick.asSeconds(), eventBus);
         registry->GetSystem<SProjectileEmitter>().Update(timeSinceLastTick.asMilliseconds(),registry);
         timeSinceLastTick -= DeltaTime;
-
     }
 }
 void Game::Draw()
@@ -228,6 +233,7 @@ void Game::Inputs()
             (frameRate>10)?frameRate-=5 : frameRate=5;
             window.setFramerateLimit(frameRate);
         }
+
         eventBus->EmitEvent<KeyPressedEvent>(event.key.code);
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
         {

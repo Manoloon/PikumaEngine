@@ -27,7 +27,6 @@ class Game
     std::unique_ptr<EventBus> eventBus;
     bool isRunning =false;
     bool bDebug= false;
-
     sf::RectangleShape cameraActor;
 
 public:

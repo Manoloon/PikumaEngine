@@ -11,7 +11,7 @@ class KeyPressedEvent : public Event
         {
 public:
     sf::Keyboard::Key keySymbol;
-    explicit KeyPressedEvent(sf::Keyboard::Key  keySymbol)
+    explicit KeyPressedEvent(sf::Keyboard::Key keySymbol)
                             : keySymbol(keySymbol){}
         };
 #endif //PIKUMAENGINE_KEYPRESSEDEVENT_H
