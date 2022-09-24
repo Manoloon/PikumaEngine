@@ -16,8 +16,7 @@
 #include "../Components/Components.h"
 
 const unsigned int MAX_COMPONENTS =32;
-typedef std::bitset<MAX_COMPONENTS> Signature;
-
+using Signature  = std::bitset<MAX_COMPONENTS>;
 //interface for components
 struct IComponent
 {
@@ -33,7 +32,7 @@ class Component : public IComponent
 public:
     static int GetId()
     {
-        static auto id = nextId++;
+        static int id = nextId++;
         return id;
     }
 };
@@ -44,8 +43,10 @@ public:
 ////////////////////////////////////////////////////////////////////////////////
 class Entity
 {
-    int id;
 public:
+    int id;
+    class Registry* registry;
+
     Entity(const Entity& entity)=default;
     explicit Entity(int newId,class Registry* registry= nullptr) : id(newId),registry(registry){}
     void Destroy();
@@ -70,8 +71,6 @@ public:
         bool HasComponent() const ;
     template<typename TComponent>
         TComponent& GetComponent() const;
-
-    class Registry* registry;
 };
 ////////////////////////////////////////////////////////////////////////////////
 // System
@@ -111,8 +110,6 @@ private:
 public:
     explicit Pool(int size = 100)
     { data.resize(size); }
-
-    virtual ~Pool() = default;
 
     bool IsEmpty() const { return data.empty(); }
 
