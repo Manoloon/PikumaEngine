@@ -48,12 +48,12 @@ void Game::LoadLevel(int) const
     registry->AddSystem<SCamera>();
     registry->AddSystem<SProjectileEmitter>();
 
-    assetStore->AddTexture("tank-image","./assets/images/tank-panther-right.png");
-    assetStore->AddTexture("truck-image","./assets/images/truck-ford-right.png");
-    assetStore->AddTexture("player-image","./assets/images/chopper-spritesheet.png");
+    assetStore->AddTexture("tank-image","../assets/images/tank-panther-right.png");
+    assetStore->AddTexture("truck-image","../assets/images/truck-ford-right.png");
+    assetStore->AddTexture("player-image","../assets/images/chopper-spritesheet.png");
     assetStore->AddTexture("radar-image","../assets/images/radar.png");
-    assetStore->AddTexture("tilemap-image","./assets/tilemaps/jungle.png");
-    assetStore->AddTexture("bullet-image","./assets/images/bullet.png");
+    assetStore->AddTexture("tilemap-image","../assets/tilemaps/jungle.png");
+    assetStore->AddTexture("bullet-image","../assets/images/bullet.png");
     // load tilemap
     // load the tilemap map from ./assets/tilemaps/jungle.map
     // could I use rect as the switcher for every tile

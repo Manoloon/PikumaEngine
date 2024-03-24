@@ -1,14 +1,20 @@
-cmake_minimum_required(VERSION 3.22)
-project(PikumaEngine)
+cmake_minimum_required(VERSION 3.25.0)
+project(PikumaEngine VERSION 0.1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 SET(SFML_STATIC_LIBRARIES TRUE)
-add_executable(PikumaEngine main.cpp Src/Game.cpp Src/Game.h Src/Logger.h Src/Systems/SMovement.h
-        Src/ECS/ECS.h Src/ECS/ECS.cpp Src/Components/Components.h Src/Systems/SRender.h
-                                                        Src/ECS/AssetStore.cpp Src/ECS/AssetStore.h Src/Enums/ERenderLayers.h Src/Systems/SAnimation.h Src/Systems/SCollision.h Src/Systems/SDebugRender.h Src/ECS/EventBus.h Src/Events/CollisionEvent.h Src/Events/Event.h Src/Systems/SDamage.h Src/Systems/SInput.h Src/Events/KeyPressedEvent.h Src/Systems/SCamera.h Src/Systems/SProjectileEmitter.h Src/Events/ShootEvent.h)
-include_directories (Includes/)
-#Lua
-find_library(LUA lua53 libraries)
+include_directories(${CMAKE_SOURCE_DIR}/Includes)
+
+add_executable(PikumaEngine main.cpp)
+# Add all source files from the 'Src' directory
+file(GLOB_RECURSE SRC_FILES "Src/*.cpp")
+target_sources(PikumaEngine PRIVATE ${SRC_FILES})
+
 #SFML
-find_package(SFML COMPONENTS system window graphics audio)
-target_link_libraries(PikumaEngine sfml-graphics sfml-window sfml-system sfml-audio ${LUA})
-#ImGui-SFML::ImGui-SFML
+find_package(SFML COMPONENTS system window graphics audio REQUIRED)
+target_link_libraries(PikumaEngine PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
+
+# Find and link Lua library
+find_library(LUA lua53 REQUIRED)
+target_link_libraries(PikumaEngine PRIVATE ${LUA})
