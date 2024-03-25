@@ -3,8 +3,8 @@
 //
 #include <fstream>
 
-#include <imgui/imgui-SFML.h>
-#include <imgui/imgui.h>
+#include "imgui-SFML.h"
+#include "imgui.h"
 
 #include "Game.h"
 #include "ECS/ECS.h"

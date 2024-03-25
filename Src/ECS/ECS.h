@@ -48,7 +48,7 @@ public:
     class Registry* registry;
 
     Entity(const Entity& entity)=default;
-    explicit Entity(int newId,class Registry* registry= nullptr) : id(newId),registry(registry){}
+    explicit Entity(int newId,class Registry* newRegistry= nullptr) : id(newId),registry(newRegistry){}
     void Destroy();
     [[nodiscard]] int GetId() const;
     Entity& operator = (const Entity& other) = default;
