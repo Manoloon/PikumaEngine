@@ -18,15 +18,6 @@ add_executable(PikumaEngine main.cpp
     Src/ECS/AssetStore.cpp
     Src/ECS/ECS.cpp
     )
-
-# Add all source files from the 'Src' directory
-file(GLOB_RECURSE SRC_FILES "Src/*.cpp")
-target_sources(PikumaEngine PRIVATE ${SRC_FILES})
-
-include_directories(${IMGUI_DIR})
 target_link_libraries(PikumaEngine PRIVATE ImGui-SFML)
-
-#SFML
-# find_package(SFML COMPONENTS system window graphics audio REQUIRED)
 target_link_libraries(PikumaEngine PRIVATE sfml-graphics sfml-window sfml-system sfml-audio ImGui-SFML::ImGui-SFML)
 
