@@ -2,6 +2,10 @@
 // Created by Manoloon on 13/05/2022.
 //
 #include <fstream>
+
+#include <imgui/imgui-SFML.h>
+#include <imgui/imgui.h>
+
 #include "Game.h"
 #include "ECS/ECS.h"
 #include "ECS/AssetStore.h"
@@ -22,7 +26,7 @@ Game::Game()
 {
      registry = std::make_unique<Registry>();
      assetStore = std::make_unique<AssetStore>();
-     eventBus = std::make_unique<EventBus>();
+     eventBus = std::make_unique<EventBus>();     
 }
 
 void Game::Run()
@@ -163,6 +167,11 @@ void Game::BeginPlay()
     LoadLevel(1);
     cameraActor.setPosition(0,0);
     cameraActor.setScale(window.getSize().x,window.getSize().y);
+    //imgui
+    if (!ImGui::SFML::Init(window)) {
+        // Handle initialization failure
+        return; // Or any other appropriate action
+    }
 }
 
 void Game::Update()
@@ -196,12 +205,16 @@ void Game::Draw()
         registry->GetSystem<SDebugRender>().
                 Update(window,cameraActor,registry->GetSystem<SCollision>().GetHitColor());
     }
+    ImGui::SFML::Update(window,DeltaTime);
+    ImGui::ShowDemoWindow();
+    ImGui::SFML::Render(window);
     window.display();
 }
 
 void Game::EndPlay()
 {
     isRunning = false;
+    ImGui::SFML::Shutdown();
     window.close();
 }
 
