@@ -1,9 +1,7 @@
 //
 // Created by Manoloon on 22/06/2022.
 //
-
-#ifndef PIKUMAENGINE_SRENDER_H
-#define PIKUMAENGINE_SRENDER_H
+#pragma once
 
 #include "../ECS/ECS.h"
 #include "../Components/Components.h"
@@ -62,4 +60,3 @@ public:
         window.draw(spr)
     }*/
 };
-#endif //PIKUMAENGINE_SRENDER_H

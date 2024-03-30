@@ -14,10 +14,11 @@
 #include "Systems/SAnimation.h"
 #include "Systems/SCollision.h"
 #include "Systems/SInput.h"
-#include "Systems/SDebugRender.h"
+#include "Systems/SRenderDebugGUI.h"
 #include "Systems/SDamage.h"
 #include "Systems/SCamera.h"
 #include "Systems/SProjectileEmitter.h"
+#include "Systems/SDebugRender.h"
 
 float Game::mapWidth;
 float Game::mapHeight;
@@ -51,6 +52,7 @@ void Game::LoadLevel(int) const
     registry->AddSystem<SInput>();
     registry->AddSystem<SCamera>();
     registry->AddSystem<SProjectileEmitter>();
+    registry->AddSystem<SRenderDebugGUI>();
 
     assetStore->AddTexture("tank-image","../assets/images/tank-panther-right.png");
     assetStore->AddTexture("truck-image","../assets/images/truck-ford-right.png");
@@ -204,10 +206,8 @@ void Game::Draw()
     {
         registry->GetSystem<SDebugRender>().
                 Update(window,cameraActor,registry->GetSystem<SCollision>().GetHitColor());
+        registry->GetSystem<SRenderDebugGUI>().Update(window,DeltaTime);
     }
-    ImGui::SFML::Update(window,DeltaTime);
-    ImGui::ShowDemoWindow();
-    ImGui::SFML::Render(window);
     window.display();
 }
 

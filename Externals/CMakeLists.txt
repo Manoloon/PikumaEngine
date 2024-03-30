@@ -23,18 +23,18 @@ FetchContent_Declare(ImGui-SFML
     GIT_PROGRESS TRUE)
 FetchContent_MakeAvailable(ImGui-SFML)
 
-FetchContent_Declare(ImPlot
-    GIT_REPOSITORY https://github.com/epezent/implot
-    GIT_TAG v0.16
-    GIT_PROGRESS TRUE)
-FetchContent_MakeAvailable(ImPlot)
+# FetchContent_Declare(ImPlot
+#     GIT_REPOSITORY https://github.com/epezent/implot
+#     GIT_TAG v0.16
+#     GIT_PROGRESS TRUE)
+# FetchContent_MakeAvailable(ImPlot)
 
-add_library(ImPlot
-    "${implot_SOURCE_DIR}/implot.cpp"
-    "${implot_SOURCE_DIR}/implot_items.cpp"
-    "${imgui_SOURCE_DIR}/imgui.cpp"
-    "${imgui_SOURCE_DIR}/imgui_draw.cpp"
-    "${imgui_SOURCE_DIR}/imgui_tables.cpp"
-    "${imgui_SOURCE_DIR}/imgui_widgets.cpp")
-add_library(ImPlot::ImPlot ALIAS ImPlot)
-target_include_directories(ImPlot PUBLIC "${implot_SOURCE_DIR}" "${imgui_SOURCE_DIR}")
+# add_library(ImPlot
+#     "${implot_SOURCE_DIR}/implot.cpp"
+#     "${implot_SOURCE_DIR}/implot_items.cpp"
+#     "${imgui_SOURCE_DIR}/imgui.cpp"
+#     "${imgui_SOURCE_DIR}/imgui_draw.cpp"
+#     "${imgui_SOURCE_DIR}/imgui_tables.cpp"
+#     "${imgui_SOURCE_DIR}/imgui_widgets.cpp")
+# add_library(ImPlot::ImPlot ALIAS ImPlot)
+# target_include_directories(ImPlot PUBLIC "${implot_SOURCE_DIR}" "${imgui_SOURCE_DIR}")
