@@ -16,6 +16,7 @@ class SRenderDebugGUI : public System
             static float NewRotation;
             static float NewXSpeed;
             static float NewYSpeed;
+
             if(ImGui::Begin("Create Enemies"))
             {
                 ImGui::Text("new enemy");

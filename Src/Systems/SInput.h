@@ -1,9 +1,7 @@
 //
 // Created by Manoloon on 31/07/2022.
 //
-
-#ifndef PIKUMAENGINE_SINPUT_H
-#define PIKUMAENGINE_SINPUT_H
+#pragma once
 
 #include "../ECS/ECS.h"
 #include "../ECS/EventBus.h"
@@ -31,26 +29,29 @@ public:
                     auto& rigidBodyComp = entity.GetComponent<CRigidBody>();
 
                     // multiply the height (32 px) times 0,1,2,3
-                    switch(event.keySymbol)
+                    if(event.keySymbol == sf::Keyboard::Key::W)
                     {
-                        case sf::Keyboard::Key::W:
-                            rigidBodyComp.velocity = keyboardComp.upVelocity;
-                            spriteComp.spriteRect.top = spriteComp.spriteRect.height *0;
-                            break;
-                        case sf::Keyboard::Key::D:
-                            rigidBodyComp.velocity = keyboardComp.rightVelocity;
-                            spriteComp.spriteRect.top = spriteComp.spriteRect.height *1;
-                            break;
-                        case sf::Keyboard::Key::S:
-                            rigidBodyComp.velocity = keyboardComp.downVelocity;
-                            spriteComp.spriteRect.top = spriteComp.spriteRect.height *2;
-                            break;
-                        case sf::Keyboard::Key::A:
-                            rigidBodyComp.velocity = keyboardComp.leftVelocity;
-                            spriteComp.spriteRect.top = spriteComp.spriteRect.height *3;
-                            break;
+                        rigidBodyComp.velocity += keyboardComp.upVelocity;
+                        spriteComp.spriteRect.top = spriteComp.spriteRect.height *0;
+                    }
+                    
+                    if(event.keySymbol == sf::Keyboard::Key::S)
+                    {
+                        rigidBodyComp.velocity += keyboardComp.downVelocity;
+                        spriteComp.spriteRect.top = spriteComp.spriteRect.height *2;
+                    }
+
+                    if(event.keySymbol == sf::Keyboard::Key::A)
+                    {
+                        rigidBodyComp.velocity += keyboardComp.leftVelocity;
+                        spriteComp.spriteRect.top = spriteComp.spriteRect.height *3;
+                    }
+
+                    if(event.keySymbol == sf::Keyboard::Key::D)
+                    {
+                        rigidBodyComp.velocity += keyboardComp.rightVelocity;
+                        spriteComp.spriteRect.top = spriteComp.spriteRect.height *1;
                     }
                 }
             }
         };
-#endif //PIKUMAENGINE_SINPUT_H

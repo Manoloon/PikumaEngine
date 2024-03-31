@@ -1,9 +1,8 @@
 //
 // Created by Manoloon on 13/05/2022.
 //
+#pragma once 
 
-#ifndef PIKUMAENGINE_GAME_H
-#define PIKUMAENGINE_GAME_H
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "ECS/AssetStore.h"
@@ -20,7 +19,7 @@ class Game
     sf::Time DeltaTime;
     sf::Time timeSinceLastTick;
     sf::Vector2i screenResolution={800,600};
-    float playerVelocity = 60.0;
+    
     int frameRate=60;
     std::unique_ptr<Registry> registry;
     std::unique_ptr<AssetStore> assetStore;
@@ -42,6 +41,3 @@ public:
     static float mapWidth;
     static float mapHeight;
 };
-
-
-#endif //PIKUMAENGINE_GAME_H

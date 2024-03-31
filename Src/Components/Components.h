@@ -1,9 +1,7 @@
 //
 // Created by Manoloon on 12/06/2022.
 //
-
-#ifndef PIKUMAENGINE_COMPONENTS_H
-#define PIKUMAENGINE_COMPONENTS_H
+#pragma once
 
 #include <SFML/Graphics.hpp>
 #include "../Enums/ERenderLayers.h"
@@ -158,4 +156,3 @@ struct CHealth
             int health;
             CHealth(int Health = 100): health(Health){}
         };
-#endif //PIKUMAENGINE_COMPONENTS_H

@@ -1,9 +1,7 @@
 //
 // Created by Manoloon on 26/05/2022.
 //
-
-#ifndef PIKUMAENGINE_ECS_H
-#define PIKUMAENGINE_ECS_H
+#pragma once
 
 #include <bitset>
 #include <vector>
@@ -311,5 +309,3 @@ template<typename TComponent>
 {
     return registry->GetComponent<TComponent>(*this);
 }
-
-#endif //PIKUMAENGINE_ECS_H

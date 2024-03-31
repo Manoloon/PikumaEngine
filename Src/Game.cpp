@@ -7,6 +7,7 @@
 #include "imgui.h"
 
 #include "Game.h"
+#include "GameConstants.h"
 #include "ECS/ECS.h"
 #include "ECS/AssetStore.h"
 #include "Systems/SMovement.h"
@@ -64,10 +65,7 @@ void Game::LoadLevel(int) const
     // load the tilemap map from ./assets/tilemaps/jungle.map
     // could I use rect as the switcher for every tile
     // consider creating an entity per tile
-    float tileSize = 32.f;
-    float tileScale = 1.0;
-    int mapNumCols = 25;
-    int mapNumRows = 20;
+
     //read the file map.
     std::fstream mapFile;
     mapFile.open("../assets/tilemaps/jungle.map");
@@ -78,32 +76,32 @@ void Game::LoadLevel(int) const
     }
     else
     {
-        for(int y=0;y<mapNumRows;y++)
+        for(int y=0;y<MAP_ROWS;y++)
         {
-            for(int x=0;x<mapNumCols;x++)
+            for(int x=0;x<MAP_COLUMNS;x++)
             {
                 char ch[2]={0,0};
                 mapFile.get(ch[0]);
-                int srcRectY=std::atoi(&ch[0]) * (int)tileSize;
+                int srcRectY=std::atoi(&ch[0]) * (int)TILE_SIZE;
                 mapFile.get(ch[0]);
-                int srcRectX=std::atoi(&ch[0]) * (int)tileSize;
+                int srcRectX=std::atoi(&ch[0]) * (int)TILE_SIZE;
                 mapFile.ignore();
 
                 Entity tile = registry->CreateEntity();
                 tile.Group("tiles");
-                tile.AddComponent<CTransform>(sf::Vector2f(x * (tileScale * tileSize),
-                                                              y * (tileScale * tileSize)),
-                                              sf::Vector2f(tileScale,tileScale),
+                tile.AddComponent<CTransform>(sf::Vector2f(x * (TILE_SCALE * TILE_SIZE),
+                                                              y * (TILE_SCALE * TILE_SIZE)),
+                                              sf::Vector2f(TILE_SCALE,TILE_SCALE),
                                               0.0f);
                 tile.AddComponent<CSprite>("tilemap-image",
-                                           sf::Vector2f(tileSize,tileSize),
+                                           sf::Vector2f(TILE_SIZE,TILE_SIZE),
                                            ERenderLayers::LAYER_TILEMAP, false,
                                            sf::Vector2f(srcRectX,srcRectY));
             }
         }
         mapFile.close();
-        mapWidth = mapNumCols * tileSize * tileScale;
-        mapHeight = mapNumRows * tileSize * tileScale;
+        mapWidth = MAP_COLUMNS * TILE_SIZE * TILE_SCALE;
+        mapHeight = MAP_ROWS * TILE_SIZE * TILE_SCALE;
     }
 
     Entity Tank = registry->CreateEntity();
@@ -131,10 +129,10 @@ void Game::LoadLevel(int) const
     Player.AddComponent<CHealth>(100);
     Player.AddComponent<CCameraFollow>();
     Player.AddComponent<CShootEmitter>(sf::Vector2f(150,150),0,1000,true,0);
-    Player.AddComponent<CKeyboardControlled>(sf::Vector2f(0, -playerVelocity),
-                                             sf::Vector2f(playerVelocity,0),
-                                             sf::Vector2f(0,playerVelocity),
-                                             sf::Vector2f(-playerVelocity,0));
+    Player.AddComponent<CKeyboardControlled>(sf::Vector2f(0, -PLAYER_VELOCITY),
+                                             sf::Vector2f(PLAYER_VELOCITY,0),
+                                             sf::Vector2f(0,PLAYER_VELOCITY),
+                                             sf::Vector2f(-PLAYER_VELOCITY,0));
 
     Entity chop2 = registry->CreateEntity();
     chop2.Group("Enemies");
