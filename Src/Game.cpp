@@ -207,7 +207,7 @@ void Game::Draw()
     {
         registry->GetSystem<SDebugRender>().
                 Update(window,cameraActor,registry->GetSystem<SCollision>().GetHitColor());
-        registry->GetSystem<SRenderDebugGUI>().Update(window,DeltaTime,registry);
+        registry->GetSystem<SRenderDebugGUI>().Update(window,DeltaTime,registry,cameraActor);
     }
     window.display();
 }
