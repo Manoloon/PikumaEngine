@@ -31,6 +31,20 @@ public:
                     auto& rigidBodyComp = entity.GetComponent<CRigidBody>();
 
                     // multiply the height (32 px) times 0,1,2,3
+                    //TODO : change this for an if statement
+                    // if(event.keySymbol == sf::Keyboard::Key::W)
+                    // {
+                    //     rigidBodyComp.velocity = keyboardComp.upVelocity;
+                    //     spriteComp.spriteRect.top = spriteComp.spriteRect.height *0;
+                    // }
+                    // else if (event.keySymbol == sf::Keyboard::Key::S)
+                    // {
+                    //     rigidBodyComp.velocity = keyboardComp.downVelocity;
+                    //     spriteComp.spriteRect.top = spriteComp.spriteRect.height *2;
+                    // }
+                    // else
+
+                
                     switch(event.keySymbol)
                     {
                         case sf::Keyboard::Key::W:

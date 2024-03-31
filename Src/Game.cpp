@@ -191,7 +191,7 @@ void Game::Update()
         //run this at the end of the frame.
         registry->Update();
         registry->GetSystem<SMovement>().Update(timeSinceLastTick.asSeconds());
-        registry->GetSystem<SCamera>().Update(timeSinceLastTick.asSeconds(), cameraActor);
+        registry->GetSystem<SCamera>().Update(cameraActor,DeltaTime);
         registry->GetSystem<SAnimation>().Update();
         registry->GetSystem<SCollision>().Update(timeSinceLastTick.asSeconds(), eventBus);
         registry->GetSystem<SProjectileEmitter>().Update(timeSinceLastTick.asMilliseconds(),registry);
@@ -202,11 +202,12 @@ void Game::Draw()
 {
     window.clear(sf::Color(18,33,43));
     registry->GetSystem<SRender>().Update(window, assetStore, cameraActor);
+    
     if(bDebug)
     {
         registry->GetSystem<SDebugRender>().
                 Update(window,cameraActor,registry->GetSystem<SCollision>().GetHitColor());
-        registry->GetSystem<SRenderDebugGUI>().Update(window,DeltaTime);
+        registry->GetSystem<SRenderDebugGUI>().Update(window,DeltaTime,registry);
     }
     window.display();
 }
@@ -222,8 +223,10 @@ void Game::Inputs()
 {
     // Check if the game was closed.
     sf::Event event;
+    
     if (window.pollEvent(event))
     {
+        ImGui::SFML::ProcessEvent(event);
         if ((event.type == sf::Event::Closed) ||
             (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)))
         {
@@ -246,15 +249,10 @@ void Game::Inputs()
             (frameRate>10)?frameRate-=5 : frameRate=5;
             window.setFramerateLimit(frameRate);
         }
-
         eventBus->EmitEvent<KeyPressedEvent>(event.key.code);
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
         {
-            bDebug = true;
-        }
-        else
-        {
-            bDebug= false;
+            bDebug = !bDebug;
         }
     }
 }

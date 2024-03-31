@@ -1,9 +1,7 @@
 //
 // Created by Manoloon on 21/08/2022.
 //
-
-#ifndef PIKUMAENGINE_SCAMERA_H
-#define PIKUMAENGINE_SCAMERA_H
+#pragma once
 
 #include "../ECS/ECS.h"
 #include "../Game.h"
@@ -22,7 +20,7 @@ public:
 
     }
 
-    void Update(float DeltaTime, sf::RectangleShape& Camera)
+    void Update(sf::RectangleShape& Camera, sf::Time DeltaTime)
     {
         for(auto entity : GetSystemEntities())
         {
@@ -51,4 +49,3 @@ public:
         }
     }
 };
-#endif //PIKUMAENGINE_SCAMERA_H
