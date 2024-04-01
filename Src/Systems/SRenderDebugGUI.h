@@ -51,6 +51,8 @@ class SRenderDebugGUI : public System
                         "Map Coordinates (x= %.1f, y= %.1f)",
                         ImGui::GetIO().MousePos.x + cameraActor.getPosition().x,
                         ImGui::GetIO().MousePos.y + cameraActor.getPosition().y);
+                        ImGui::Spacing();
+                        ImGui::Text("FPS > %.1f",CurrentFPS);
             }
             ImGui::End();
             ImGui::SFML::Render(window);

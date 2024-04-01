@@ -7,7 +7,7 @@
 #include "imgui.h"
 
 #include "Game.h"
-#include "GameConstants.h"
+#include "GameGlobals.h"
 #include "ECS/ECS.h"
 #include "ECS/AssetStore.h"
 #include "Systems/SMovement.h"
@@ -167,6 +167,7 @@ void Game::BeginPlay()
     LoadLevel(1);
     cameraActor.setPosition(0,0);
     cameraActor.setScale(window.getSize().x,window.getSize().y);
+    window.setFramerateLimit(frameRate);
     //imgui
     if (!ImGui::SFML::Init(window)) {
         // Handle initialization failure
@@ -176,8 +177,9 @@ void Game::BeginPlay()
 
 void Game::Update()
 {
-   timeSinceLastTick +=gameClock.restart();
-    while (timeSinceLastTick > DeltaTime)
+    sf::Time elapsedTime = gameClock.restart();
+   timeSinceLastTick += elapsedTime;
+    while (timeSinceLastTick >= DeltaTime)
     {
         //housecleaning subscribers
         eventBus->Reset();
@@ -194,7 +196,8 @@ void Game::Update()
         registry->GetSystem<SCollision>().Update(timeSinceLastTick.asSeconds(), eventBus);
         registry->GetSystem<SProjectileEmitter>().Update(timeSinceLastTick.asMilliseconds(),registry);
         timeSinceLastTick -= DeltaTime;
-    }
+    }  
+    CurrentFPS = 1.f / elapsedTime.asSeconds();
 }
 void Game::Draw()
 {
@@ -221,10 +224,11 @@ void Game::Inputs()
 {
     // Check if the game was closed.
     sf::Event event;
-    
+    static bool bPKeyPressed;
     if (window.pollEvent(event))
     {
         ImGui::SFML::ProcessEvent(event);
+        
         if ((event.type == sf::Event::Closed) ||
             (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)))
         {
@@ -247,10 +251,15 @@ void Game::Inputs()
             (frameRate>10)?frameRate-=5 : frameRate=5;
             window.setFramerateLimit(frameRate);
         }
-        eventBus->EmitEvent<KeyPressedEvent>(event.key.code);
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)&& !bPKeyPressed)
         {
             bDebug = !bDebug;
+            bPKeyPressed=true;
         }
+        else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+        {
+            bPKeyPressed = false;
+        }
+        eventBus->EmitEvent<KeyPressedEvent>(event.key.code);
     }
 }

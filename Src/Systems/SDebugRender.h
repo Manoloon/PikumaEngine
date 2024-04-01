@@ -2,8 +2,7 @@
 // Created by Manoloon on 24/07/2022.
 //
 
-#ifndef PIKUMAENGINE_SDEBUGRENDER_H
-#define PIKUMAENGINE_SDEBUGRENDER_H
+#pragma once
 
 #include "../ECS/ECS.h"
 
@@ -34,4 +33,3 @@ public:
         }
     }
 };
-#endif //PIKUMAENGINE_SDEBUGRENDER_H
