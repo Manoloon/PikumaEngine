@@ -2,8 +2,7 @@
 // Created by Manoloon on 28/07/2022.
 //
 
-#ifndef PIKUMAENGINE_COLLISIONEVENT_H
-#define PIKUMAENGINE_COLLISIONEVENT_H
+#pragma once
 
 #include "../ECS/ECS.h"
 #include "Event.h"
@@ -11,11 +10,8 @@
 class CollisionEvent : public Event
 {
 public:
-    Entity entityA;
-    Entity entityB;
+    Entity EntityA;
+    Entity EntityB;
     explicit CollisionEvent(Entity entityA,Entity entityB)
-                            :entityA(entityA),entityB(entityB){}
+                            :EntityA(entityA),EntityB(entityB){}
 };
-
-
-#endif //PIKUMAENGINE_COLLISIONEVENT_H

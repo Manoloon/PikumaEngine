@@ -30,16 +30,16 @@ template<typename TOwner,typename TEvent>
 class EventCallback : public IEventCallback
 {
     typedef void (TOwner::*CallbackFunction)(TEvent&);
-    TOwner* ownerInstance;
-    CallbackFunction  callbackFunction;
+    TOwner* Owner;
+    CallbackFunction  Callback;
 
     virtual void Call(Event& event) override
     {
-        std::invoke(callbackFunction,ownerInstance,static_cast<TEvent&>(event));
+        std::invoke(Callback,Owner,static_cast<TEvent&>(event));
     }
 public:
     EventCallback(TOwner* ownerInstance,CallbackFunction callbackFunction)
-        :ownerInstance(ownerInstance),callbackFunction(callbackFunction){}
+        :Owner(ownerInstance),Callback(callbackFunction){}
 
     virtual ~EventCallback() override=default;
 };

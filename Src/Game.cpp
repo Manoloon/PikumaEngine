@@ -61,6 +61,7 @@ void Game::LoadLevel(int) const
     assetStore->AddTexture("radar-image","../assets/images/radar.png");
     assetStore->AddTexture("tilemap-image","../assets/tilemaps/jungle.png");
     assetStore->AddTexture("bullet-image","../assets/images/bullet.png");
+    assetStore->AddTexture("tree-image","../assets/images/tree.png");
     // load tilemap
     // load the tilemap map from ./assets/tilemaps/jungle.map
     // could I use rect as the switcher for every tile
@@ -148,6 +149,11 @@ void Game::LoadLevel(int) const
     chop1.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_PLAYER);
     chop1.AddComponent<CAnimation>(2, 2);
 
+    Entity tree = registry->CreateEntity();
+    tree.Group("Obstacles");
+    tree.AddComponent<CTransform>(sf::Vector2f(100.f,500.f));
+    tree.AddComponent<CSprite>("tree-image",sf::Vector2f(16.f,32.f),ERenderLayers::LAYER_OBSTACLES);
+    tree.AddComponent<CBoxCollision>(sf::Vector2f(16.f, 32.f));
 
     Entity UI_Radar = registry->CreateEntity();
     UI_Radar.AddComponent<CTransform>(sf::Vector2f(screenResolution.x - 100, 50));

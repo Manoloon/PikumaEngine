@@ -27,7 +27,7 @@ public:
     {
         Logger::Warning("Shoot");
 
-        if(event.keySymbol == sf::Keyboard::Space)
+        if(event.KeySymbol == sf::Keyboard::Space)
         {
             for(auto entity : GetSystemEntities())
             {

@@ -39,13 +39,13 @@ public:
     */
     void Update([[maybe_unused]] float DeltaTime,std::unique_ptr<EventBus>& eventBus)
     {
-      auto entities = GetSystemEntities();
-      for(auto i = entities.begin(); i != entities.end(); i++)
+      auto Entities = GetSystemEntities();
+      for(auto i = Entities.begin(); i != Entities.end(); i++)
       {
           auto entityA = *i;
           const auto& aTransform = entityA.GetComponent<CTransform>();
           const auto& aCollision = entityA.GetComponent<CBoxCollision>();
-          for(auto j=i;j!=entities.end();j++)
+          for(auto j=i;j!=Entities.end();j++)
           {
               auto entityB = *j;
               const auto& bTransform = entityB.GetComponent<CTransform>();
