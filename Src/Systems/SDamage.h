@@ -2,8 +2,7 @@
 // Created by Manoloon on 31/07/2022.
 //
 
-#ifndef PIKUMAENGINE_SDAMAGE_H
-#define PIKUMAENGINE_SDAMAGE_H
+#pragma once
 
 #include "../ECS/ECS.h"
 #include "../ECS/EventBus.h"
@@ -25,16 +24,47 @@ public:
 
     void onCollision(CollisionEvent& event)
     {
-      /*  Logger::Warning("The damage system receive events entity" +
-                std::to_string(event.entityA.GetId()) + "and entity" +
-                std::to_string(event.entityB.GetId()));*/
+        Entity a = event.EntityA;
+        Entity b = event.EntityB;
+
+        if(a.BelongToGroup("projectiles") && b.HasTag("player"))
+        {
+            OnProjectileHitsOther(a,b);
+        }
+        if(b.BelongToGroup("projectiles") && a.HasTag("player"))
+        {
+            OnProjectileHitsOther(b,a);
+        }
+        if(a.BelongToGroup("projectiles") && b.HasTag("enemies"))
+        {
+
+        }
+        if(b.BelongToGroup("projectiles") && a.HasTag("enemies"))
+        {
+
+        }
        // event.entityA.Destroy();
+
        // event.entityB.Destroy();
     }
 
+    void OnProjectileHitsOther(Entity Projectile, Entity Other)
+    {
+        auto projectileComp = Projectile.GetComponent<CShootEmitter>();
+        if(!projectileComp.bIsFriendly)
+        {
+            auto& LocalHealth = Other.GetComponent<CHealth>();
+            LocalHealth.Health -= projectileComp.damagePercentage;
+
+            if(LocalHealth.Health <=0)
+            {
+                Other.Destroy();
+            }
+            Projectile.Destroy();
+        }
+    }
     void Update()
     {
         //Todo
     }
 };
-#endif //PIKUMAENGINE_SDAMAGE_H

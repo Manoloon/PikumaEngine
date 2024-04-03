@@ -134,6 +134,7 @@ void Game::LoadLevel(int) const
                                              sf::Vector2f(PLAYER_VELOCITY,0),
                                              sf::Vector2f(0,PLAYER_VELOCITY),
                                              sf::Vector2f(-PLAYER_VELOCITY,0));
+    Player.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
     Entity chop2 = registry->CreateEntity();
     chop2.Group("Enemies");
@@ -141,6 +142,7 @@ void Game::LoadLevel(int) const
     chop2.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     chop2.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_PLAYER);
     chop2.AddComponent<CAnimation>(2, 12);
+    chop2.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
     Entity chop1 = registry->CreateEntity();
     chop1.Group("Enemies");
@@ -148,6 +150,7 @@ void Game::LoadLevel(int) const
     chop1.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     chop1.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_PLAYER);
     chop1.AddComponent<CAnimation>(2, 2);
+    chop1.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
     Entity tree = registry->CreateEntity();
     tree.Group("Obstacles");

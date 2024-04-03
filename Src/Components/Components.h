@@ -153,6 +153,6 @@ struct CShootEmitter
 */
 struct CHealth
         {
-            int health;
-            CHealth(int Health = 100): health(Health){}
+            int Health;
+            CHealth(int health = 100): Health(health){}
         };
