@@ -2,6 +2,7 @@
 // Created by Manoloon on 26/05/2022.
 //
 #include <algorithm>
+#include <string>
 #include "ECS.h"
 
 // initialize the interface variable for the static function.
@@ -16,34 +17,34 @@ int Entity::GetId() const
 {
     return id;
 }
-void Entity::Tag(std::string_view tag)
+void Entity::Tag(const std::string& tag)
 {
     registry->TagEntity(*this,tag);
 }
 
-bool Entity::HasTag(std::string_view tag) const
+bool Entity::HasTag(const std::string& tag) const
 {
     return registry->EntityHasTag(*this,tag);
 }
 
-void Entity::Group(std::string_view group)
+void Entity::Group(const std::string& group)
 {
     registry->GroupEntity(*this,group);
 }
 
-bool Entity::BelongToGroup(std::string_view group) const
+bool Entity::BelongToGroup(const std::string& group) const
 {
     return registry->EntityBelongToGroup(*this,group);
 }
 /////////////// REGISTRY //////////////////////////////
 
-void Registry::TagEntity(Entity entity, std::string_view tag)
+void Registry::TagEntity(Entity entity,const std::string& tag)
 {
     entityPerTag.emplace(tag,entity);
     tagPerEntity.emplace(entity.GetId(),tag);
 }
 
-bool Registry::EntityHasTag(Entity entity, std::string_view tag) const
+bool Registry::EntityHasTag(Entity entity,const std::string& tag) const
 {
     if (tagPerEntity.find(entity.GetId()) == tagPerEntity.end())
     {
@@ -52,7 +53,7 @@ bool Registry::EntityHasTag(Entity entity, std::string_view tag) const
     return entityPerTag.find(tag)->second == entity;
 }
 
-Entity Registry::GetEntityByTag(std::string_view tag) const
+Entity Registry::GetEntityByTag(const std::string& tag) const
 {
     return entityPerTag.at(tag);
 }
@@ -68,22 +69,27 @@ void Registry::RemoveEntityTag(Entity entity)
     }
 }
 
-void Registry::GroupEntity(Entity entity, std::string_view group)
+void Registry::GroupEntity(Entity entity,const std::string& group)
 {
     entitiesPerGroup.emplace(group,std::set<Entity>());
     entitiesPerGroup[group].emplace(entity);
     groupPerEntity.emplace(entity.GetId(),group);
 }
 
-bool Registry::EntityBelongToGroup(Entity entity, std::string_view group) const
+bool Registry::EntityBelongToGroup(Entity entity,const std::string& group) const
 {
+    if(entitiesPerGroup.find(group) == entitiesPerGroup.end())
+    {
+        false;
+    }
     auto groupEntities = entitiesPerGroup.at(group);
-    return groupEntities.find(entity) != groupEntities.end();
+    std::string idString = std::to_string(entity.GetId());
+    return groupEntities.find(idString) != groupEntities.end();
 }
 
-std::vector<Entity> Registry::GetEntitiesByGroup(std::string_view group) const
+std::vector<Entity> Registry::GetEntitiesByGroup(const std::string& group) const
 {
-    auto &setOfEntities = entitiesPerGroup.at(group);
+    auto& setOfEntities = entitiesPerGroup.at(group);
     return {setOfEntities.begin(),setOfEntities.end()};
 }
 

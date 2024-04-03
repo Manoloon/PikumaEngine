@@ -43,9 +43,6 @@ public:
         {
 
         }
-       // event.entityA.Destroy();
-
-       // event.entityB.Destroy();
     }
 
     void OnProjectileHitsOther(Entity Projectile, Entity Other)

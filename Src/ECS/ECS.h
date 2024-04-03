@@ -6,6 +6,7 @@
 #include <bitset>
 #include <vector>
 #include <set>
+#include <string>
 #include <unordered_map>
 #include <typeindex>
 #include <memory>
@@ -56,10 +57,10 @@ public:
     bool operator <(const Entity& other) const { return id < other.id; }
 
     // Tag system
-    void Tag(std::string_view tag);
-    bool HasTag(std::string_view tag) const;
-    void Group(std::string_view group);
-    bool BelongToGroup(std::string_view group)const;
+    void Tag(const std::string& tag);
+    bool HasTag(const std::string& tag) const;
+    void Group(const std::string& group);
+    bool BelongToGroup(const std::string& group)const;
 
     template<typename TComponent,typename  ...TArgs>
         void AddComponent(TArgs&& ...args);
@@ -143,11 +144,11 @@ class Registry
     std::unordered_map<std::type_index,std::shared_ptr<System>> Systems;
     std::deque<int> freeEntityIds;
 
-    std::unordered_map<std::string_view, Entity> entityPerTag;
-    std::unordered_map<int,std::string_view> tagPerEntity;
+    std::unordered_map<std::string, Entity> entityPerTag;
+    std::unordered_map<int,std::string> tagPerEntity;
 
-    std::unordered_map<std::string_view, std::set<Entity>> entitiesPerGroup;
-    std::unordered_map<int,std::string_view> groupPerEntity;
+    std::unordered_map<std::string, std::set<Entity>> entitiesPerGroup;
+    std::unordered_map<int,std::string> groupPerEntity;
 
 public:
     Entity CreateEntity();
@@ -156,15 +157,15 @@ public:
     void RemoveEntityFromSystems(Entity entity) const;
 
     // tag management
-    void TagEntity(Entity entity, std::string_view tag);
-    bool EntityHasTag(Entity entity, std::string_view tag) const;
-    Entity GetEntityByTag(std::string_view tag) const;
+    void TagEntity(Entity entity,const std::string& tag);
+    bool EntityHasTag(Entity entity,const std::string& tag) const;
+    Entity GetEntityByTag(const std::string& tag) const;
     void RemoveEntityTag(Entity entity);
 
     // group management
-    void GroupEntity(Entity entity,std::string_view group);
-    bool EntityBelongToGroup(Entity entity,std::string_view group) const;
-    std::vector<Entity> GetEntitiesByGroup(std::string_view group) const;
+    void GroupEntity(Entity entity,const std::string& group);
+    bool EntityBelongToGroup(Entity entity,const std::string& group) const;
+    std::vector<Entity> GetEntitiesByGroup(const std::string& group) const;
     void RemoveEntityGroup(Entity entity);
 
     void Update();
