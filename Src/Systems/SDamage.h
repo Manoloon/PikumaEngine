@@ -24,41 +24,46 @@ public:
 
     void onCollision(CollisionEvent& event)
     {
-        Entity a = event.EntityA;
-        Entity b = event.EntityB;
+        // SHOULD Change on event to return an uniqueptr
+        std::unique_ptr<Entity> a = std::make_unique<Entity>(event.EntityA);
+        std::unique_ptr<Entity> b = std::make_unique<Entity>(event.EntityB);
 
-        if(a.BelongToGroup("projectiles") && b.HasTag("player"))
+        if(a->BelongToGroup("projectiles") && b->HasTag("player"))
         {
             OnProjectileHitsOther(a,b);
         }
-        if(b.BelongToGroup("projectiles") && a.HasTag("player"))
+        if(b->BelongToGroup("projectiles") && a->HasTag("player"))
         {
             OnProjectileHitsOther(b,a);
         }
-        if(a.BelongToGroup("projectiles") && b.HasTag("enemies"))
-        {
+        // if(a.BelongToGroup("projectiles") && b.HasTag("enemies"))
+        // {
 
-        }
-        if(b.BelongToGroup("projectiles") && a.HasTag("enemies"))
-        {
+        // }
+        // if(b.BelongToGroup("projectiles") && a.HasTag("enemies"))
+        // {
 
-        }
+        // }
     }
 
-    void OnProjectileHitsOther(Entity Projectile, Entity Other)
+    void OnProjectileHitsOther(std::unique_ptr<Entity>& Projectile, std::unique_ptr<Entity>& Other)
     {
-        auto projectileComp = Projectile.GetComponent<CShootEmitter>();
-        if(!projectileComp.bIsFriendly)
-        {
-            auto& LocalHealth = Other.GetComponent<CHealth>();
-            LocalHealth.Health -= projectileComp.damagePercentage;
+        // std::unique_ptr<CShootEmitter> projectileComp = std::make_unique<CShootEmitter>(Projectile->GetComponent<CShootEmitter>());
+        // if(projectileComp == nullptr)
+        // {
+        //     return;
+        // }
+        // if(!projectileComp->bIsFriendly)
+        // {
+        //     // auto& LocalHealth = Other.GetComponent<CHealth>();
+        //     // LocalHealth.Health -= projectileComp.damagePercentage;
 
-            if(LocalHealth.Health <=0)
-            {
-                Other.Destroy();
-            }
-            Projectile.Destroy();
-        }
+        //     // if(LocalHealth.Health <=0)
+        //     // {
+        //     //     Other.Destroy();
+        //     // }
+        //     // Projectile.Destroy();
+        // }
     }
     void Update()
     {

@@ -164,7 +164,7 @@ public:
 
     // group management
     void GroupEntity(Entity entity,const std::string& group);
-    bool EntityBelongToGroup(Entity entity,const std::string& group) const;
+    bool EntityBelongToGroup(const Entity& entity,const std::string& group) const;
     std::vector<Entity> GetEntitiesByGroup(const std::string& group) const;
     void RemoveEntityGroup(Entity entity);
 

@@ -76,15 +76,24 @@ void Registry::GroupEntity(Entity entity,const std::string& group)
     groupPerEntity.emplace(entity.GetId(),group);
 }
 
-bool Registry::EntityBelongToGroup(Entity entity,const std::string& group) const
+bool Registry::EntityBelongToGroup(const Entity& entity,const std::string& group) const
 {
+    if(entitiesPerGroup.empty())
+    {
+        Logger::Error("EntitiesPerGroup is Empty");
+        return false;
+    }
     if(entitiesPerGroup.find(group) == entitiesPerGroup.end())
     {
-        false;
+       Logger::Error("EntitiesPerGroup dont have a group name");
+       std::cout << std::endl;
+       std::cout << group << std::endl;
+        return false; 
     }
     auto groupEntities = entitiesPerGroup.at(group);
+    // TODO : See this if we can use the id
     std::string idString = std::to_string(entity.GetId());
-    return groupEntities.find(idString) != groupEntities.end();
+    return groupEntities.find(entity) != groupEntities.end();
 }
 
 std::vector<Entity> Registry::GetEntitiesByGroup(const std::string& group) const
@@ -116,11 +125,11 @@ void System::RemoveEntityFromSystem(Entity EntityRef)
     {
         return;
     }
-    entities.erase(std::remove_if(entities.begin(), entities.end(),
+    entities.erase(std::remove_if(std::begin(entities),std::end(entities),
                                   [&EntityRef](Entity other)
                                   {
                                     return EntityRef == other;
-                                  }),entities.end());
+                                  }),std::end(entities));
 }
 
 std::vector<Entity> System::GetSystemEntities() const

@@ -1,9 +1,8 @@
 //
 // Created by Manoloon on 17/05/2022.
 //
+#pragma once 
 
-#ifndef PIKUMAENGINE_LOGGER_H
-#define PIKUMAENGINE_LOGGER_H
 #include <string_view>
 #include <chrono>
 #include <iostream>
@@ -11,6 +10,7 @@
 class Logger
 {
 public:
+    // Logger::Warning("Shoot");
     static void Warning(const std::string_view &Message)
     {
         std::time_t end_time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -18,7 +18,7 @@ public:
         "\x1b[0m" <<
         std::endl;
     };
-
+    // Logger::Error("DEAD");
     static void Error(const std::string_view &Message)
     {
         std::time_t end_time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -26,4 +26,3 @@ public:
         "\x1b[0m" << std::endl;
     };
 };
-#endif //PIKUMAENGINE_LOGGER_H

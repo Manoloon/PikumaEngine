@@ -25,8 +25,6 @@ public:
 
     void onKeyPressed(KeyPressedEvent& event)
     {
-        Logger::Warning("Shoot");
-
         if(event.KeySymbol == sf::Keyboard::Space)
         {
             for(auto entity : GetSystemEntities())
@@ -67,7 +65,7 @@ public:
                     projectileVelocity.y = shootEmitter.velocity.y * dirY;
                   //create projectile
                     Entity projectile = entity.registry->CreateEntity();
-                    projectile.Tag("projectile");
+                    projectile.Group("projectiles");
                     projectile.AddComponent<CTransform>(projectilePosition,transform.scale,transform
                             .rotation);
                     projectile.AddComponent<CRigidBody>(projectileVelocity);
@@ -101,7 +99,7 @@ public:
                     projectilePosition.y += (transform.scale.y * Sprite.spriteRect.height/2);
                 }
                 Entity projectile = Registry->CreateEntity();
-                projectile.Tag("projectile");
+                projectile.Group("projectiles");
                 projectile.AddComponent<CTransform>(projectilePosition,transform.scale,transform
                 .rotation);
                 projectile.AddComponent<CRigidBody>(shootEmitter.velocity);
