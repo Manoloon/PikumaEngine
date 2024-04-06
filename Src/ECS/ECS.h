@@ -98,33 +98,92 @@ public:
 class IPool
 {
 public:
-    virtual ~IPool() = default;
+    virtual void RemoveEntityFromPool(int entityId)=0;
 };
 
 template<typename T>
 class Pool : public IPool
 {
 private:
-    std::vector<T> data;
+    std::vector<T> Data;
+    int Size;
+    std::unordered_map<int,int> IdToIndex;
+    std::unordered_map<int,int> IndexToId;
+
 public:
-    explicit Pool(int size = 100)
-    { data.resize(size); }
+    explicit Pool(int capacity = 100)
+    { Data.resize(capacity); }
 
-    bool IsEmpty() const { return data.empty(); }
+    bool IsEmpty() const { return Size == 0; }
 
-    size_t GetSize() const  { return data.size(); }
+    size_t GetCapacity() const  { return Data.size(); }
 
-    void Resize(size_t size) { data.resize(size); }
+    void Resize(size_t Capacity) { Data.resize(Capacity); }
 
-    void Clear() { data.clear(); }
+    void Clear() 
+    {
+        Data.clear(); 
+        Size = 0;
+    }
 
-    void Add(T object) { data.push_back(object); }
+    void Add(T object) { Data.push_back(object); }
 
-    void Set(int index, T object) { data[index] = object; }
+    void Set(int EntityId, T object) 
+    {
+        // if the id exists
+        if(IdToIndex.find(EntityId) != std::end(IdToIndex))
+        {
+            int index = IdToIndex[EntityId];
+            Data[index] = object;
+        }
+        else
+        {
+            // use size as the last index in the array.
+            int index = Size;
+            IdToIndex.emplace(EntityId,index); 
+            IndexToId.emplace(index,EntityId);
+            if(index >= Data.capacity())
+            {
+                Data.resize(index * 2);
+            }
+            Data[index] = object;
+            Size++;
+        }
+    }
 
-    T& Get(int index) { return static_cast<T&>(data[index]); }
+    void Remove(int EntityId)
+    {
+        // move the last value to the place where the removed one was.
+        int indexToRemove = IdToIndex[EntityId];
+        int lastIndex = Size - 1;
+        Data[indexToRemove] = Data[lastIndex];
 
-    T &operator[](unsigned int index) { return data[index]; }
+        // then we reflect the changes into the other arrays.
+        int idLastElement = IndexToId[lastIndex];
+        IdToIndex[idLastElement] = indexToRemove;
+        IndexToId[indexToRemove] = idLastElement;
+
+        // now we remove the object that we want to remove.
+        IdToIndex.erase(EntityId);
+        IndexToId.erase(EntityId);
+        Size--;
+    }
+
+    void RemoveEntityFromPool(int entityId) override
+    {
+        if(IdToIndex.find(entityId) != std::end(IdToIndex))
+        {
+            Remove(entityId);
+        }
+    }
+
+    T& Get(int EntityId) 
+    { 
+        int index = IdToIndex[EntityId];
+        return static_cast<T&>(Data[index]); 
+    }
+
+    T &operator[](unsigned int index) { return Data[index]; }
 };
 ////////////////////////////////////////////////////////////////////////////////
 // Registry
@@ -137,7 +196,7 @@ class Registry
     int numEntities=0;
     // vector index = component type ID
     // Pool index = Identity ID
-    std::vector<std::shared_ptr<IPool>> componentsPool;
+    std::vector<std::shared_ptr<IPool>> componentsPools;
     std::vector<Signature> componentSignatures;
     std::set<Entity> entitiesToAdd;
     std::set<Entity> entitiesToDestroy;
@@ -207,31 +266,28 @@ void Registry::AddComponent(Entity entity, TArgs &&... args)
     const auto entityId = entity.GetId();
     // if the new component its not in the component Pool -> resize componentPool and init with
     // nullptr
-    if(componentId >= componentsPool.size())
+    if(componentId >= (int)(componentsPools.size()))
     {
-        componentsPool.resize(componentId + 1, nullptr);
+        componentsPools.resize(componentId + 1, nullptr);
     }
     // if the new component don´t exist in the componentPool
     // create a new one and place it in the ComponentsPool
-    if(!componentsPool[componentId])
+    if(!componentsPools[componentId])
     {
         std::shared_ptr<Pool<TComponent>> newCompPool = std::make_shared<Pool<TComponent>>();
-        componentsPool[componentId] = newCompPool;
+        componentsPools[componentId] = newCompPool;
     }
     // get the pool of components for that component value
-    std::shared_ptr<Pool<TComponent>> newCompPool = std::static_pointer_cast<Pool<TComponent>>
-                                                                    (componentsPool[componentId]);
-    // if the entity id is greater than the current size of the pool , resize the pool
-    if(entityId >= newCompPool->GetSize())
-    {
-        newCompPool->Resize(numEntities);
-    }
+    std::shared_ptr<Pool<TComponent>> compPool = std::static_pointer_cast<Pool<TComponent>>(componentsPools[componentId]);
     //create a new component of type T and forward the many parameters to the constructor.
     TComponent newComponent(std::forward<TArgs>(args)...);
     // add the new component to the pool list, using the identity id as index
-    newCompPool->Set(entityId, newComponent);
+    compPool->Set(entityId, newComponent);
     // change the component signature of the entity and set the component id on the bitset to 1
     componentSignatures[entityId].set(componentId);
+
+    std::cout << "Component ID = " << componentId << "--> Pool Size : " << compPool->GetCapacity() << std::endl;
+
 }
 
 template<typename TComponent>
@@ -239,6 +295,9 @@ void Registry::RemoveComponent(Entity entity)
 {
     const auto componentId = Component<TComponent>::GetId();
     const auto entityId = entity.GetId();
+    // search the component pool
+    std::shared_ptr<Pool<TComponent>> newCompPool = std::static_pointer_cast<Pool<TComponent>>(componentsPools[componentId]);
+    newCompPool->Remove(entityId);
     componentSignatures[entityId].set(componentId,false);
 }
 
@@ -255,7 +314,7 @@ TComponent& Registry::GetComponent(Entity entity) const
 {
     const auto componentId = Component<TComponent>::GetId();
     const auto entityId = entity.GetId();
-    auto newCompPool = std::static_pointer_cast<Pool<TComponent>>(componentsPool[componentId]);
+    auto newCompPool = std::static_pointer_cast<Pool<TComponent>>(componentsPools[componentId]);
     return newCompPool->Get(entityId);
 }
 

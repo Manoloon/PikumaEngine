@@ -148,7 +148,7 @@ Entity Registry::CreateEntity()
     if(freeEntityIds.empty())
     {
         entityID = numEntities++;
-        if(entityID >= componentSignatures.size())
+        if(entityID >= (int)componentSignatures.size())
         {
             componentSignatures.resize(entityID+1);
         }
@@ -175,11 +175,25 @@ void Registry::Update()
         AddEntityToSystem(entity);
     }
     entitiesToAdd.clear();
+
     for(auto entity : entitiesToDestroy)
     {
         RemoveEntityFromSystems(entity);
         componentSignatures[entity.GetId()].reset();
+
+        //remove the entity from the components pools
+        for(auto pool : componentsPools)
+        {
+            if(pool != nullptr)
+            {
+                pool->RemoveEntityFromPool(entity.GetId());
+            }
+        }
+
         freeEntityIds.push_back(entity.GetId());
+
+        RemoveEntityTag(entity);
+        RemoveEntityGroup(entity);
     }
     entitiesToDestroy.clear();
 }

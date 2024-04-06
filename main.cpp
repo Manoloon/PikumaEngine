@@ -2,6 +2,6 @@
 
 int main()
 {
-    Game game;
-    game.Run();
+    std::unique_ptr<Game> game = std::make_unique<Game>();
+    game->Run();
 }
