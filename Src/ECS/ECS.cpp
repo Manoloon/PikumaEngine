@@ -80,12 +80,12 @@ bool Registry::EntityBelongToGroup(const Entity& entity,const std::string& group
 {
     if(entitiesPerGroup.empty())
     {
-        Logger::Error("EntitiesPerGroup is Empty");
+        Logger::Error("Registry: EntitiesPerGroup is Empty");
         return false;
     }
     if(entitiesPerGroup.find(group) == entitiesPerGroup.end())
     {
-       Logger::Error("EntitiesPerGroup dont have a group name");
+       Logger::Error("Registry: EntitiesPerGroup dont have a group name");
        std::cout << std::endl;
        std::cout << group << std::endl;
         return false; 

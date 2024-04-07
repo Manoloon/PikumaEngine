@@ -41,7 +41,7 @@ void Game::Run()
         Draw();
     }
 }
-
+// TODO ::: PROBLEM IS HERE
 void Game::LoadLevel(int) const
 {
     registry->AddSystem<SMovement>();
@@ -172,11 +172,14 @@ void Game::BeginPlay()
     // Fix time step
     timeSinceLastTick = sf::Time::Zero;
     DeltaTime = sf::seconds(1.f / FPS);
-    isRunning =true;
+    
     LoadLevel(1);
+
+    isRunning =true;
     cameraActor.setPosition(0,0);
     cameraActor.setScale(window.getSize().x,window.getSize().y);
     window.setFramerateLimit(frameRate);
+   
     //imgui
     if (!ImGui::SFML::Init(window)) {
         // Handle initialization failure

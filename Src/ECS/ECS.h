@@ -106,7 +106,7 @@ class Pool : public IPool
 {
 private:
     std::vector<T> Data;
-    int Size;
+    int PoolSize = 0;
     std::unordered_map<int,int> IdToIndex;
     std::unordered_map<int,int> IndexToId;
 
@@ -114,7 +114,7 @@ public:
     explicit Pool(int capacity = 100)
     { Data.resize(capacity); }
 
-    bool IsEmpty() const { return Size == 0; }
+    bool IsEmpty() const { return PoolSize == 0; }
 
     size_t GetCapacity() const  { return Data.size(); }
 
@@ -122,8 +122,10 @@ public:
 
     void Clear() 
     {
-        Data.clear(); 
-        Size = 0;
+        Data.clear();
+        IdToIndex.clear();
+        IndexToId.clear();
+        PoolSize = 0;
     }
 
     void Add(T object) { Data.push_back(object); }
@@ -139,15 +141,15 @@ public:
         else
         {
             // use size as the last index in the array.
-            int index = Size;
+            int index = PoolSize;
             IdToIndex.emplace(EntityId,index); 
             IndexToId.emplace(index,EntityId);
-            if(index >= Data.capacity())
+            if(index >= (int)Data.size())
             {
                 Data.resize(index * 2);
             }
             Data[index] = object;
-            Size++;
+            PoolSize++;
         }
     }
 
@@ -155,7 +157,7 @@ public:
     {
         // move the last value to the place where the removed one was.
         int indexToRemove = IdToIndex[EntityId];
-        int lastIndex = Size - 1;
+        int lastIndex = PoolSize - 1;
         Data[indexToRemove] = Data[lastIndex];
 
         // then we reflect the changes into the other arrays.
@@ -166,7 +168,7 @@ public:
         // now we remove the object that we want to remove.
         IdToIndex.erase(EntityId);
         IndexToId.erase(EntityId);
-        Size--;
+        PoolSize--;
     }
 
     void RemoveEntityFromPool(int entityId) override

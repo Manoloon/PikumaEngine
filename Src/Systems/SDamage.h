@@ -28,14 +28,14 @@ public:
         std::unique_ptr<Entity> a = std::make_unique<Entity>(event.EntityA);
         std::unique_ptr<Entity> b = std::make_unique<Entity>(event.EntityB);
 
-        if(a->BelongToGroup("projectiles") && !b->HasTag("enemies"))
-        {
-            OnProjectileHitsOther(a,b);
-        }
-        if(b->BelongToGroup("projectiles") && !a->HasTag("enemies"))
-        {
-            OnProjectileHitsOther(b,a);
-        }
+        // if(a->BelongToGroup("projectiles") && !b->HasTag("enemies"))
+        // {
+        //     OnProjectileHitsOther(a,b);
+        // }
+        // if(b->BelongToGroup("projectiles") && !a->HasTag("enemies"))
+        // {
+        //     OnProjectileHitsOther(b,a);
+        // }
         // if(a.BelongToGroup("projectiles") && b.HasTag("enemies"))
         // {
 
