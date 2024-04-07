@@ -288,8 +288,7 @@ void Registry::AddComponent(Entity entity, TArgs &&... args)
     // change the component signature of the entity and set the component id on the bitset to 1
     componentSignatures[entityId].set(componentId);
 
-    std::cout << "Component ID = " << componentId << "--> Pool Size : " << compPool->GetCapacity() << std::endl;
-
+    //std::cout << "Component ID = " << componentId << "--> Pool Size : " << compPool->GetCapacity() << std::endl;
 }
 
 template<typename TComponent>

@@ -26,13 +26,15 @@ float Game::mapHeight;
 
 Game::Game()
 {
-     registry = std::make_unique<Registry>();
-     assetStore = std::make_unique<AssetStore>();
-     eventBus = std::make_unique<EventBus>();     
+    registry = std::make_unique<Registry>();
+    assetStore = std::make_unique<AssetStore>();
+    eventBus = std::make_unique<EventBus>();     
+    Logger::Warning("Game Constructor Called");
 }
 
 void Game::Run()
 {
+    Preload();
     BeginPlay();
     while (isRunning)
     {
@@ -41,8 +43,19 @@ void Game::Run()
         Draw();
     }
 }
-// TODO ::: PROBLEM IS HERE
-void Game::LoadLevel(int) const
+void Game::Preload()
+{
+    // window
+    window.create(sf::VideoMode(screenResolution.x,screenResolution.y),"");
+    
+    //imgui
+    if (!ImGui::SFML::Init(window)) {
+        // Handle initialization failure
+        return; // Or any other appropriate action
+    }
+}
+
+void Game::BeginPlay()
 {
     registry->AddSystem<SMovement>();
     registry->AddSystem<SRender>();
@@ -62,6 +75,23 @@ void Game::LoadLevel(int) const
     assetStore->AddTexture("tilemap-image","../assets/tilemaps/jungle.png");
     assetStore->AddTexture("bullet-image","../assets/images/bullet.png");
     assetStore->AddTexture("tree-image","../assets/images/tree.png");
+    
+    window.setFramerateLimit(frameRate);
+        
+    cameraActor.setPosition(0,0);
+    cameraActor.setScale(window.getSize().x,window.getSize().y);
+    isRunning =true;
+
+    LoadLevel(1);
+    
+    // Fix time step
+    timeSinceLastTick = sf::Time::Zero;
+    DeltaTime = sf::seconds(1.f / FPS);
+}
+
+// TODO ::: PROBLEM IS HERE
+void Game::LoadLevel(int newLevel) const
+{
     // load tilemap
     // load the tilemap map from ./assets/tilemaps/jungle.map
     // could I use rect as the switcher for every tile
@@ -165,32 +195,10 @@ void Game::LoadLevel(int) const
     UI_Radar.AddComponent<CAnimation>(8, 5);
 }
 
-void Game::BeginPlay()
-{
-    // window
-    window.create(sf::VideoMode(screenResolution.x,screenResolution.y),"");
-    // Fix time step
-    timeSinceLastTick = sf::Time::Zero;
-    DeltaTime = sf::seconds(1.f / FPS);
-    
-    LoadLevel(1);
-
-    isRunning =true;
-    cameraActor.setPosition(0,0);
-    cameraActor.setScale(window.getSize().x,window.getSize().y);
-    window.setFramerateLimit(frameRate);
-   
-    //imgui
-    if (!ImGui::SFML::Init(window)) {
-        // Handle initialization failure
-        return; // Or any other appropriate action
-    }
-}
-
 void Game::Update()
 {
     sf::Time elapsedTime = gameClock.restart();
-   timeSinceLastTick += elapsedTime;
+    timeSinceLastTick += elapsedTime;
     while (timeSinceLastTick >= DeltaTime)
     {
         //housecleaning subscribers

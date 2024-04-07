@@ -30,7 +30,9 @@ class Game
 public:
     Game();
     void Run();
+    void Preload();
     void LoadLevel(int newLevel) const;
+    void PostLoad();
     void BeginPlay();
     void EndPlay();
     void Update();
