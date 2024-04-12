@@ -27,7 +27,7 @@ public:
         // SHOULD Change on event to return an uniqueptr
         std::unique_ptr<Entity> a = std::make_unique<Entity>(event.EntityA);
         std::unique_ptr<Entity> b = std::make_unique<Entity>(event.EntityB);
-
+        // Hit On Enemies
         // if(a->BelongToGroup("projectiles") && !b->HasTag("enemies"))
         // {
         //     OnProjectileHitsOther(a,b);
@@ -36,11 +36,13 @@ public:
         // {
         //     OnProjectileHitsOther(b,a);
         // }
-        // if(a.BelongToGroup("projectiles") && b.HasTag("enemies"))
+        
+        // // hit player
+        // if(a->BelongToGroup("projectiles") && b->HasTag("player"))
         // {
 
         // }
-        // if(b.BelongToGroup("projectiles") && a.HasTag("enemies"))
+        // if(b->BelongToGroup("projectiles") && a->HasTag("player"))
         // {
 
         // }

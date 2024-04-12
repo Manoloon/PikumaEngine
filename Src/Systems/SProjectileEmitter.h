@@ -11,6 +11,7 @@
 
 class SProjectileEmitter : public System
 {
+
 public:
     SProjectileEmitter()
     {
@@ -29,7 +30,7 @@ public:
         {
             for(auto entity : GetSystemEntities())
             {
-                if(entity.HasComponent<CCameraFollow>())
+                if(entity.HasTag("Player"))
                 {
                     auto& shootEmitter = entity.GetComponent<CShootEmitter>();
                     const auto& transform = entity.GetComponent<CTransform>();
@@ -45,34 +46,50 @@ public:
                     sf::Vector2f projectileVelocity = shootEmitter.velocity;
                     int dirX = 0;
                     int dirY = 0;
-                    if(rigidBody.velocity.x !=0)
-                    {
-                        rigidBody.velocity.x > 0 ? dirX =1 : dirX =-1;
-                    }
+                    if(projectileVelocity.x != 0)
+                        {
+                        if (rigidBody.velocity.x >= 0) dirX = +1;
+                        if (rigidBody.velocity.x < 0) dirX = -1;
+                        }
+                    if(projectileVelocity.y != 0)
+                        {
+                        if (rigidBody.velocity.y >= 0) dirY = +1;
+                        if (rigidBody.velocity.y < 0) dirY = -1;
+                        }
                     else
-                    {
-                        dirX = 0;
-                    }
-                    if(rigidBody.velocity.y != 0)
-                    {
-                        rigidBody.velocity.y > 0 ? dirY = 1 : dirY =-1;
-                    }
-                    else
-                    {
+                        {
                         dirY = 0;
-                    }
+                        }
+                    
+                    // if(rigidBody.velocity.x !=0)
+                    // {
+                    //     rigidBody.velocity.x > 0 ? dirX = 1 : dirX = -1;
+                    // }
+                    // else
+                    // {
+                    //     dirX = 0;
+                    // }
+                    // if(rigidBody.velocity.y != 0)
+                    // {
+                    //     rigidBody.velocity.y > 0 ? dirY = 1 : dirY = -1;
+                    // }
+                    // else
+                    // {
+                    //     dirY = 0;
+                    // }
+                    std::cout << "X dir : " << dirX << " : " << " Y Dir : " << dirY << std::endl;
                     projectileVelocity.x = shootEmitter.velocity.x * dirX;
                     projectileVelocity.y = shootEmitter.velocity.y * dirY;
                   //create projectile
                     Entity projectile = entity.registry->CreateEntity();
                     projectile.Group("projectiles");
-                    projectile.AddComponent<CTransform>(projectilePosition,transform.scale,transform
-                            .rotation);
+                    projectile.AddComponent<CTransform>(projectilePosition,transform.scale,transform.rotation);
                     projectile.AddComponent<CRigidBody>(projectileVelocity);
-                    projectile.AddComponent<CSprite>("bullet-image",sf::Vector2f(4.f, 4.f),
-                                                     ERenderLayers::LAYER_PROJECTILE);
-                    projectile.AddComponent<CBoxCollision>(sf::Vector2f(4.f, 4.f));
-                    shootEmitter.lastEmissionTime = 0;
+                    projectile.AddComponent<CSprite>("bullet-image",transform.scale,ERenderLayers::L_PROJECTILE);
+                    projectile.AddComponent<CBoxCollision>(transform.scale);
+                    projectile.AddComponent<CShootEmitter>(projectileVelocity,0,
+                    shootEmitter.lifeSpan,shootEmitter.damagePercentage,
+                    shootEmitter.bIsFriendly,shootEmitter.lastEmissionTime);
                 }
             }
         }
@@ -104,7 +121,7 @@ public:
                 .rotation);
                 projectile.AddComponent<CRigidBody>(shootEmitter.velocity);
                 projectile.AddComponent<CSprite>("bullet-image",sf::Vector2f(4.f, 4.f),
-                                                 ERenderLayers::LAYER_PROJECTILE);
+                                                 ERenderLayers::L_PROJECTILE);
                 projectile.AddComponent<CBoxCollision>(sf::Vector2f(4.f, 4.f));
                 shootEmitter.lastEmissionTime = 0;
             }

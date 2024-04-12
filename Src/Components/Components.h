@@ -53,7 +53,7 @@ struct CSprite
 
     explicit CSprite(std::string_view AssetId = "",
                      sf::Vector2f Scale = sf::Vector2f(1, 1),
-                     ERenderLayers RenderLayers = ERenderLayers::LAYER_PLAYER, bool isUI = false,
+                     ERenderLayers RenderLayers = ERenderLayers::L_PLAYER, bool isUI = false,
                      sf::Vector2f RectPos = sf::Vector2f(0, 0))
             : assetId(AssetId),
               scale(Scale), renderLayer(RenderLayers), bIsUI(isUI),
@@ -139,6 +139,7 @@ struct CShootEmitter
     int damagePercentage;
     bool bIsFriendly;
     int lastEmissionTime;
+    
     explicit CShootEmitter(sf::Vector2f Velocity = {0, 0}, int LoopFrequency = 1, int LifeSpan = 3,
                            int DamagePercent = 40, bool IsFriendly = false,
                            int LastEmissionTime = 0) :

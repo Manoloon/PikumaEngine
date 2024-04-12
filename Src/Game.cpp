@@ -126,7 +126,7 @@ void Game::LoadLevel(int newLevel) const
                                               0.0f);
                 tile.AddComponent<CSprite>("tilemap-image",
                                            sf::Vector2f(TILE_SIZE,TILE_SIZE),
-                                           ERenderLayers::LAYER_TILEMAP, false,
+                                           ERenderLayers::L_TILEMAP, false,
                                            sf::Vector2f(srcRectX,srcRectY));
             }
         }
@@ -140,7 +140,7 @@ void Game::LoadLevel(int newLevel) const
     Tank.AddComponent<CTransform>(sf::Vector2f(10, 50), sf::Vector2f(2.0, 2.0), 0.0);
     Tank.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     Tank.AddComponent<CShootEmitter>(sf::Vector2f(50,10),2000,2000,false);
-    Tank.AddComponent<CSprite>("tank-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_ENEMIES);
+    Tank.AddComponent<CSprite>("tank-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
     Tank.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
     Entity Truck = registry->CreateEntity();
@@ -148,50 +148,50 @@ void Game::LoadLevel(int newLevel) const
     Truck.AddComponent<CTransform>(sf::Vector2f(200, 50), sf::Vector2f(1.0, 1.0), 0.0);
     Truck.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     Truck.AddComponent<CShootEmitter>(sf::Vector2f(40,0),5000,1000,false);
-    Truck.AddComponent<CSprite>("truck-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_ENEMIES);
+    Truck.AddComponent<CSprite>("truck-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
     Truck.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
     Entity Player = registry->CreateEntity();
     Player.Tag("Player");
     Player.AddComponent<CTransform>(sf::Vector2f(50, 50), sf::Vector2f(4.0, 4.0), 0.0);
     Player.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
-    Player.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_PLAYER);
+    Player.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_PLAYER);
     Player.AddComponent<CAnimation>(2, 6);
     Player.AddComponent<CHealth>(100);
     Player.AddComponent<CCameraFollow>();
-    Player.AddComponent<CShootEmitter>(sf::Vector2f(150,150),0,1000,true,0);
+    Player.AddComponent<CShootEmitter>(sf::Vector2f(40.f,40.f),0,1000,10,true,0);
     Player.AddComponent<CKeyboardControlled>(sf::Vector2f(0, -PLAYER_VELOCITY),
                                              sf::Vector2f(PLAYER_VELOCITY,0),
                                              sf::Vector2f(0,PLAYER_VELOCITY),
                                              sf::Vector2f(-PLAYER_VELOCITY,0));
-    //Player.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
+    Player.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
     Entity chop2 = registry->CreateEntity();
     chop2.Group("Enemies");
     chop2.AddComponent<CTransform>(sf::Vector2f(150, 150), sf::Vector2f(2.0, 2.0), 0.0);
     chop2.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
-    chop2.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_PLAYER);
+    chop2.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
     chop2.AddComponent<CAnimation>(2, 12);
-    //chop2.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
+    chop2.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
     Entity chop1 = registry->CreateEntity();
     chop1.Group("Enemies");
     chop1.AddComponent<CTransform>(sf::Vector2f(250, 250), sf::Vector2f(1.0, 1.0), 0.0);
     chop1.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
-    chop1.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::LAYER_PLAYER);
+    chop1.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
     chop1.AddComponent<CAnimation>(2, 2);
-    //chop1.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
+    chop1.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
     Entity tree = registry->CreateEntity();
     tree.Group("Obstacles");
     tree.AddComponent<CTransform>(sf::Vector2f(100.f,500.f));
-    tree.AddComponent<CSprite>("tree-image",sf::Vector2f(16.f,32.f),ERenderLayers::LAYER_OBSTACLES);
+    tree.AddComponent<CSprite>("tree-image",sf::Vector2f(16.f,32.f),ERenderLayers::L_OBSTACLES);
     tree.AddComponent<CBoxCollision>(sf::Vector2f(16.f, 32.f));
 
     Entity UI_Radar = registry->CreateEntity();
     UI_Radar.AddComponent<CTransform>(sf::Vector2f(screenResolution.x - 100, 50));
     UI_Radar.AddComponent<CSprite>("radar-image", sf::Vector2f(64.f, 64.f),
-                                   ERenderLayers::LAYER_GUI, true);
+                                   ERenderLayers::L_GUI, true);
     UI_Radar.AddComponent<CAnimation>(8, 5);
 }
 
