@@ -1,9 +1,7 @@
 //
 // Created by Manoloon on 23/07/2022.
 //
-
-#ifndef PIKUMAENGINE_SCOLLISION_H
-#define PIKUMAENGINE_SCOLLISION_H
+#pragma once
 
 #include "../ECS/ECS.h"
 #include "../Components/Components.h"
@@ -67,4 +65,3 @@ public:
       }
     }
 };
-#endif //PIKUMAENGINE_SCOLLISION_H

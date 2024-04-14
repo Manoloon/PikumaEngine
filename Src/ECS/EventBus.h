@@ -1,9 +1,7 @@
 //
 // Created by Manoloon on 28/07/2022.
 //
-
-#ifndef PIKUMAENGINE_EVENTBUS_H
-#define PIKUMAENGINE_EVENTBUS_H
+#pragma once
 
 #include <map>
 #include <typeindex>
@@ -85,5 +83,3 @@ public:
         subscribers.clear();
     }
 };
-
-#endif //PIKUMAENGINE_EVENTBUS_H

@@ -138,7 +138,7 @@ void Game::LoadLevel(int newLevel) const
     Entity Tank = registry->CreateEntity();
     Tank.Group("Enemies");
     Tank.AddComponent<CTransform>(sf::Vector2f(10, 50), sf::Vector2f(2.0, 2.0), 0.0);
-    Tank.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
+    Tank.AddComponent<CRigidBody>(sf::Vector2f(10.f, 0.f));
     Tank.AddComponent<CShootEmitter>(sf::Vector2f(50,10),2000,2000,false);
     Tank.AddComponent<CSprite>("tank-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
     Tank.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
@@ -184,9 +184,15 @@ void Game::LoadLevel(int newLevel) const
 
     Entity tree = registry->CreateEntity();
     tree.Group("Obstacles");
-    tree.AddComponent<CTransform>(sf::Vector2f(100.f,500.f));
+    tree.AddComponent<CTransform>(sf::Vector2f(5.f,50.f));
     tree.AddComponent<CSprite>("tree-image",sf::Vector2f(16.f,32.f),ERenderLayers::L_OBSTACLES);
     tree.AddComponent<CBoxCollision>(sf::Vector2f(16.f, 32.f));
+
+    Entity tree2 = registry->CreateEntity();
+    tree2.Group("Obstacles");
+    tree2.AddComponent<CTransform>(sf::Vector2f(100.f,50.f));
+    tree2.AddComponent<CSprite>("tree-image",sf::Vector2f(16.f,32.f),ERenderLayers::L_OBSTACLES);
+    tree2.AddComponent<CBoxCollision>(sf::Vector2f(16.f, 32.f));
 
     Entity UI_Radar = registry->CreateEntity();
     UI_Radar.AddComponent<CTransform>(sf::Vector2f(screenResolution.x - 100, 50));
