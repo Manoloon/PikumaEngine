@@ -3,6 +3,6 @@
 /.idea/
 /.vscode/
 /build/
-*.srctlbm
-*.srctldb
+*.srctrllbm
+*.srctrlldb
 *.srctrlprj
