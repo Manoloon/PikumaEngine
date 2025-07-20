@@ -11,7 +11,7 @@
 #include <typeindex>
 #include <memory>
 #include <deque>
-#include "../Src/Logger.h"
+#include "Logger.h"
 #include "../Components/Components.h"
 
 const unsigned int MAX_COMPONENTS =32;

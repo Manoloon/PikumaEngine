@@ -1,0 +1,2 @@
+#include "SCamera.h"
+

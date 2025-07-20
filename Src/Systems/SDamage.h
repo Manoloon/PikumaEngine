@@ -67,8 +67,4 @@ public:
             Projectile->Destroy();
         }
     }
-    void Update()
-    {
-        //Todo
-    }
 };

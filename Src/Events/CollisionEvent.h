@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../ECS/ECS.h"
+#include "ECS/ECS.h"
 #include "Event.h"
 
 class CollisionEvent : public Event
