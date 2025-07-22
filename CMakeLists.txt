@@ -16,12 +16,20 @@ set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Src)
 set(SOURCES
     ${SRC_DIR}/Game.cpp
     ${SRC_DIR}/Logger.cpp
+    ${SRC_DIR}/GameGlobals.cpp
     ${SRC_DIR}/ECS/ECS.cpp
     ${SRC_DIR}/ECS/AssetStore.cpp
     ${SRC_DIR}/Systems/SAnimation.cpp
     ${SRC_DIR}/Systems/SCamera.cpp
     ${SRC_DIR}/Systems/SCollision.cpp
     ${SRC_DIR}/Systems/SDamage.cpp
+    ${SRC_DIR}/Systems/SInput.cpp
+    ${SRC_DIR}/Systems/SDebugRender.cpp
+    ${SRC_DIR}/Systems/SInput.cpp
+    ${SRC_DIR}/Systems/SMovement.cpp
+    ${SRC_DIR}/Systems/SProjectileEmitter.cpp
+    ${SRC_DIR}/Systems/SRender.cpp
+    ${SRC_DIR}/Systems/SRenderDebugGUI.cpp
     )
 #include_directories(${CMAKE_SOURCE_DIR}/Src)
 

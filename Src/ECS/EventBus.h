@@ -8,7 +8,7 @@
 #include <memory>
 #include <list>
 #include <functional>
-#include "../Events/Event.h"
+#include "Events/Event.h"
 
 //interface
 class IEventCallback

@@ -8,4 +8,4 @@ const int MAP_ROWS = 20;
 
 // Player
 const float PLAYER_VELOCITY = 6.0;
-float CurrentFPS;
+extern float CurrentGameFPS;

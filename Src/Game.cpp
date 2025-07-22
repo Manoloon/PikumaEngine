@@ -201,6 +201,8 @@ void Game::LoadLevel(int newLevel) const
     UI_Radar.AddComponent<CAnimation>(8, 5);
 }
 
+void Game::PostLoad() {}
+
 void Game::Update()
 {
     sf::Time elapsedTime = gameClock.restart();
@@ -223,7 +225,7 @@ void Game::Update()
         registry->GetSystem<SProjectileEmitter>().Update(timeSinceLastTick.asMilliseconds(),registry);
         timeSinceLastTick -= DeltaTime;
     }  
-    CurrentFPS = 1.f / elapsedTime.asSeconds();
+    CurrentGameFPS = 1.f / elapsedTime.asSeconds();
 }
 void Game::Draw()
 {
