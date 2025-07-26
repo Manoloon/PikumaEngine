@@ -13,60 +13,37 @@ void SProjectileEmitter::SubscribeToEvent(std::unique_ptr<EventBus>& eventBus)
 
 void SProjectileEmitter::onKeyPressed(KeyPressedEvent& event)
 {
-        if(event.KeySymbol == sf::Keyboard::Space)
-        {
+        if(event.KeySymbol != sf::Keyboard::Space) return;
+
             for(auto entity : GetSystemEntities())
             {
-                if(entity.HasTag("Player"))
-                {
-                    auto& shootEmitter = entity.GetComponent<CShootEmitter>();
-                    const auto& transform = entity.GetComponent<CTransform>();
-                    const auto& rigidBody = entity.GetComponent<CRigidBody>();
-                    auto projectilePosition = transform.position;
+                if(!entity.HasTag("Player")) continue;
+
+                    CShootEmitter& shootEmitter = entity.GetComponent<CShootEmitter>();
+                    const CTransform& transform = entity.GetComponent<CTransform>();
+                    const CRigidBody& rigidBody = entity.GetComponent<CRigidBody>();
+                    sf::Vector2f projectilePosition = transform.position;
                     if(entity.HasComponent<CSprite>())
                     {
-                        const auto& Sprite = entity.GetComponent<CSprite>();
+                        const CSprite& Sprite = entity.GetComponent<CSprite>();
                         projectilePosition.x += (transform.scale.x * Sprite.spriteRect.width/2);
                         projectilePosition.y += (transform.scale.y * Sprite.spriteRect.height/2);
                     }
-                    // set projectileVelocity due to direction of player
-                    sf::Vector2f projectileVelocity = shootEmitter.velocity;
-                    int dirX = 0;
-                    int dirY = 0;
-                    if(projectileVelocity.x != 0)
-                        {
-                        if (rigidBody.velocity.x >= 0) dirX = +1;
-                        if (rigidBody.velocity.x < 0) dirX = -1;
-                        }
-                    if(projectileVelocity.y != 0)
-                        {
-                        if (rigidBody.velocity.y >= 0) dirY = +1;
-                        if (rigidBody.velocity.y < 0) dirY = -1;
-                        }
-                    else
-                        {
-                        dirY = 0;
-                        }
+                    // Determine direction from rigidbody
+                    sf::Vector2f dir = {1.f,0.f};
+                    if(rigidBody.velocity.x != 0.f)
+                        dir.x = (rigidBody.velocity.x > 0.f) ? 1.f : -1.f;
+                    if(rigidBody.velocity.y != 0.f)
+                        dir.y = (rigidBody.velocity.y > 0.f) ? 1.f : -1.f;
+
+                    if(dir == sf::Vector2f(0.f,0.f))
+                        dir.x = 1.f; // default shot dir
                     
-                    // if(rigidBody.velocity.x !=0)
-                    // {
-                    //     rigidBody.velocity.x > 0 ? dirX = 1 : dirX = -1;
-                    // }
-                    // else
-                    // {
-                    //     dirX = 0;
-                    // }
-                    // if(rigidBody.velocity.y != 0)
-                    // {
-                    //     rigidBody.velocity.y > 0 ? dirY = 1 : dirY = -1;
-                    // }
-                    // else
-                    // {
-                    //     dirY = 0;
-                    // }
-                    std::cout << "X dir : " << dirX << " : " << " Y Dir : " << dirY << std::endl;
-                    projectileVelocity.x = shootEmitter.velocity.x * dirX;
-                    projectileVelocity.y = shootEmitter.velocity.y * dirY;
+                    sf::Vector2f projectileVelocity = 
+                    {
+                        shootEmitter.velocity.x * dir.x,
+                        shootEmitter.velocity.y * dir.y
+                    };
                   //create projectile
                     Entity projectile = entity.registry->CreateEntity();
                     projectile.Group("projectiles");
@@ -77,29 +54,24 @@ void SProjectileEmitter::onKeyPressed(KeyPressedEvent& event)
                     projectile.AddComponent<CShootEmitter>(projectileVelocity,0,
                     shootEmitter.lifeSpan,shootEmitter.damagePercentage,
                     shootEmitter.bIsFriendly,shootEmitter.lastEmissionTime);
-                }
             }
-        }
 }
 
-void SProjectileEmitter::Update(int DeltaTime, std::unique_ptr<Registry> &Registry) 
+void SProjectileEmitter::Update(float DeltaTime, std::unique_ptr<Registry> &Registry) 
 {
     for(auto entity : GetSystemEntities())
     {
-            auto& shootEmitter = entity.GetComponent<CShootEmitter>();
-            const auto& transform = entity.GetComponent<CTransform>();
+            CShootEmitter& shootEmitter = entity.GetComponent<CShootEmitter>();
+            const CTransform& transform = entity.GetComponent<CTransform>();
             shootEmitter.lastEmissionTime +=DeltaTime;
-            if(shootEmitter.loopFrequency == 0)
+            if(shootEmitter.loopFrequency == 0 || shootEmitter.lastEmissionTime < shootEmitter.loopFrequency)
             {
                 continue;
             }
-            // timer execute
-            if( shootEmitter.lastEmissionTime > shootEmitter.loopFrequency)
-            {
                 auto projectilePosition = transform.position;
                 if(entity.HasComponent<CSprite>())
                 {
-                    const auto& Sprite = entity.GetComponent<CSprite>();
+                    const CSprite& Sprite = entity.GetComponent<CSprite>();
                     projectilePosition.x += (transform.scale.x * Sprite.spriteRect.width/2);
                     projectilePosition.y += (transform.scale.y * Sprite.spriteRect.height/2);
                 }
@@ -111,7 +83,6 @@ void SProjectileEmitter::Update(int DeltaTime, std::unique_ptr<Registry> &Regist
                 projectile.AddComponent<CSprite>("bullet-image",sf::Vector2f(4.f, 4.f),
                                                  ERenderLayers::L_PROJECTILE);
                 projectile.AddComponent<CBoxCollision>(sf::Vector2f(4.f, 4.f));
-                shootEmitter.lastEmissionTime = 0;
-            }
+                shootEmitter.lastEmissionTime = 0.f;
     }
 }

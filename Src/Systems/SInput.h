@@ -15,4 +15,7 @@ public:
     void SubscribeToEvents(std::unique_ptr<EventBus>& eventBus);
 
     void onKeyPressed(KeyPressedEvent& event);
+    // consider a per frame pooling of iskeypressed
+    // add momentum using acceleration max speed and velocity decay
+    void Update(float deltaTime);
 };

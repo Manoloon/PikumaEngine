@@ -207,22 +207,30 @@ void Game::Update()
 {
     sf::Time elapsedTime = gameClock.restart();
     timeSinceLastTick += elapsedTime;
+    const sf::Time MaxAccumulateTime = sf::seconds(0.25f);
+    if(timeSinceLastTick > MaxAccumulateTime)
+    {
+        timeSinceLastTick = MaxAccumulateTime;
+    }
+    float DeltaTimeSecond = DeltaTime.asSeconds();
+    // fixed update loop
     while (timeSinceLastTick >= DeltaTime)
     {
         //housecleaning subscribers
         eventBus->Reset();
         // the subscribing would be frame by frame
+        // TODO : this should be handle out of update
         registry->GetSystem<SDamage>().SubscribeToEvents(eventBus);
         registry->GetSystem<SInput>().SubscribeToEvents(eventBus);
         registry->GetSystem<SProjectileEmitter>().SubscribeToEvent(eventBus);
 
         //run this at the end of the frame.
         registry->Update();
-        registry->GetSystem<SMovement>().Update(timeSinceLastTick.asSeconds());
+        registry->GetSystem<SMovement>().Update(DeltaTimeSecond);
         registry->GetSystem<SCamera>().Update(cameraActor,DeltaTime);
         registry->GetSystem<SAnimation>().Update();
-        registry->GetSystem<SCollision>().Update(timeSinceLastTick.asSeconds(), eventBus);
-        registry->GetSystem<SProjectileEmitter>().Update(timeSinceLastTick.asMilliseconds(),registry);
+        registry->GetSystem<SCollision>().Update(DeltaTimeSecond, eventBus);
+        registry->GetSystem<SProjectileEmitter>().Update(DeltaTimeSecond,registry);
         timeSinceLastTick -= DeltaTime;
     }  
     CurrentGameFPS = 1.f / elapsedTime.asSeconds();

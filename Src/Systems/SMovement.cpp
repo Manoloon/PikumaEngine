@@ -50,20 +50,20 @@ void SMovement::OnEnemyHitsObstacle(Entity enemy, Entity obstacle)
 void SMovement::Update(float DeltaTime) 
 {
     for(auto entity : GetSystemEntities())
-        {
+    {
         auto& transform = entity.GetComponent<CTransform>();
-        auto& rigidBody = entity.GetComponent<CRigidBody>();
+        const auto& rigidBody = entity.GetComponent<CRigidBody>();
 
 
         transform.position.x += rigidBody.velocity.x * DeltaTime;
         transform.position.y += rigidBody.velocity.y * DeltaTime;
 
-        bool bHitLimits = (transform.position.x < 0 || transform.position.x > Game::mapWidth ||
+        bool bOutOfBounds = (transform.position.x < 0 || transform.position.x > Game::mapWidth ||
                             transform.position.y < 0 || transform.position.y > Game::mapHeight);
         
-        if(bHitLimits && !entity.HasTag("Player"))
-            {
-                entity.Destroy();
-            }
+        if(bOutOfBounds && !entity.HasTag("Player"))
+        {
+            entity.Destroy();
         }
+    }
 }

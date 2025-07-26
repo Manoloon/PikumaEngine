@@ -20,6 +20,6 @@ public:
 
     void onKeyPressed(KeyPressedEvent& event);
  
-    void Update(int DeltaTime,std::unique_ptr<Registry>& Registry);
+    void Update(float DeltaTime,std::unique_ptr<Registry>& Registry);
 };
 #endif //PIKUMAENGINE_SPROJECTILEEMITTER_H

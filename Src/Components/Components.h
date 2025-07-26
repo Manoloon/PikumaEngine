@@ -101,6 +101,13 @@ struct CBoxCollision
 */
 struct CKeyboardControlled
 {
+    float acceleration = 500.f;   // Units per second squared
+    float maxSpeed = 300.f;       // Maximum velocity
+    float damping = 0.95f;        // Friction / air resistance per frame
+    // sf::Vector2f up    = { 0.f, -1.f };
+    // sf::Vector2f down  = { 0.f,  1.f };
+    sf::Vector2f left  = { -1.f, 0.f };
+    sf::Vector2f right = { 1.f,  0.f };
     sf::Vector2f upVelocity;
     sf::Vector2f rightVelocity;
     sf::Vector2f downVelocity;
@@ -138,7 +145,7 @@ struct CShootEmitter
     int lifeSpan;
     int damagePercentage;
     bool bIsFriendly;
-    int lastEmissionTime;
+    float lastEmissionTime;
     
     explicit CShootEmitter(sf::Vector2f Velocity = {0, 0}, int LoopFrequency = 1, int LifeSpan = 3,
                            int DamagePercent = 40, bool IsFriendly = false,
