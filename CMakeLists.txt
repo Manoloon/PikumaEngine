@@ -25,13 +25,11 @@ set(SOURCES
     ${SRC_DIR}/Systems/SDamage.cpp
     ${SRC_DIR}/Systems/SInput.cpp
     ${SRC_DIR}/Systems/SDebugRender.cpp
-    ${SRC_DIR}/Systems/SInput.cpp
     ${SRC_DIR}/Systems/SMovement.cpp
     ${SRC_DIR}/Systems/SProjectileEmitter.cpp
     ${SRC_DIR}/Systems/SRender.cpp
     ${SRC_DIR}/Systems/SRenderDebugGUI.cpp
     )
-#include_directories(${CMAKE_SOURCE_DIR}/Src)
 
 add_executable(PikumaEngine main.cpp ${SOURCES})
 target_include_directories(PikumaEngine PRIVATE ${SRC_DIR})
@@ -44,3 +42,11 @@ target_link_libraries(PikumaEngine PRIVATE
                         sfml-audio 
                         )
 
+target_include_directories(PikumaEngine PRIVATE
+    "C:/msys64/mingw64/include"
+    "C:/msys64/mingw64/include/lua5.4"
+)
+
+target_link_libraries(PikumaEngine PRIVATE
+    "C:/msys64/mingw64/lib/liblua5.4.dll.a"
+)

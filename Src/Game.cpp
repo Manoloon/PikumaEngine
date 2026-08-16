@@ -78,8 +78,8 @@ void Game::BeginPlay()
     
     window.setFramerateLimit(frameRate);
         
-    cameraActor.setPosition(0,0);
-    cameraActor.setScale(window.getSize().x,window.getSize().y);
+    cameraActor.setPosition(sf::Vector2f{0,0});
+    cameraActor.setScale(static_cast<sf::Vector2f>(window.getSize()));
     isRunning =true;
 
     LoadLevel(1);

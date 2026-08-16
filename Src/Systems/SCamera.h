@@ -37,7 +37,7 @@ public:
             {
                 locCamPosY = transform.position.y - (Game::mapHeight/2);
             }
-            Camera.setPosition(locCamPosX,locCamPosY);
+            Camera.setPosition(sf::Vector2f{locCamPosX,locCamPosY});
             // TODO : PRoblem!!
             locCameraX = Camera.getPosition().x < 0 ? 0 : Camera.getPosition().x;
             locCameraX = Camera.getPosition().x > Camera.getSize().x ? Camera.getSize().x :
@@ -45,7 +45,7 @@ public:
             locCameraY = Camera.getPosition().y < 0 ? 0 : Camera.getPosition().y;
             locCameraY = Camera.getPosition().y > Camera.getSize().y ? Camera.getSize().y :
                          Camera.getPosition().y;
-            Camera.setPosition(locCameraX,locCameraY);
+            Camera.setPosition(sf::Vector2f{locCameraX,locCameraY});
         }
     }
 };
