@@ -2,7 +2,31 @@
 #include <fstream>
 #include "Game.h"
 #include "ECS/ECS.h"
+#include "ECS/AssetStore.h"
 #include "GameGlobals.h"
+
+
+void LevelLoader::LoadSettings()
+{
+    
+}
+
+void LevelLoader::LoadAssets(AssetStore *assetStore)
+{
+    if(assetStore == nullptr)
+    {
+        Logger::Error("Failed to access to AssetStore pointer");
+        return;
+    }
+    assetStore->AddTexture("tank-image","../assets/images/tank-panther-right.png");
+    assetStore->AddTexture("truck-image","../assets/images/truck-ford-right.png");
+    assetStore->AddTexture("player-image","../assets/images/chopper-spritesheet.png");
+    assetStore->AddTexture("radar-image","../assets/images/radar.png");
+    assetStore->AddTexture("tilemap-image","../assets/tilemaps/jungle.png");
+    assetStore->AddTexture("bullet-image","../assets/images/bullet.png");
+    assetStore->AddTexture("tree-image","../assets/images/tree.png");
+
+}
 
 void LevelLoader::ParseNewMap(Registry* registry, const std::string_view newMap)
 {
@@ -47,8 +71,9 @@ void LevelLoader::ParseNewMap(Registry* registry, const std::string_view newMap)
         Game::mapHeight = MAP_ROWS * TILE_SIZE * TILE_SCALE;
 }
 
-void LevelLoader::LoadLevel(Registry* registry,float ScreenResWidth,int LevelID)
+void LevelLoader::LoadLevel(Registry* registry,AssetStore* assetStore,float ScreenResWidth,int LevelID)
 {
+    LoadAssets(assetStore);
     // TODO : temporary
     const std::string_view map = "../assets/tilemaps/jungle.map";
     ParseNewMap(registry,map);

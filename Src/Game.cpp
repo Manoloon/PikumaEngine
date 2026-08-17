@@ -1,8 +1,6 @@
 //
 // Created by Manoloon on 13/05/2022.
 //
-#include <fstream>
-
 #include "imgui-SFML.h"
 #include "imgui.h"
 
@@ -47,7 +45,7 @@ void Game::Run()
 void Game::Preload()
 {
     // window
-    window.create(sf::VideoMode(screenResolution),"");
+    window.create(sf::VideoMode(screenResolution.x, screenResolution.y),"Game");
     
     //imgui
     if (!ImGui::SFML::Init(window)) {
@@ -69,14 +67,6 @@ void Game::BeginPlay()
     registry->AddSystem<SProjectileEmitter>();
     registry->AddSystem<SRenderDebugGUI>();
 
-    assetStore->AddTexture("tank-image","../assets/images/tank-panther-right.png");
-    assetStore->AddTexture("truck-image","../assets/images/truck-ford-right.png");
-    assetStore->AddTexture("player-image","../assets/images/chopper-spritesheet.png");
-    assetStore->AddTexture("radar-image","../assets/images/radar.png");
-    assetStore->AddTexture("tilemap-image","../assets/tilemaps/jungle.png");
-    assetStore->AddTexture("bullet-image","../assets/images/bullet.png");
-    assetStore->AddTexture("tree-image","../assets/images/tree.png");
-    
     window.setFramerateLimit(frameRate);
         
     cameraActor.setPosition(sf::Vector2f{0,0});
@@ -84,9 +74,7 @@ void Game::BeginPlay()
     isRunning =true;
 
     auto levelLoader = std::make_unique<LevelLoader>();
-    levelLoader->LoadLevel(registry.get(),screenResolution.x,1);
-// TODO :: load level
-    //LoadLevel(1);
+    levelLoader->LoadLevel(registry.get(),assetStore.get(),screenResolution.x,1);
     
     // Fix time step
     timeSinceLastTick = sf::Time::Zero;
@@ -130,7 +118,7 @@ void Game::Update()
 void Game::Draw()
 {
     window.clear(sf::Color(18,33,43));
-    registry->GetSystem<SRender>().Update(window, assetStore, cameraActor);
+    registry->GetSystem<SRender>().Update(window, assetStore.get(), cameraActor);
     
     if(bDebug)
     {

@@ -12,7 +12,7 @@ bool SRender::CompareByIndex(const Entity &a, const Entity &b)
 }
 
 void SRender::Update(sf::RenderWindow &window,
-                     const std::unique_ptr<AssetStore> &assetStore,
+                     AssetStore* assetStore,
                      const sf::RectangleShape &camera) const 
 {
     std::vector<Entity> newEntities = GetSystemEntities();
@@ -22,8 +22,9 @@ void SRender::Update(sf::RenderWindow &window,
             const auto& transformComp = entity.GetComponent<CTransform>();
             const auto& spriteComp = entity.GetComponent<CSprite>();
             // set the source rect for the origin for the sprite
+            auto text = assetStore->GetTexture(spriteComp.assetId);
             sf::Sprite sprite;
-            sprite.setTexture(*assetStore->GetTexture(spriteComp.assetId));
+            sprite.setTexture(*text);
             sprite.setTextureRect(spriteComp.spriteRect);
             if(!spriteComp.bIsUI)
             {

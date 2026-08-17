@@ -20,7 +20,7 @@ public:
   * \return The login session for that accountId.
   * \remarks If a new login session is created, then LoginSessions.AfterKeyAdded is raised.</remarks>
   */
-    void Update(sf::RenderWindow& window,const std::unique_ptr<AssetStore>& assetStore,
+    void Update(sf::RenderWindow& window,AssetStore* assetStore,
                                     const sf::RectangleShape& camera) const;
     /*
     void Draw(sf::RenderWindow& window)

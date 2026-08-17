@@ -26,7 +26,7 @@ class Game
     bool isRunning =false;
     bool bDebug= false;
     sf::RectangleShape cameraActor;
-    sf::Vector2i screenResolution ={800,600};
+    sf::Vector2u screenResolution ={800,600};
 public:   
     Game();
     void Run();
