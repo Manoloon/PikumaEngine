@@ -20,6 +20,7 @@
 #include "Systems/SCamera.h"
 #include "Systems/SProjectileEmitter.h"
 #include "Systems/SDebugRender.h"
+#include "LevelLoader.h"
 
 float Game::mapWidth;
 float Game::mapHeight;
@@ -46,7 +47,7 @@ void Game::Run()
 void Game::Preload()
 {
     // window
-    window.create(sf::VideoMode(screenResolution.x,screenResolution.y),"");
+    window.create(sf::VideoMode(screenResolution),"");
     
     //imgui
     if (!ImGui::SFML::Init(window)) {
@@ -81,6 +82,9 @@ void Game::BeginPlay()
     cameraActor.setPosition(sf::Vector2f{0,0});
     cameraActor.setScale(static_cast<sf::Vector2f>(window.getSize()));
     isRunning =true;
+
+    auto levelLoader = std::make_unique<LevelLoader>();
+    levelLoader->LoadLevel(registry.get(),screenResolution.x,1);
 // TODO :: load level
     //LoadLevel(1);
     

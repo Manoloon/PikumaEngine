@@ -43,6 +43,15 @@ target_link_libraries(PikumaEngine PRIVATE
                         sfml-audio 
                         )
 
+# find_package(Lua 5.4 REQUIRED)
+# target_include_directories(PikumaEngine PRIVATE
+#     ${LUA_INCLUDE_DIR}
+# )
+
+# target_link_libraries(PikumaEngine PRIVATE
+#     ${LUA_LIBRARIES}
+# )
+
 target_include_directories(PikumaEngine PRIVATE
     "C:/msys64/mingw64/include"
     "C:/msys64/mingw64/include/lua5.4"
