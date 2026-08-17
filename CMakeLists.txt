@@ -31,7 +31,8 @@ set(SOURCES
     ${SRC_DIR}/Systems/SRenderDebugGUI.cpp
     )
 
-add_executable(PikumaEngine main.cpp ${SOURCES})
+add_executable(PikumaEngine main.cpp ${SOURCES}
+    Src/LevelLoader.cpp)
 target_include_directories(PikumaEngine PRIVATE ${SRC_DIR})
 
 target_link_libraries(PikumaEngine PRIVATE

@@ -96,6 +96,12 @@
   "output": "CMakeFiles/PikumaEngine.dir/Src/Systems/SRenderDebugGUI.cpp.obj"
 },
 {
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\LevelLoader.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\LevelLoader.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/LevelLoader.cpp",
+  "output": "CMakeFiles/PikumaEngine.dir/Src/LevelLoader.cpp.obj"
+},
+{
   "directory": "C:/Coding/cpp/PikumaEngine/build/_deps/sfml-build/src/SFML/System",
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/sfml-system.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow  -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wcast-align -Wunused -Woverloaded-virtual -Wconversion -Wsign-conversion -Wdouble-promotion -Wformat=2 -Wnull-dereference -Wold-style-cast -Wpedantic -Wmisleading-indentation -Wduplicated-cond -Wlogical-op -Wduplicated-branches -o CMakeFiles\\sfml-system.dir\\Clock.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\build\\_deps\\sfml-src\\src\\SFML\\System\\Clock.cpp",
   "file": "C:/Coding/cpp/PikumaEngine/build/_deps/sfml-src/src/SFML/System/Clock.cpp",

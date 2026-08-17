@@ -18,7 +18,7 @@ class Game
     sf::Clock gameClock;
     sf::Time DeltaTime;
     sf::Time timeSinceLastTick;
-    sf::Vector2i screenResolution={800,600};
+
     int frameRate = 60;
     std::unique_ptr<Registry> registry;
     std::unique_ptr<AssetStore> assetStore;
@@ -27,11 +27,10 @@ class Game
     bool bDebug= false;
     sf::RectangleShape cameraActor;
 
-public:
+public:   
     Game();
     void Run();
     void Preload();
-    void LoadLevel(int newLevel) const;
     void PostLoad();
     void BeginPlay();
     void EndPlay();
@@ -41,4 +40,5 @@ public:
 
     static float mapWidth;
     static float mapHeight;
+    sf::Vector2i screenResolution ={800,600};
 };
