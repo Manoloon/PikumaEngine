@@ -27,7 +27,7 @@ Game::Game()
 {
     registry = std::make_unique<Registry>();
     assetStore = std::make_unique<AssetStore>();
-    eventBus = std::make_unique<EventBus>();     
+    eventBus = std::make_unique<EventBus>();   
     Logger::Warning("Game Constructor Called");
 }
 
@@ -52,6 +52,7 @@ void Game::Preload()
         // Handle initialization failure
         return; // Or any other appropriate action
     }
+    luaState.open_libraries(sol::lib::base, sol::lib::math);
 }
 
 void Game::BeginPlay()
@@ -74,6 +75,7 @@ void Game::BeginPlay()
     isRunning =true;
 
     auto levelLoader = std::make_unique<LevelLoader>();
+    levelLoader->LoadSettings(luaState,1);
     levelLoader->LoadLevel(registry.get(),assetStore.get(),screenResolution.x,1);
     
     // Fix time step

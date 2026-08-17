@@ -4,11 +4,27 @@
 #include "ECS/ECS.h"
 #include "ECS/AssetStore.h"
 #include "GameGlobals.h"
+#include <sol/sol.hpp>
 
 
-void LevelLoader::LoadSettings()
+void LevelLoader::LoadSettings(sol::state& LuaState,int LevelNumber)
 {
-    
+    const std::string_view scriptfile = "./assets/scripts/Level" + std::to_string(LevelNumber) + ".lua";
+    sol::load_result script = LuaState.load_file(scriptfile.data());
+    if(!script.valid())
+    {
+        sol::error err = script;
+        std::string_view Message = err.what();
+        Logger::Error(Message);
+        return;
+    }
+
+    LuaState.safe_script_file(scriptfile.data());
+    sol::table levelTable = LuaState["Level"];
+    // TODO :
+    // loop assets if assetoptional is true 
+    // populate assets from the table.
+    // use a while(true) and a counter int i = 0; break if any inside assets in the script is not found
 }
 
 void LevelLoader::LoadAssets(AssetStore *assetStore)

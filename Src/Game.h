@@ -8,6 +8,7 @@
 #include "ECS/AssetStore.h"
 #include "ECS/ECS.h"
 #include "ECS/EventBus.h"
+#include <sol/sol.hpp>
 
 class Game
 {
@@ -23,6 +24,8 @@ class Game
     std::unique_ptr<Registry> registry;
     std::unique_ptr<AssetStore> assetStore;
     std::unique_ptr<EventBus> eventBus;
+    sol::state luaState;
+
     bool isRunning =false;
     bool bDebug= false;
     sf::RectangleShape cameraActor;
