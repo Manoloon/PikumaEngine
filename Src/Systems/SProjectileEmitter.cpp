@@ -13,7 +13,7 @@ void SProjectileEmitter::SubscribeToEvent(std::unique_ptr<EventBus>& eventBus)
 
 void SProjectileEmitter::onKeyPressed(KeyPressedEvent& event)
 {
-        if(event.KeySymbol != sf::Keyboard::Space) return;
+        if(event.KeySymbol != sf::Keyboard::Key::Space) return;
 
             for(auto entity : GetSystemEntities())
             {
@@ -26,8 +26,8 @@ void SProjectileEmitter::onKeyPressed(KeyPressedEvent& event)
                     if(entity.HasComponent<CSprite>())
                     {
                         const CSprite& Sprite = entity.GetComponent<CSprite>();
-                        projectilePosition.x += (transform.scale.x * Sprite.spriteRect.width/2);
-                        projectilePosition.y += (transform.scale.y * Sprite.spriteRect.height/2);
+                        projectilePosition.x += transform.scale.x * Sprite.spriteRect.size.x * 0.5f;
+                        projectilePosition.y += transform.scale.y * Sprite.spriteRect.size.y * 0.5f;
                     }
                     // Determine direction from rigidbody
                     sf::Vector2f dir = {1.f,0.f};
@@ -72,8 +72,8 @@ void SProjectileEmitter::Update(float DeltaTime, std::unique_ptr<Registry> &Regi
                 if(entity.HasComponent<CSprite>())
                 {
                     const CSprite& Sprite = entity.GetComponent<CSprite>();
-                    projectilePosition.x += (transform.scale.x * Sprite.spriteRect.width/2);
-                    projectilePosition.y += (transform.scale.y * Sprite.spriteRect.height/2);
+                    projectilePosition.x += transform.scale.x * Sprite.spriteRect.size.x * 0.5f;
+                    projectilePosition.y += transform.scale.y * Sprite.spriteRect.size.y * 0.5f;
                 }
                 Entity projectile = Registry->CreateEntity();
                 projectile.Group("projectiles");

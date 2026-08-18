@@ -31,11 +31,12 @@ void AssetStore::AddTexture(std::string_view assetId, const std::string &filePat
 void AssetStore::AddFont(std::string_view assetId, const std::string &filePath, unsigned int fontSize)
 {
     sf::Font newFont;
-    newFont.loadFromFile(filePath);
-    //newFont.setCharacterSize(fontSize);
-    // TODO : ver donde aplicar el size
+    if(!newFont.openFromFile(filePath))
+    {
+        Logger::Error("Failed to load Font: " + filePath);
+        return;
+    }
     fonts.try_emplace(std::string(assetId),newFont);
-
 }
 sf::Texture *AssetStore::GetTexture(std::string_view assetId)
 {

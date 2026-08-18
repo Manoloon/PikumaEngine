@@ -29,7 +29,7 @@ void SRenderDebugGUI::Update(sf::RenderWindow &window, sf::Time DeltaTime,
                 {
                     Entity Tank = Registry->CreateEntity();
                     Tank.Group("Enemies");
-                    Tank.AddComponent<CTransform>(sf::Vector2f(NewXPos,NewYPos), sf::Vector2f(NewScale, NewScale),NewRotation);
+                    Tank.AddComponent<CTransform>(sf::Vector2f(NewXPos,NewYPos), sf::Vector2f(NewScale, NewScale),sf::degrees(NewRotation));
                     Tank.AddComponent<CRigidBody>(sf::Vector2f(NewXSpeed, NewYSpeed));
                     Tank.AddComponent<CShootEmitter>(sf::Vector2f(50,10),20000,20000,false);
                     Tank.AddComponent<CSprite>("tank-image", sf::Vector2f(32.f * NewScale, 32.f * NewScale), ERenderLayers::L_ENEMIES);

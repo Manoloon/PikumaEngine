@@ -48,13 +48,14 @@ add_custom_target(copy_assets ALL
         "${ASSETS_DIR}"
         "${CMAKE_BINARY_DIR}/assets"
 )
+find_package(SFML 3 REQUIRED COMPONENTS Graphics Window System Audio)
 
 target_link_libraries(PikumaEngine PRIVATE
                         ImGui-SFML::ImGui-SFML
-                        sfml-graphics 
-                        sfml-window 
-                        sfml-system 
-                        sfml-audio 
+                        SFML::Graphics
+                        SFML::Window 
+                        SFML::System 
+                        SFML::Audio 
                         )
 
 get_filename_component(MINGW64_ROOT

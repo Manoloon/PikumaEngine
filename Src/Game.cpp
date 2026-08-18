@@ -45,7 +45,7 @@ void Game::Run()
 void Game::Preload()
 {
     // window
-    window.create(sf::VideoMode(screenResolution.x, screenResolution.y),"Game");
+    window.create(sf::VideoMode(screenResolution),"Game");
     
     //imgui
     if (!ImGui::SFML::Init(window)) {
@@ -140,43 +140,42 @@ void Game::EndPlay()
 void Game::Inputs()
 {
     // Check if the game was closed.
-    sf::Event event;
     static bool bPKeyPressed;
-    if (window.pollEvent(event))
+    while(const std::optional event = window.pollEvent())
     {
-        ImGui::SFML::ProcessEvent(event);
-        
-        if ((event.type == sf::Event::Closed) ||
-            (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)))
+        ImGui::SFML::ProcessEvent(window,*event);
+        if (event->is<sf::Event::Closed>())
         {
             EndPlay();
         }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::F))
         {
-            window.create(sf::VideoMode::getDesktopMode(), "", sf::Style::Fullscreen);
+            window.create(sf::VideoMode::getDesktopMode(), "", sf::State::Fullscreen);
             window.setFramerateLimit(60);
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
         {
             frameRate+=10;
             window.setFramerateLimit(frameRate);
         }
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
         {
 
             (frameRate>10)?frameRate-=5 : frameRate=5;
             window.setFramerateLimit(frameRate);
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)&& !bPKeyPressed)
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P)&& !bPKeyPressed)
         {
             bDebug = !bDebug;
             bPKeyPressed=true;
         }
-        else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+        else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P))
         {
             bPKeyPressed = false;
         }
-        eventBus->EmitEvent<KeyPressedEvent>(event.key.code);
+        if(const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
+        {
+            eventBus->EmitEvent<KeyPressedEvent>(keyPressed->code);
+        }
     }
 }

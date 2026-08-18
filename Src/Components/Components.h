@@ -16,11 +16,11 @@ struct CTransform
 {
     sf::Vector2f position;
     sf::Vector2f scale;
-    float rotation;
+    sf::Angle rotation;
 
     explicit CTransform(sf::Vector2f Position = sf::Vector2f(0.f, 0.f),
                         sf::Vector2f Scale = sf::Vector2f(1.0, 1.0),
-                        double Rotation = 0.0f)
+                        sf::Angle Rotation = sf::degrees(0.f))
             : position(Position), scale(Scale), rotation(Rotation){}
 };
 
@@ -57,11 +57,8 @@ struct CSprite
                      sf::Vector2f RectPos = sf::Vector2f(0, 0))
             : assetId(AssetId),
               scale(Scale), renderLayer(RenderLayers), bIsUI(isUI),
-              spriteRect({static_cast<int>(RectPos.x),
-                          static_cast<int>(RectPos.y),
-                          static_cast<int>(scale.x),
-                          static_cast<int>(scale.y)})
-    {};
+              spriteRect({static_cast<int>(RectPos.x),static_cast<int>(RectPos.y)},
+                          {static_cast<int>(scale.x),static_cast<int>(scale.y)}){};
 };
 /**
 * \brief component for actors with animation.

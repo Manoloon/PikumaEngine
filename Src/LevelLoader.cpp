@@ -94,7 +94,7 @@ void LevelLoader::ParseNewMap(Registry* registry, const std::string_view newMap)
                 tile.AddComponent<CTransform>(sf::Vector2f(x * (TILE_SCALE * TILE_SIZE),
                                                               y * (TILE_SCALE * TILE_SIZE)),
                                               sf::Vector2f(TILE_SCALE,TILE_SCALE),
-                                              0.0f);
+                                              sf::degrees(0.0f));
                 tile.AddComponent<CSprite>("tilemap-image",
                                            sf::Vector2f(TILE_SIZE,TILE_SIZE),
                                            ERenderLayers::L_TILEMAP, false,
@@ -114,7 +114,7 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
 
     Entity Tank = registry->CreateEntity();
     Tank.Group("Enemies");
-    Tank.AddComponent<CTransform>(sf::Vector2f(10, 50), sf::Vector2f(2.0, 2.0), 0.0);
+    Tank.AddComponent<CTransform>(sf::Vector2f(10, 50), sf::Vector2f(2.0, 2.0), sf::degrees(0.f));
     Tank.AddComponent<CRigidBody>(sf::Vector2f(10.f, 0.f));
     Tank.AddComponent<CShootEmitter>(sf::Vector2f(50,10),2000,2000,false);
     Tank.AddComponent<CSprite>("tank-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
@@ -122,7 +122,7 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
 
     Entity Truck = registry->CreateEntity();
     Truck.Group("Enemies");
-    Truck.AddComponent<CTransform>(sf::Vector2f(200, 50), sf::Vector2f(1.0, 1.0), 0.0);
+    Truck.AddComponent<CTransform>(sf::Vector2f(200, 50), sf::Vector2f(1.0, 1.0), sf::degrees(0.f));
     Truck.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     Truck.AddComponent<CShootEmitter>(sf::Vector2f(40,0),5000,1000,false);
     Truck.AddComponent<CSprite>("truck-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
@@ -130,7 +130,7 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
 
     Entity Player = registry->CreateEntity();
     Player.Tag("Player");
-    Player.AddComponent<CTransform>(sf::Vector2f(50, 50), sf::Vector2f(4.0, 4.0), 0.0);
+    Player.AddComponent<CTransform>(sf::Vector2f(50, 50), sf::Vector2f(4.0, 4.0), sf::degrees(0.f));
     Player.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     Player.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_PLAYER);
     Player.AddComponent<CAnimation>(2, 6);
@@ -145,7 +145,7 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
 
     Entity chop2 = registry->CreateEntity();
     chop2.Group("Enemies");
-    chop2.AddComponent<CTransform>(sf::Vector2f(150, 150), sf::Vector2f(2.0, 2.0), 0.0);
+    chop2.AddComponent<CTransform>(sf::Vector2f(150, 150), sf::Vector2f(2.0, 2.0), sf::degrees(0.f));
     chop2.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     chop2.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
     chop2.AddComponent<CAnimation>(2, 12);
@@ -153,7 +153,7 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
 
     Entity chop1 = registry->CreateEntity();
     chop1.Group("Enemies");
-    chop1.AddComponent<CTransform>(sf::Vector2f(250, 250), sf::Vector2f(1.0, 1.0), 0.0);
+    chop1.AddComponent<CTransform>(sf::Vector2f(250, 250), sf::Vector2f(1.0, 1.0), sf::degrees(0.f));
     chop1.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     chop1.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
     chop1.AddComponent<CAnimation>(2, 2);

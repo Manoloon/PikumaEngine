@@ -112,7 +112,7 @@ private:
 
 public:
     explicit Pool(int capacity = 100)
-    { Data.resize(capacity); }
+    { Data.reserve(capacity); }
 
     bool IsEmpty() const { return PoolSize == 0; }
 
@@ -136,39 +136,52 @@ public:
         if(IdToIndex.find(EntityId) != std::end(IdToIndex))
         {
             int index = IdToIndex[EntityId];
-            Data[index] = object;
+            Data[index] = std::move(object);
+            return;
+        }
+
+        // use size as the last index in the array.
+        const int index = PoolSize;
+        IdToIndex.emplace(EntityId,index); 
+        IndexToId.emplace(index,EntityId);
+        if(index >= static_cast<int>(Data.size()))
+        {
+            Data.emplace_back(std::move(object));
         }
         else
         {
-            // use size as the last index in the array.
-            int index = PoolSize;
-            IdToIndex.emplace(EntityId,index); 
-            IndexToId.emplace(index,EntityId);
-            if(index >= (int)Data.size())
-            {
-                Data.resize(index * 2);
-            }
-            Data[index] = object;
-            PoolSize++;
+            Data[index] = std::move(object);
         }
+        PoolSize++;
     }
 
     void Remove(int EntityId)
     {
-        // move the last value to the place where the removed one was.
-        int indexToRemove = IdToIndex[EntityId];
-        int lastIndex = PoolSize - 1;
-        Data[indexToRemove] = Data[lastIndex];
+        auto it = IdToIndex.find(EntityId);
 
-        // then we reflect the changes into the other arrays.
-        int idLastElement = IndexToId[lastIndex];
-        IdToIndex[idLastElement] = indexToRemove;
-        IndexToId[indexToRemove] = idLastElement;
+        if(it == std::end(IdToIndex))
+        {
+            return;
+        }
 
+        const int indexToRemove = it->second;
+        const int lastIndex = PoolSize - 1;
+        
+        if(indexToRemove != lastIndex)
+        {
+            Data[indexToRemove] = std::move(Data[lastIndex]);
+            
+            // then we reflect the changes into the other arrays.
+            const int idLastElement = IndexToId[lastIndex];
+            IdToIndex[idLastElement] = indexToRemove;
+            IndexToId[indexToRemove] = idLastElement;
+        }
+        
         // now we remove the object that we want to remove.
         IdToIndex.erase(EntityId);
-        IndexToId.erase(EntityId);
+        IndexToId.erase(lastIndex);
         PoolSize--;
+        Data.pop_back();
     }
 
     void RemoveEntityFromPool(int entityId) override

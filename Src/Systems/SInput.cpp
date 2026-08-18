@@ -25,25 +25,25 @@ void SInput::onKeyPressed(KeyPressedEvent& event)
                     if(event.KeySymbol == sf::Keyboard::Key::W)
                     {
                         rigidBodyComp.velocity += keyboardComp.upVelocity;
-                        spriteComp.spriteRect.top = spriteComp.spriteRect.height *0;
+                        spriteComp.spriteRect.position.y = spriteComp.spriteRect.size.y * 0;
                     }
                     
                     if(event.KeySymbol == sf::Keyboard::Key::S)
                     {
                         rigidBodyComp.velocity += keyboardComp.downVelocity;
-                        spriteComp.spriteRect.top = spriteComp.spriteRect.height *2;
+                        spriteComp.spriteRect.position.y = spriteComp.spriteRect.size.y * 2;
                     }
 
                     if(event.KeySymbol == sf::Keyboard::Key::A)
                     {
                         rigidBodyComp.velocity += keyboardComp.leftVelocity;
-                        spriteComp.spriteRect.top = spriteComp.spriteRect.height *3;
+                        spriteComp.spriteRect.position.y  = spriteComp.spriteRect.size.y * 3;
                     }
 
                     if(event.KeySymbol == sf::Keyboard::Key::D)
                     {
                         rigidBodyComp.velocity += keyboardComp.rightVelocity;
-                        spriteComp.spriteRect.top = spriteComp.spriteRect.height *1;
+                        spriteComp.spriteRect.position.y = spriteComp.spriteRect.size.y * 1;
                     }
     }
 }

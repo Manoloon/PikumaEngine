@@ -23,8 +23,7 @@ void SRender::Update(sf::RenderWindow &window,
             const CSprite& spriteComp = entity.GetComponent<CSprite>();
             // set the source rect for the origin for the sprite
             auto text = assetStore->GetTexture(spriteComp.assetId);
-            sf::Sprite sprite;
-            sprite.setTexture(*text);
+            sf::Sprite sprite(*text);
             sprite.setTextureRect(spriteComp.spriteRect);
             if(!spriteComp.bIsUI)
             {
