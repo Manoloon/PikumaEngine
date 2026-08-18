@@ -36,14 +36,18 @@ add_executable(PikumaEngine main.cpp ${SOURCES}
 target_include_directories(PikumaEngine PRIVATE ${SRC_DIR})
 
 # Asset directory copy to build folder
-set(ASSETS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets")
-set(BUILD_ASSETS_DIR "${CMAKE_BINARY_DIR}/assets")
-add_custom_command(TARGET PikumaEngine POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${ASSETS_DIR}"
-        "${BUILD_ASSETS_DIR}"
+set(ASSETS_DIR "${CMAKE_SOURCE_DIR}/assets")
+
+file(GLOB_RECURSE ASSET_FILES
+    CONFIGURE_DEPENDS
+    "${ASSETS_DIR}/*"
 )
 
+add_custom_target(copy_assets ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${ASSETS_DIR}"
+        "${CMAKE_BINARY_DIR}/assets"
+)
 
 target_link_libraries(PikumaEngine PRIVATE
                         ImGui-SFML::ImGui-SFML

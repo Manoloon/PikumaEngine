@@ -7,42 +7,60 @@
 #include <sol/sol.hpp>
 
 
-void LevelLoader::LoadSettings(sol::state& LuaState,int LevelNumber)
+void LevelLoader::LoadSettings(sol::state& LuaState,AssetStore* assetStore, int LevelNumber)
 {
-    const std::string_view scriptfile = "./assets/scripts/Level" + std::to_string(LevelNumber) + ".lua";
-    sol::load_result script = LuaState.load_file(scriptfile.data());
+    const std::string scriptfile = "./assets/scripts/Level" + std::to_string(LevelNumber) + ".lua";
+    sol::load_result script = LuaState.load_file(scriptfile);
     if(!script.valid())
     {
         sol::error err = script;
-        std::string_view Message = err.what();
+        std::string Message = err.what();
         Logger::Error(Message);
         return;
     }
 
-    LuaState.safe_script_file(scriptfile.data());
+    LuaState.safe_script_file(scriptfile.data()); 
     sol::table levelTable = LuaState["Level"];
-    // TODO :
-    // loop assets if assetoptional is true 
-    // populate assets from the table.
-    // use a while(true) and a counter int i = 0; break if any inside assets in the script is not found
-}
-
-void LevelLoader::LoadAssets(AssetStore *assetStore)
-{
-    if(assetStore == nullptr)
+    if(!levelTable.valid())
     {
-        Logger::Error("Failed to access to AssetStore pointer");
+        Logger::Error("Level table not found");
         return;
     }
-    assetStore->AddTexture("tank-image","../assets/images/tank-panther-right.png");
-    assetStore->AddTexture("truck-image","../assets/images/truck-ford-right.png");
-    assetStore->AddTexture("player-image","../assets/images/chopper-spritesheet.png");
-    assetStore->AddTexture("radar-image","../assets/images/radar.png");
-    assetStore->AddTexture("tilemap-image","../assets/tilemaps/jungle.png");
-    assetStore->AddTexture("bullet-image","../assets/images/bullet.png");
-    assetStore->AddTexture("tree-image","../assets/images/tree.png");
 
+    sol::table assetsTable = levelTable["assets"];
+    if(!assetsTable.valid())
+    {
+        Logger::Error("Assets table not found");
+        return;
+    }
+    //TODO to refactor this
+    for(int it = 0; ;it++)
+    {
+        sol::optional<sol::table> asset = assetsTable[it];
+        if(!asset)
+        {
+            Logger::Warning("Finished assets at index " + std::to_string(it));
+            break;
+        }
+
+        //TODO : podria usarse un enum
+        std::string assetType = (*asset)["type"];
+        const std::string id = (*asset)["id"]; 
+        const std::string assetFile = (*asset)["file"];
+        if(assetType == "texture")
+        {
+            assetStore->AddTexture(id,assetFile);
+            //Logger::Info("A new texture added id: " + id + " : " + assetFile);
+        }
+        else if (assetType == "font")
+        {
+            int size = (*asset)["font_size"];
+            assetStore->AddFont(id,assetFile,size);
+            //Logger::Info("A new Font added id: " + id);
+        }
+    }
 }
+
 
 void LevelLoader::ParseNewMap(Registry* registry, const std::string_view newMap)
 {
@@ -71,6 +89,7 @@ void LevelLoader::ParseNewMap(Registry* registry, const std::string_view newMap)
                 mapFile.ignore();
 
                 Entity tile = registry->CreateEntity();
+                // TODO : enum groups
                 tile.Group("tiles");
                 tile.AddComponent<CTransform>(sf::Vector2f(x * (TILE_SCALE * TILE_SIZE),
                                                               y * (TILE_SCALE * TILE_SIZE)),
@@ -87,9 +106,8 @@ void LevelLoader::ParseNewMap(Registry* registry, const std::string_view newMap)
         Game::mapHeight = MAP_ROWS * TILE_SIZE * TILE_SCALE;
 }
 
-void LevelLoader::LoadLevel(Registry* registry,AssetStore* assetStore,float ScreenResWidth,int LevelID)
+void LevelLoader::LoadLevel(Registry* registry,int LevelID)
 {
-    LoadAssets(assetStore);
     // TODO : temporary
     const std::string_view map = "../assets/tilemaps/jungle.map";
     ParseNewMap(registry,map);
@@ -158,4 +176,10 @@ void LevelLoader::LoadLevel(Registry* registry,AssetStore* assetStore,float Scre
     UI_Radar.AddComponent<CSprite>("radar-image", sf::Vector2f(64.f, 64.f),
                                    ERenderLayers::L_GUI, true);
     UI_Radar.AddComponent<CAnimation>(8, 5);
+}
+
+void LevelLoader::SetupAndLoad(Registry *registry, AssetStore *assetStore, sol::state &LuaState, int LevelID)
+{
+    LoadSettings(LuaState,assetStore,LevelID);
+    LoadLevel(registry,LevelID);
 }

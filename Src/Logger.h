@@ -10,8 +10,9 @@
 class Logger
 {
 public:
+    static void Info(std::string_view Message);
     // Logger::Warning("Shoot");
-    static void Warning(const std::string_view &Message);
+    static void Warning(std::string_view Message);
     // Logger::Error("DEAD");
-    static void Error(const std::string_view &Message);
+    static void Error(std::string_view Message);
 };

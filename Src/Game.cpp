@@ -75,8 +75,7 @@ void Game::BeginPlay()
     isRunning =true;
 
     auto levelLoader = std::make_unique<LevelLoader>();
-    levelLoader->LoadSettings(luaState,1);
-    levelLoader->LoadLevel(registry.get(),assetStore.get(),screenResolution.x,1);
+    levelLoader->SetupAndLoad(registry.get(),assetStore.get(),luaState,1);
     
     // Fix time step
     timeSinceLastTick = sf::Time::Zero;

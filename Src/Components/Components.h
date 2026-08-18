@@ -51,7 +51,7 @@ struct CSprite
     bool bIsUI;
     sf::IntRect spriteRect;
 
-    explicit CSprite(std::string_view AssetId = "",
+    explicit CSprite(std::string_view AssetId="",
                      sf::Vector2f Scale = sf::Vector2f(1, 1),
                      ERenderLayers RenderLayers = ERenderLayers::L_PLAYER, bool isUI = false,
                      sf::Vector2f RectPos = sf::Vector2f(0, 0))

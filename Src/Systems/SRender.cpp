@@ -19,8 +19,8 @@ void SRender::Update(sf::RenderWindow &window,
         std::sort(newEntities.begin(),newEntities.end(), CompareByIndex);
         for(auto entity : newEntities)
         {
-            const auto& transformComp = entity.GetComponent<CTransform>();
-            const auto& spriteComp = entity.GetComponent<CSprite>();
+            const CTransform& transformComp = entity.GetComponent<CTransform>();
+            const CSprite& spriteComp = entity.GetComponent<CSprite>();
             // set the source rect for the origin for the sprite
             auto text = assetStore->GetTexture(spriteComp.assetId);
             sf::Sprite sprite;
