@@ -1,5 +1,6 @@
 #pragma once
 #include <string_view>
+#include <sol/sol.hpp>
 class Registry;
 class AssetStore;
 

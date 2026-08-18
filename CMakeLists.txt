@@ -43,20 +43,31 @@ target_link_libraries(PikumaEngine PRIVATE
                         sfml-audio 
                         )
 
-# find_package(Lua 5.4 REQUIRED)
-# target_include_directories(PikumaEngine PRIVATE
-#     ${LUA_INCLUDE_DIR}
-# )
+get_filename_component(MINGW64_ROOT
+    "${CMAKE_CXX_COMPILER}"
+    DIRECTORY
+)
 
-# target_link_libraries(PikumaEngine PRIVATE
-#     ${LUA_LIBRARIES}
-# )
+get_filename_component(MINGW64_ROOT
+    "${MINGW64_ROOT}"
+    DIRECTORY
+)
+set(LUA_ROOT "${MINGW64_ROOT}/include/lua5.4")
 
 target_include_directories(PikumaEngine PRIVATE
-    "C:/msys64/mingw64/include"
-    "C:/msys64/mingw64/include/lua5.4"
+    "${MINGW64_ROOT}/include"
+    "${LUA_ROOT}"
 )
 
 target_link_libraries(PikumaEngine PRIVATE
-    "C:/msys64/mingw64/lib/liblua5.4.dll.a"
+    "${MINGW64_ROOT}/lib/liblua5.4.dll.a"
 )
+
+# target_include_directories(PikumaEngine PRIVATE
+#     "C:/msys64/mingw64/include"
+#     "C:/msys64/mingw64/include/lua5.4"
+# )
+
+# target_link_libraries(PikumaEngine PRIVATE
+#     "C:/msys64/mingw64/lib/liblua5.4.dll.a"
+# )
