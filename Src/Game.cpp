@@ -44,15 +44,13 @@ void Game::Run()
 }
 void Game::Preload()
 {
-    // window
     window.create(sf::VideoMode(screenResolution),"Game");
-    
+    luaState.open_libraries(sol::lib::base, sol::lib::math);
     //imgui
     if (!ImGui::SFML::Init(window)) {
         // Handle initialization failure
         return; // Or any other appropriate action
     }
-    luaState.open_libraries(sol::lib::base, sol::lib::math);
 }
 
 void Game::BeginPlay()

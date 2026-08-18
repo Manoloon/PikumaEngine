@@ -27,13 +27,14 @@ void LevelLoader::LoadSettings(sol::state& LuaState,AssetStore* assetStore, int 
         return;
     }
 
+    // Assets
     sol::table assetsTable = levelTable["assets"];
     if(!assetsTable.valid())
     {
         Logger::Error("Assets table not found");
         return;
     }
-    //TODO to refactor this
+
     for(int it = 0; ;it++)
     {
         sol::optional<sol::table> asset = assetsTable[it];
@@ -59,6 +60,7 @@ void LevelLoader::LoadSettings(sol::state& LuaState,AssetStore* assetStore, int 
             //Logger::Info("A new Font added id: " + id);
         }
     }
+    //// Level Assets
 }
 
 
