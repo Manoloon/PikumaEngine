@@ -1,30 +1,40 @@
 #include "SCamera.h"
+#include "Logger.h"
 
 SCamera::SCamera()
 {
-    RequireComponent<CCameraFollow>();
+    RequireComponent<CCamera>();
     RequireComponent<CTransform>();
 }
 
 void SCamera::BeginPlay()
 {
+    const auto locEntities = GetSystemEntities();
+    Logger::Info("SCamera entities: " + std::to_string(locEntities.size()));
+    for (const auto& entity : GetSystemEntities())
+    {
+        Logger::Info("Camera entity found");
+        PlayerCamera = &entity.GetComponent<CCamera>();
+        break;
+    }
 }
 
-void SCamera::Update(sf::RectangleShape & Camera, sf::Time DeltaTime)
+void SCamera::Update(sf::Time DeltaTime)
 {
-    for(auto entity : GetSystemEntities())
-        {
-            auto const& transform = entity.GetComponent<CTransform>();
-            float locCamPosX=0;
-            float locCamPosY=0;
-            if(transform.position.x + (Camera.getSize().x/2) < Game::mapWidth)
-            {
-                locCamPosX = transform.position.x - (Game::mapWidth /2);
-            }
-            if(transform.position.y + (Camera.getSize().y/2) < Game::mapHeight)
-            {
-                locCamPosY = transform.position.y - (Game::mapHeight/2);
-            }
-            Camera.setPosition(sf::Vector2f{locCamPosX,locCamPosY});
-        }
+    for (const auto &entity : GetSystemEntities())
+    {
+        const auto &transform = entity.GetComponent<CTransform>();
+
+        PlayerCamera->position = {transform.position.x - PlayerCamera->size.x / 2.f,
+                                  transform.position.y - PlayerCamera->size.y / 2.f};
+
+        PlayerCamera->position.x = std::clamp(PlayerCamera->position.x, 0.f, Game::mapWidth - PlayerCamera->size.x);
+        PlayerCamera->position.y = std::clamp(PlayerCamera->position.y, 0.f, Game::mapHeight - PlayerCamera->size.y);
+        break;
+    }
+}
+
+const CCamera *SCamera::GetCamera() const
+{
+    return PlayerCamera;
 }

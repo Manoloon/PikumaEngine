@@ -12,7 +12,7 @@ void SRenderText::Initialize(AssetStore* assetStore)
     // TODO : podriamos evitar mucho loop en tick
 }
 
-void SRenderText::Draw(sf::RenderWindow& window,AssetStore* assetStore, sf::RectangleShape& cameraActor)
+void SRenderText::Draw(sf::RenderWindow& window,AssetStore* assetStore,const CCamera& cameraActor)
 {
     for(auto entity : GetSystemEntities())
     {
@@ -20,19 +20,16 @@ void SRenderText::Draw(sf::RenderWindow& window,AssetStore* assetStore, sf::Rect
         const sf::Font* font = assetStore->GetFont(textcomp.AssetID);
         sf::Text text(*font);
         text.setString(textcomp.Text);
-        text.setCharacterSize(24);
+        text.setCharacterSize(textcomp.Size);
         text.setFillColor(textcomp.Color);
         if(textcomp.IsFixed)
         {
-            text.setPosition(textcomp.Position);
+            text.setPosition(cameraActor.position);
         }
         else
         {
-            sf::Vector2f pos = {textcomp.Position - cameraActor.getPosition()};
-            text.setPosition(pos);
+            text.setPosition(textcomp.Position);
         }
         window.draw(text);
-        // setup de font and render the font in the position required and the color.
-        // is Fixed ? position.x - 0 , sino position.x - camera.x , lo mismo para y.
     }
 }

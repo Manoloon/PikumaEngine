@@ -123,6 +123,10 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     Tank.AddComponent<CRigidBody>(sf::Vector2f(10.f, 0.f));
     Tank.AddComponent<CShootEmitter>(sf::Vector2f(50,10),2000,2000,false);
     Tank.AddComponent<CSprite>("tank-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
+    Tank.AddComponent<CHealth>(100);
+    std::string TankhealthText = std::to_string(Tank.GetComponent<CHealth>().Health);
+    sf::Vector2f Tankpos = {Tank.GetComponent<CTransform>().position.x,Tank.GetComponent<CTransform>().position.y - 10} ;
+    Tank.AddComponent<CTextComponent>(Tankpos,TankhealthText,"pico8-font-5",sf::Color::Green,5,false);
     Tank.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
     Entity Truck = registry->CreateEntity();
@@ -140,17 +144,15 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     Player.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_PLAYER);
     Player.AddComponent<CAnimation>(2, 6);
     Player.AddComponent<CHealth>(100);
-    Player.AddComponent<CCameraFollow>();
+    Player.AddComponent<CCamera>();
     Player.AddComponent<CShootEmitter>(sf::Vector2f(40.f,40.f),0,1000,10,true,0);
     Player.AddComponent<CKeyboardControlled>(sf::Vector2f(0, -PLAYER_VELOCITY),
                                              sf::Vector2f(PLAYER_VELOCITY,0),
                                              sf::Vector2f(0,PLAYER_VELOCITY),
                                              sf::Vector2f(-PLAYER_VELOCITY,0));
     Player.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
-
     Entity chop2 = registry->CreateEntity();
     chop2.Group("Enemies");
-    chop2.AddComponent<CTextComponent>(sf::Vector2f(150,170),"Health","pico8-font-5",sf::Color::Green,false);
     chop2.AddComponent<CTransform>(sf::Vector2f(150, 150), sf::Vector2f(2.0, 2.0), sf::degrees(0.f));
     chop2.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     chop2.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
@@ -163,6 +165,10 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     chop1.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     chop1.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
     chop1.AddComponent<CAnimation>(2, 2);
+    chop1.AddComponent<CHealth>();
+    std::string healthText = std::to_string(chop1.GetComponent<CHealth>().Health);
+    sf::Vector2f chop1pos = {chop1.GetComponent<CTransform>().position.x,chop1.GetComponent<CTransform>().position.y - 10} ;
+    chop1.AddComponent<CTextComponent>(chop1pos,healthText,"pico8-font-5",sf::Color::Green,5);
     chop1.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
     Entity tree = registry->CreateEntity();

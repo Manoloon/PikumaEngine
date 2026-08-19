@@ -69,14 +69,18 @@ void Game::BeginPlay()
     registry->AddSystem<SRenderText>();
 
     window.setFramerateLimit(frameRate);
-        
-    cameraActor.setPosition(sf::Vector2f{0,0});
-    cameraActor.setScale(static_cast<sf::Vector2f>(window.getSize()));
     isRunning =true;
-
     auto levelLoader = std::make_unique<LevelLoader>();
     levelLoader->SetupAndLoad(registry.get(),assetStore.get(),luaState,1);
-    
+    registry->Update();
+    auto& cameraSystem = registry->GetSystem<SCamera>();
+    cameraSystem.BeginPlay();
+    CameraActor = cameraSystem.GetCamera();
+    if(CameraActor == nullptr)
+    {
+        Logger::Error("Camera actor nullptr");
+        return;
+    }
     // Fix time step
     timeSinceLastTick = sf::Time::Zero;
     DeltaTime = sf::seconds(1.f / FPS);
@@ -108,7 +112,7 @@ void Game::Update()
         //run this at the end of the frame.
         registry->Update();
         registry->GetSystem<SMovement>().Update(DeltaTimeSecond);
-        registry->GetSystem<SCamera>().Update(cameraActor,DeltaTime);
+        registry->GetSystem<SCamera>().Update(DeltaTime);
         registry->GetSystem<SAnimation>().Update();
         registry->GetSystem<SCollision>().Update(DeltaTimeSecond, eventBus);
         registry->GetSystem<SProjectileEmitter>().Update(DeltaTimeSecond,registry);
@@ -119,13 +123,13 @@ void Game::Update()
 void Game::Draw()
 {
     window.clear(sf::Color(18,33,43));
-    registry->GetSystem<SRender>().Update(window, assetStore.get(), cameraActor);
-    registry->GetSystem<SRenderText>().Draw(window,assetStore.get(),cameraActor);
+    registry->GetSystem<SRender>().Update(window, assetStore.get(), *CameraActor);
+    registry->GetSystem<SRenderText>().Draw(window,assetStore.get(),*CameraActor);
     if(bDebug)
     {
         registry->GetSystem<SDebugRender>().
-                Update(window,cameraActor,registry->GetSystem<SCollision>().GetHitColor());
-        registry->GetSystem<SRenderDebugGUI>().Update(window,DeltaTime,registry,cameraActor);
+                Update(window,*CameraActor,registry->GetSystem<SCollision>().GetHitColor());
+        registry->GetSystem<SRenderDebugGUI>().Update(window,DeltaTime,registry,*CameraActor);
     }
     window.display();
 }

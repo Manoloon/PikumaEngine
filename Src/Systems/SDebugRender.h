@@ -11,5 +11,5 @@ class SDebugRender : public System
 public:
     SDebugRender();
 
-    void Update(sf::RenderWindow &window,sf::RectangleShape& camera,sf::Color color = sf::Color::Green) const;
+    void Update(sf::RenderWindow &window,const CCamera& camera,sf::Color color = sf::Color::Green) const;
 };

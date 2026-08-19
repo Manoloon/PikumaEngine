@@ -6,10 +6,14 @@
 #include "../ECS/ECS.h"
 #include "../Game.h"
 
+class CCamera;
+
 class SCamera : public System
 {
+    CCamera* PlayerCamera = nullptr;
 public:
     SCamera();
     void BeginPlay();
-    void Update(sf::RectangleShape& Camera, sf::Time DeltaTime);
+    void Update(sf::Time DeltaTime);
+    const CCamera* GetCamera() const;
 };

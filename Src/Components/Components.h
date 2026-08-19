@@ -128,9 +128,12 @@ struct CKeyboardControlled
     }
 };
 
-struct CCameraFollow
+struct CCamera
 {
+    sf::Vector2f position;
+    sf::Vector2f size;
 };
+
 /**
 * \brief component for actors that spawn projectiles.
 * \param Velocity sf::Vector2f.
@@ -181,11 +184,13 @@ struct CTextComponent
     std::string Text;
     std::string_view AssetID;
     sf::Color Color;
+    int Size;
     bool IsFixed;
-    CTextComponent(sf::Vector2f position,const std::string& text,std::string_view assetID,sf::Color color,bool isFixed = true):
+    CTextComponent(sf::Vector2f position,const std::string& text,std::string_view assetID,sf::Color color,int size = 24,bool isFixed = true):
     Position(position),
     Text(text),
     AssetID(assetID),
     Color(color),
+    Size(size),
     IsFixed(isFixed){}
 };

@@ -5,7 +5,7 @@ Level = {
     ----------------------------------------------------
     assets = {
         [0] =
-        { type = "texture", id = "tank-image",    file = "assets/images/tank-tiger-up.png" },
+        { type = "texture", id = "tank-image",    file = "assets/images/tank-tiger-right.png" },
         { type = "texture", id = "truck-image",    file = "assets/images/truck-ford-right.png" },
         { type = "texture", id = "player-image", file = "assets/images/chopper-spritesheet.png" },
         { type = "texture", id = "radar-image",  file = "assets/images/radar.png" },

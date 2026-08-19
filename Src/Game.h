@@ -28,7 +28,7 @@ class Game
 
     bool isRunning =false;
     bool bDebug= false;
-    sf::RectangleShape cameraActor;
+    
     sf::Vector2u screenResolution ={800,600};
 public:   
     Game();
@@ -40,7 +40,7 @@ public:
     void Update();
     void Inputs();
     void Draw();
-
+    const CCamera* CameraActor;
     static float mapWidth;
     static float mapHeight;
 };

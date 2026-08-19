@@ -4,7 +4,7 @@
 
 void SRenderDebugGUI::Update(sf::RenderWindow &window, sf::Time DeltaTime,
                              std::unique_ptr<Registry> &Registry,
-                             sf::RectangleShape &cameraActor) 
+                             const CCamera& cameraActor) 
 {
     ImGui::SFML::Update(window,DeltaTime);
             static int NewXPos;
@@ -46,8 +46,8 @@ void SRenderDebugGUI::Update(sf::RenderWindow &window, sf::Time DeltaTime,
             {
                 ImGui::Text(
                         "Map Coordinates (x= %.1f, y= %.1f)",
-                        ImGui::GetIO().MousePos.x + cameraActor.getPosition().x,
-                        ImGui::GetIO().MousePos.y + cameraActor.getPosition().y);
+                        ImGui::GetIO().MousePos.x + cameraActor.position.x,
+                        ImGui::GetIO().MousePos.y + cameraActor.position.y);
                         ImGui::Spacing();
                         ImGui::Text("FPS > %.1f",CurrentGameFPS);
             }
