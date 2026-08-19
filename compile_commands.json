@@ -102,6 +102,12 @@
   "output": "CMakeFiles/PikumaEngine.dir/Src/LevelLoader.cpp.obj"
 },
 {
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\Systems\\SRenderText.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SRenderText.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SRenderText.cpp",
+  "output": "CMakeFiles/PikumaEngine.dir/Src/Systems/SRenderText.cpp.obj"
+},
+{
   "directory": "C:/Coding/cpp/PikumaEngine/build/_deps/imgui-sfml-build",
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/ImGui-SFML.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\ImGui-SFML.dir\\imgui-SFML.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\build\\_deps\\imgui-sfml-src\\imgui-SFML.cpp",
   "file": "C:/Coding/cpp/PikumaEngine/build/_deps/imgui-sfml-src/imgui-SFML.cpp",

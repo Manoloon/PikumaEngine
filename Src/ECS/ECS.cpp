@@ -71,8 +71,10 @@ void Registry::RemoveEntityTag(Entity entity)
 
 void Registry::GroupEntity(Entity entity,const std::string& group)
 {
+    Logger::Info("Registry: GroupEntity group to add : " + group);
     entitiesPerGroup.emplace(group,std::set<Entity>());
     entitiesPerGroup[group].emplace(entity);
+    Logger::Info("Registry: GroupEntity groupPerEntity to add id: " + std::to_string(entity.GetId()) + " group: " + group);
     groupPerEntity.emplace(entity.GetId(),group);
 }
 

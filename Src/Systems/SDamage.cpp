@@ -15,14 +15,14 @@ void SDamage::onCollision(CollisionEvent &event)
     std::unique_ptr<Entity> a = std::make_unique<Entity>(event.EntityA);
     std::unique_ptr<Entity> b = std::make_unique<Entity>(event.EntityB);
     // Hit On Enemies
-    // if(a->BelongToGroup("projectiles") && !b->HasTag("enemies"))
-    // {
-    //     OnProjectileHitsOther(a,b);
-    // }
-    // if(b->BelongToGroup("projectiles") && !a->HasTag("enemies"))
-    // {
-    //     OnProjectileHitsOther(b,a);
-    // }
+    if(a->BelongToGroup("projectiles") && !b->HasTag("enemies"))
+    {
+        OnProjectileHitsOther(a,b);
+    }
+    if(b->BelongToGroup("projectiles") && !a->HasTag("enemies"))
+    {
+        OnProjectileHitsOther(b,a);
+    }
 
     // // hit player
     // if(a->BelongToGroup("projectiles") && b->HasTag("player"))
@@ -46,8 +46,12 @@ void SDamage::OnProjectileHitsOther(std::unique_ptr<Entity> &Projectile, std::un
     if (!projectileComp->bIsFriendly)
     {
         auto &LocalHealth = Other->GetComponent<CHealth>();
-        LocalHealth.Health -= projectileComp->damagePercentage;
 
+        LocalHealth.Health -= projectileComp->damagePercentage;
+        if(Other->HasComponent<CTextComponent>())
+        {
+            Other->GetComponent<CTextComponent>().Text = std::to_string(LocalHealth.Health);
+        }
         if (LocalHealth.Health <= 0)
         {
             Other->Destroy();
