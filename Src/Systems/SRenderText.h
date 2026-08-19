@@ -9,6 +9,5 @@ class SRenderText : public System
     public:
     SRenderText();
     void Initialize(AssetStore* assetStore);
-    void Update(AssetStore* assetStore);
-    void Draw(sf::RenderWindow& window,AssetStore* assetStore);
+    void Draw(sf::RenderWindow& window,AssetStore* assetStore, sf::RectangleShape& cameraActor);
 };

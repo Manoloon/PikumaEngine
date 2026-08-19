@@ -120,7 +120,7 @@ void Game::Draw()
 {
     window.clear(sf::Color(18,33,43));
     registry->GetSystem<SRender>().Update(window, assetStore.get(), cameraActor);
-    registry->GetSystem<SRenderText>().Draw(window,assetStore.get());
+    registry->GetSystem<SRenderText>().Draw(window,assetStore.get(),cameraActor);
     if(bDebug)
     {
         registry->GetSystem<SDebugRender>().
