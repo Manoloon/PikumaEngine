@@ -29,10 +29,11 @@ set(SOURCES
     ${SRC_DIR}/Systems/SProjectileEmitter.cpp
     ${SRC_DIR}/Systems/SRender.cpp
     ${SRC_DIR}/Systems/SRenderDebugGUI.cpp
+    ${SRC_DIR}/LevelLoader.cpp
+    ${SRC_DIR}/Systems/SRenderText.cpp
     )
 
-add_executable(PikumaEngine main.cpp ${SOURCES}
-    Src/LevelLoader.cpp)
+add_executable(PikumaEngine main.cpp ${SOURCES})
 target_include_directories(PikumaEngine PRIVATE ${SRC_DIR})
 
 # Asset directory copy to build folder

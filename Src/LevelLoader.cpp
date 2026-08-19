@@ -114,6 +114,9 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     const std::string_view map = "../assets/tilemaps/jungle.map";
     ParseNewMap(registry,map);
 
+    Entity Title = registry->CreateEntity();
+    Title.AddComponent<CTextComponent>(sf::Vector2f(ScreenResWidth/2.f,10),"The Engine!","pico8-font-5",sf::Color::White);
+
     Entity Tank = registry->CreateEntity();
     Tank.Group("Enemies");
     Tank.AddComponent<CTransform>(sf::Vector2f(10, 50), sf::Vector2f(2.0, 2.0), sf::degrees(0.f));
@@ -147,6 +150,7 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
 
     Entity chop2 = registry->CreateEntity();
     chop2.Group("Enemies");
+    chop2.AddComponent<CTextComponent>(sf::Vector2f(150,170),"Health","pico8-font-5",sf::Color::Green,false);
     chop2.AddComponent<CTransform>(sf::Vector2f(150, 150), sf::Vector2f(2.0, 2.0), sf::degrees(0.f));
     chop2.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     chop2.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);

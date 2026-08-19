@@ -18,6 +18,7 @@
 #include "Systems/SCamera.h"
 #include "Systems/SProjectileEmitter.h"
 #include "Systems/SDebugRender.h"
+#include "Systems/SRenderText.h"
 #include "LevelLoader.h"
 
 float Game::mapWidth;
@@ -65,6 +66,7 @@ void Game::BeginPlay()
     registry->AddSystem<SCamera>();
     registry->AddSystem<SProjectileEmitter>();
     registry->AddSystem<SRenderDebugGUI>();
+    registry->AddSystem<SRenderText>();
 
     window.setFramerateLimit(frameRate);
         
@@ -118,7 +120,7 @@ void Game::Draw()
 {
     window.clear(sf::Color(18,33,43));
     registry->GetSystem<SRender>().Update(window, assetStore.get(), cameraActor);
-    
+    registry->GetSystem<SRenderText>().Draw(window,assetStore.get());
     if(bDebug)
     {
         registry->GetSystem<SDebugRender>().

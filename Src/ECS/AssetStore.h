@@ -23,8 +23,9 @@ public:
 
     void ClearAssets();
     void AddTexture(std::string_view assetId,const std::string &filePath);
-    void AddFont(std::string_view assetId,const std::string& filePath, unsigned int fontSize);
     sf::Texture* GetTexture(std::string_view assetId);
+
+    void AddFont(std::string_view assetId,const std::string& filePath, unsigned int fontSize);
     sf::Font* GetFont(std::string_view assetId);
 };
 #endif //PIKUMAENGINE_ASSETSTORE_H

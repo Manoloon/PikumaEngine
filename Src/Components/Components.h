@@ -3,8 +3,8 @@
 //
 #pragma once
 
-#include <SFML/Graphics.hpp>
 #include "../Enums/ERenderLayers.h"
+#include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 /**
 * \brief Component for actors with presence in the world.
@@ -21,7 +21,9 @@ struct CTransform
     explicit CTransform(sf::Vector2f Position = sf::Vector2f(0.f, 0.f),
                         sf::Vector2f Scale = sf::Vector2f(1.0, 1.0),
                         sf::Angle Rotation = sf::degrees(0.f))
-            : position(Position), scale(Scale), rotation(Rotation){}
+        : position(Position), scale(Scale), rotation(Rotation)
+    {
+    }
 };
 
 /**
@@ -32,8 +34,9 @@ struct CRigidBody
 {
     sf::Vector2f velocity;
 
-    explicit CRigidBody(const sf::Vector2f Velocity = sf::Vector2f(0.0, 0.0))
-            : velocity(Velocity){}
+    explicit CRigidBody(const sf::Vector2f Velocity = sf::Vector2f(0.0, 0.0)) : velocity(Velocity)
+    {
+    }
 };
 /**
 * \brief component for actors with sprites.
@@ -51,14 +54,14 @@ struct CSprite
     bool bIsUI;
     sf::IntRect spriteRect;
 
-    explicit CSprite(std::string_view AssetId="",
+    explicit CSprite(std::string_view AssetId = "",
                      sf::Vector2f Scale = sf::Vector2f(1, 1),
-                     ERenderLayers RenderLayers = ERenderLayers::L_PLAYER, bool isUI = false,
+                     ERenderLayers RenderLayers = ERenderLayers::L_PLAYER,
+                     bool isUI = false,
                      sf::Vector2f RectPos = sf::Vector2f(0, 0))
-            : assetId(AssetId),
-              scale(Scale), renderLayer(RenderLayers), bIsUI(isUI),
-              spriteRect({static_cast<int>(RectPos.x),static_cast<int>(RectPos.y)},
-                          {static_cast<int>(scale.x),static_cast<int>(scale.y)}){};
+        : assetId(AssetId), scale(Scale), renderLayer(RenderLayers), bIsUI(isUI),
+          spriteRect({static_cast<int>(RectPos.x), static_cast<int>(RectPos.y)},
+                     {static_cast<int>(scale.x), static_cast<int>(scale.y)}) {};
 };
 /**
 * \brief component for actors with animation.
@@ -73,8 +76,10 @@ struct CAnimation
     int frameRateSpeed;
     bool bShouldLoop;
 
-    explicit CAnimation(int NFrames = 1, int FRateSpeed = 1,bool ShouldLoop = true)
-            : numFrames(NFrames), frameRateSpeed(FRateSpeed), bShouldLoop(ShouldLoop){}
+    explicit CAnimation(int NFrames = 1, int FRateSpeed = 1, bool ShouldLoop = true)
+        : numFrames(NFrames), frameRateSpeed(FRateSpeed), bShouldLoop(ShouldLoop)
+    {
+    }
 };
 /**
 * \brief component for actors with Collision.
@@ -85,9 +90,10 @@ struct CBoxCollision
 {
     sf::Vector2f size;
     sf::Vector2f offset;
-    explicit CBoxCollision(sf::Vector2f Size = sf::Vector2f(32, 32),
-                           sf::Vector2f Offset = sf::Vector2f(0, 0))
-            : size(Size), offset(Offset){}
+    explicit CBoxCollision(sf::Vector2f Size = sf::Vector2f(32, 32), sf::Vector2f Offset = sf::Vector2f(0, 0))
+        : size(Size), offset(Offset)
+    {
+    }
 };
 /**
 * \brief component for actors controlled by keyboard.
@@ -98,13 +104,13 @@ struct CBoxCollision
 */
 struct CKeyboardControlled
 {
-    float acceleration = 500.f;   // Units per second squared
-    float maxSpeed = 300.f;       // Maximum velocity
-    float damping = 0.95f;        // Friction / air resistance per frame
+    float acceleration = 500.f; // Units per second squared
+    float maxSpeed = 300.f;     // Maximum velocity
+    float damping = 0.95f;      // Friction / air resistance per frame
     // sf::Vector2f up    = { 0.f, -1.f };
     // sf::Vector2f down  = { 0.f,  1.f };
-    sf::Vector2f left  = { -1.f, 0.f };
-    sf::Vector2f right = { 1.f,  0.f };
+    sf::Vector2f left = {-1.f, 0.f};
+    sf::Vector2f right = {1.f, 0.f};
     sf::Vector2f upVelocity;
     sf::Vector2f rightVelocity;
     sf::Vector2f downVelocity;
@@ -124,7 +130,6 @@ struct CKeyboardControlled
 
 struct CCameraFollow
 {
-
 };
 /**
 * \brief component for actors that spawn projectiles.
@@ -143,21 +148,44 @@ struct CShootEmitter
     int damagePercentage;
     bool bIsFriendly;
     float lastEmissionTime;
-    
-    explicit CShootEmitter(sf::Vector2f Velocity = {0, 0}, int LoopFrequency = 1, int LifeSpan = 3,
-                           int DamagePercent = 40, bool IsFriendly = false,
-                           int LastEmissionTime = 0) :
-            velocity(Velocity), loopFrequency(LoopFrequency), lifeSpan(LifeSpan),
-            damagePercentage(DamagePercent), bIsFriendly(IsFriendly),
-            lastEmissionTime(LastEmissionTime)
-    {}
+
+    explicit CShootEmitter(sf::Vector2f Velocity = {0, 0},
+                           int LoopFrequency = 1,
+                           int LifeSpan = 3,
+                           int DamagePercent = 40,
+                           bool IsFriendly = false,
+                           int LastEmissionTime = 0)
+        : velocity(Velocity), loopFrequency(LoopFrequency), lifeSpan(LifeSpan), damagePercentage(DamagePercent),
+          bIsFriendly(IsFriendly), lastEmissionTime(LastEmissionTime)
+    {
+    }
 };
 /**
 * \brief component for actors that handle Health.
 * \param Health int. in percentage
 */
 struct CHealth
-        {
-            int Health;
-            CHealth(int health = 100): Health(health){}
-        };
+{
+    int Health;
+    CHealth(int health = 100) : Health(health)
+    {
+    }
+};
+
+/**
+*  \brief component that shows a label on screen
+*/
+struct CTextComponent
+{
+    sf::Vector2f Position;
+    std::string Text;
+    std::string_view AssetID;
+    sf::Color Color;
+    bool IsFixed;
+    CTextComponent(sf::Vector2f position,const std::string& text,std::string_view assetID,sf::Color color,bool isFixed = true):
+    Position(position),
+    Text(text),
+    AssetID(assetID),
+    Color(color),
+    IsFixed(isFixed){}
+};

@@ -8,11 +8,6 @@
 
 void AssetStore::ClearAssets()
 {
-    /*
-    for(auto texture: textures)
-    {
-        sf::Texture:destroy(texture.second)
-    }*/
     textures.clear();
     fonts.clear();
 }
@@ -28,16 +23,7 @@ void AssetStore::AddTexture(std::string_view assetId, const std::string &filePat
     textures.try_emplace(std::string(assetId),newTexture);
     //Logger::Info("Texture loaded: " + std::string(assetId));
 }
-void AssetStore::AddFont(std::string_view assetId, const std::string &filePath, unsigned int fontSize)
-{
-    sf::Font newFont;
-    if(!newFont.openFromFile(filePath))
-    {
-        Logger::Error("Failed to load Font: " + filePath);
-        return;
-    }
-    fonts.try_emplace(std::string(assetId),newFont);
-}
+
 sf::Texture *AssetStore::GetTexture(std::string_view assetId)
 {
     auto it = textures.find(std::string(assetId));
@@ -47,6 +33,17 @@ sf::Texture *AssetStore::GetTexture(std::string_view assetId)
         return nullptr;
     }
     return &it->second;
+}
+
+void AssetStore::AddFont(std::string_view assetId, const std::string &filePath, unsigned int fontSize)
+{
+    sf::Font newFont;
+    if(!newFont.openFromFile(filePath))
+    {
+        Logger::Error("Failed to load Font: " + filePath);
+        return;
+    }
+    fonts.try_emplace(std::string(assetId),newFont);
 }
 
 sf::Font *AssetStore::GetFont(std::string_view assetId)
