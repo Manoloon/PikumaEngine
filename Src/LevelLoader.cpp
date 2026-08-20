@@ -96,7 +96,7 @@ void LevelLoader::ParseNewMap(Registry* registry, const std::string_view newMap)
                                                               y * (TILE_SCALE * TILE_SIZE)),
                                               sf::Vector2f(TILE_SCALE,TILE_SCALE),
                                               sf::degrees(0.0f));
-                tile.AddComponent<CSprite>("tilemap-image",
+                tile.AddComponent<CSprite>("tilemap-texture",
                                            sf::Vector2f(TILE_SIZE,TILE_SIZE),
                                            ERenderLayers::L_TILEMAP, false,
                                            sf::Vector2f(srcRectX,srcRectY));
@@ -122,7 +122,7 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     Tank.AddComponent<CTransform>(sf::Vector2f(10, 50), sf::Vector2f(2.0, 2.0), sf::degrees(0.f));
     Tank.AddComponent<CRigidBody>(sf::Vector2f(10.f, 0.f));
     Tank.AddComponent<CShootEmitter>(sf::Vector2f(50,10),100,1000,false);
-    Tank.AddComponent<CSprite>("tank-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
+    Tank.AddComponent<CSprite>("tank-tiger-right-texture", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
     Tank.AddComponent<CHealth>(100);
     std::string TankhealthText = std::to_string(Tank.GetComponent<CHealth>().Health);
     sf::Vector2f Tankpos = {Tank.GetComponent<CTransform>().position.x,Tank.GetComponent<CTransform>().position.y - 10} ;
@@ -134,14 +134,14 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     Truck.AddComponent<CTransform>(sf::Vector2f(200, 50), sf::Vector2f(1.0, 1.0), sf::degrees(0.f));
     Truck.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     Truck.AddComponent<CShootEmitter>(sf::Vector2f(40,0),100,1000,false);
-    Truck.AddComponent<CSprite>("truck-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
+    Truck.AddComponent<CSprite>("truck-texture", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
     Truck.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
     Entity Player = registry->CreateEntity();
     Player.Tag("Player");
     Player.AddComponent<CTransform>(sf::Vector2f(ScreenResWidth/2.f, 300), sf::Vector2f(1.0, 1.0), sf::degrees(0.f));
     Player.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
-    Player.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_PLAYER);
+    Player.AddComponent<CSprite>("chopper-texture", sf::Vector2f(32.f, 32.f), ERenderLayers::L_PLAYER);
     Player.AddComponent<CAnimation>(2, 6);
     Player.AddComponent<CHealth>(100);
     Player.AddComponent<CCamera>();
@@ -153,7 +153,7 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     chop2.Group("Enemies");
     chop2.AddComponent<CTransform>(sf::Vector2f(150, 150), sf::Vector2f(2.0, 2.0), sf::degrees(0.f));
     chop2.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
-    chop2.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
+    chop2.AddComponent<CSprite>("chopper-texture", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
     chop2.AddComponent<CAnimation>(2, 12);
     chop2.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
@@ -161,7 +161,7 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     chop1.Group("Enemies");
     chop1.AddComponent<CTransform>(sf::Vector2f(250, 250), sf::Vector2f(1.0, 1.0), sf::degrees(0.f));
     chop1.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
-    chop1.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
+    chop1.AddComponent<CSprite>("chopper-texture", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
     chop1.AddComponent<CAnimation>(2, 2);
     chop1.AddComponent<CHealth>();
     std::string healthText = std::to_string(chop1.GetComponent<CHealth>().Health);
@@ -172,19 +172,19 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     Entity tree = registry->CreateEntity();
     tree.Group("Obstacles");
     tree.AddComponent<CTransform>(sf::Vector2f(5.f,50.f));
-    tree.AddComponent<CSprite>("tree-image",sf::Vector2f(16.f,32.f),ERenderLayers::L_OBSTACLES);
+    tree.AddComponent<CSprite>("tree2-texture",sf::Vector2f(16.f,32.f),ERenderLayers::L_OBSTACLES);
     tree.AddComponent<CBoxCollision>(sf::Vector2f(16.f, 32.f));
 
     Entity tree2 = registry->CreateEntity();
     tree2.Group("Obstacles");
     tree2.AddComponent<CTransform>(sf::Vector2f(100.f,50.f));
-    tree2.AddComponent<CSprite>("tree-image",sf::Vector2f(16.f,32.f),ERenderLayers::L_OBSTACLES);
+    tree2.AddComponent<CSprite>("tree1-texture",sf::Vector2f(16.f,32.f),ERenderLayers::L_OBSTACLES);
     tree2.AddComponent<CBoxCollision>(sf::Vector2f(16.f, 32.f));
 
     Entity UI_Radar = registry->CreateEntity();
     UI_Radar.Group("UI");
     UI_Radar.AddComponent<CTransform>(sf::Vector2f(ScreenResWidth - 100.f, 50.f));
-    UI_Radar.AddComponent<CSprite>("radar-image", sf::Vector2f(64.f, 64.f),
+    UI_Radar.AddComponent<CSprite>("radar-texture", sf::Vector2f(64.f, 64.f),
                                    ERenderLayers::L_GUI, true);
     UI_Radar.AddComponent<CAnimation>(8, 5);
 }
