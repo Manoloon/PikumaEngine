@@ -76,13 +76,13 @@ void SProjectileEmitter::Update(float DeltaTime, std::unique_ptr<Registry> &Regi
             projectilePosition.x += transform.scale.x * Sprite.spriteRect.size.x * 0.5f;
             projectilePosition.y += transform.scale.y * Sprite.spriteRect.size.y * 0.5f;
         }
-        Entity projectile = Registry->CreateEntity();
-        // TODO : this should be in an enum
-        projectile.Group("projectiles");
-        projectile.AddComponent<CTransform>(projectilePosition, transform.scale, transform.rotation);
-        projectile.AddComponent<CRigidBody>(shootEmitter.velocity);
-        projectile.AddComponent<CSprite>("bullet-image", sf::Vector2f(4.f, 4.f), ERenderLayers::L_PROJECTILE);
-        projectile.AddComponent<CBoxCollision>(sf::Vector2f(4.f, 4.f));
-        shootEmitter.lastEmissionTime = 0.f;
+        // Entity projectile = Registry->CreateEntity();
+        // // TODO : this should be in an enum
+        // projectile.Group("projectiles");
+        // projectile.AddComponent<CTransform>(projectilePosition, transform.scale, transform.rotation);
+        // projectile.AddComponent<CRigidBody>(shootEmitter.velocity);
+        // projectile.AddComponent<CSprite>("bullet-image", sf::Vector2f(4.f, 4.f), ERenderLayers::L_PROJECTILE);
+        // projectile.AddComponent<CBoxCollision>(sf::Vector2f(4.f, 4.f));
+        // shootEmitter.lastEmissionTime = 0.f;
     }
 }

@@ -165,7 +165,10 @@ void Game::Inputs()
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
         {
 
-            (frameRate>10)?frameRate-=5 : frameRate=5;
+            if(frameRate>10)
+            {
+                frameRate-=5;
+            }
             window.setFramerateLimit(frameRate);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P)&& !bPKeyPressed)

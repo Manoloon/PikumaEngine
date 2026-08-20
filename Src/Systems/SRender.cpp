@@ -15,17 +15,20 @@ void SRender::Update(sf::RenderWindow &window, AssetStore *assetStore, const CCa
 {
     std::vector<Entity> newEntities = GetSystemEntities();
     std::sort(newEntities.begin(), newEntities.end(), CompareByIndex);
+    const sf::Vector2f screenCenter = {window.getView().getSize().x/2.f,window.getView().getSize().y/2.f};
     for (auto entity : newEntities)
     {
         const CTransform &transformComp = entity.GetComponent<CTransform>();
         const CSprite &spriteComp = entity.GetComponent<CSprite>();
+
         // set the source rect for the origin for the sprite
         auto text = assetStore->GetTexture(spriteComp.assetId);
         sf::Sprite sprite(*text);
         sprite.setTextureRect(spriteComp.spriteRect);
+        
         if (!spriteComp.bIsUI)
         {
-            sprite.setPosition(transformComp.position - camera.position);
+            sprite.setPosition(transformComp.position - camera.position + screenCenter);
         }
         else
         {

@@ -121,7 +121,7 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     Tank.Group("Enemies");
     Tank.AddComponent<CTransform>(sf::Vector2f(10, 50), sf::Vector2f(2.0, 2.0), sf::degrees(0.f));
     Tank.AddComponent<CRigidBody>(sf::Vector2f(10.f, 0.f));
-    //Tank.AddComponent<CShootEmitter>(sf::Vector2f(50,10),2000,2000,false);
+    Tank.AddComponent<CShootEmitter>(sf::Vector2f(50,10),100,1000,false);
     Tank.AddComponent<CSprite>("tank-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
     Tank.AddComponent<CHealth>(100);
     std::string TankhealthText = std::to_string(Tank.GetComponent<CHealth>().Health);
@@ -133,19 +133,19 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     Truck.Group("Enemies");
     Truck.AddComponent<CTransform>(sf::Vector2f(200, 50), sf::Vector2f(1.0, 1.0), sf::degrees(0.f));
     Truck.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
-    //Truck.AddComponent<CShootEmitter>(sf::Vector2f(40,0),5000,1000,false);
+    Truck.AddComponent<CShootEmitter>(sf::Vector2f(40,0),100,1000,false);
     Truck.AddComponent<CSprite>("truck-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
     Truck.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
     Entity Player = registry->CreateEntity();
     Player.Tag("Player");
-    Player.AddComponent<CTransform>(sf::Vector2f(50, 50), sf::Vector2f(2.0, 2.0), sf::degrees(0.f));
+    Player.AddComponent<CTransform>(sf::Vector2f(ScreenResWidth/2.f, 300), sf::Vector2f(1.0, 1.0), sf::degrees(0.f));
     Player.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     Player.AddComponent<CSprite>("player-image", sf::Vector2f(32.f, 32.f), ERenderLayers::L_PLAYER);
     Player.AddComponent<CAnimation>(2, 6);
     Player.AddComponent<CHealth>(100);
     Player.AddComponent<CCamera>();
-    Player.AddComponent<CShootEmitter>(sf::Vector2f(40.f,40.f),0,1000,10,true,100);
+    Player.AddComponent<CShootEmitter>(sf::Vector2f(40.f,40.f),0,1000,10,true);
     Player.AddComponent<CKeyboardControlled>(sf::Vector2f(0, -PLAYER_VELOCITY),
                                              sf::Vector2f(PLAYER_VELOCITY,0),
                                              sf::Vector2f(0,PLAYER_VELOCITY),

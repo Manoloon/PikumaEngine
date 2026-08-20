@@ -15,34 +15,25 @@ void SDamage::onCollision(CollisionEvent &event)
     std::unique_ptr<Entity> a = std::make_unique<Entity>(event.EntityA);
     std::unique_ptr<Entity> b = std::make_unique<Entity>(event.EntityB);
     // Hit On Enemies
-    if(a->BelongToGroup("projectiles") && !b->HasTag("enemies"))
+    if(a->BelongToGroup("projectiles") && b->HasComponent<CHealth>())
     {
         OnProjectileHitsOther(a,b);
     }
-    if(b->BelongToGroup("projectiles") && !a->HasTag("enemies"))
+    else if(a->HasComponent<CHealth>() && b->BelongToGroup("projectiles"))
     {
         OnProjectileHitsOther(b,a);
     }
-
-    // // hit player
-    // if(a->BelongToGroup("projectiles") && b->HasTag("player"))
-    // {
-
-    // }
-    // if(b->BelongToGroup("projectiles") && a->HasTag("player"))
-    // {
-
-    // }
 }
 
 void SDamage::OnProjectileHitsOther(std::unique_ptr<Entity> &Projectile, std::unique_ptr<Entity> &Other)
 {
-    std::unique_ptr<CShootEmitter> projectileComp =
-        std::make_unique<CShootEmitter>(Projectile->GetComponent<CShootEmitter>());
-    if (projectileComp == nullptr)
+    if(!Projectile->HasComponent<CShootEmitter>())
     {
+        Logger::Warning("SDamage: OnProjectileHitsOther Projectile dont have CSHootEmitter component");
         return;
     }
+    std::unique_ptr<CShootEmitter> projectileComp = std::make_unique<CShootEmitter>(Projectile->GetComponent<CShootEmitter>());
+
     if (!projectileComp->bIsFriendly)
     {
         auto &LocalHealth = Other->GetComponent<CHealth>();

@@ -25,11 +25,10 @@ void SCamera::Update(sf::Time DeltaTime)
     {
         const auto &transform = entity.GetComponent<CTransform>();
 
-        PlayerCamera->position = {transform.position.x - PlayerCamera->size.x / 2.f,
-                                  transform.position.y - PlayerCamera->size.y / 2.f};
+        PlayerCamera->position = transform.position;
 
-        PlayerCamera->position.x = std::clamp(PlayerCamera->position.x, 0.f, Game::mapWidth - PlayerCamera->size.x);
-        PlayerCamera->position.y = std::clamp(PlayerCamera->position.y, 0.f, Game::mapHeight - PlayerCamera->size.y);
+        PlayerCamera->position.x = std::clamp(PlayerCamera->position.x, PlayerCamera->size.x/2.f, Game::mapWidth - PlayerCamera->size.x/2.f);
+        PlayerCamera->position.y = std::clamp(PlayerCamera->position.y, PlayerCamera->size.y/2.f, Game::mapHeight - PlayerCamera->size.y/2.f);
         break;
     }
 }
