@@ -34,9 +34,7 @@ struct CRigidBody
 {
     sf::Vector2f velocity;
 
-    explicit CRigidBody(const sf::Vector2f Velocity = sf::Vector2f(0.0, 0.0)) : velocity(Velocity)
-    {
-    }
+    explicit CRigidBody(const sf::Vector2f Velocity = {0.0, 0.0}) : velocity(Velocity){}
 };
 /**
 * \brief component for actors with sprites.
@@ -97,35 +95,24 @@ struct CBoxCollision
 };
 /**
 * \brief component for actors controlled by keyboard.
-* \param UpVelocity sf::Vector2f.
-* \param RightVelocity sf::Vector2f.
-* \param DownVelocity sf::Vector2f.
-* \param LeftVelocity sf::Vector2f.
+* \param Up sf::Vector2f.
+* \param Right sf::Vector2f.
+* \param Down sf::Vector2f.
+* \param Left sf::Vector2f.
 */
 struct CKeyboardControlled
 {
     float acceleration = 500.f; // Units per second squared
     float maxSpeed = 300.f;     // Maximum velocity
     float damping = 0.95f;      // Friction / air resistance per frame
-    // sf::Vector2f up    = { 0.f, -1.f };
-    // sf::Vector2f down  = { 0.f,  1.f };
-    sf::Vector2f left = {-1.f, 0.f};
-    sf::Vector2f right = {1.f, 0.f};
-    sf::Vector2f upVelocity;
-    sf::Vector2f rightVelocity;
-    sf::Vector2f downVelocity;
-    sf::Vector2f leftVelocity;
 
-    CKeyboardControlled(sf::Vector2f UpVelocity = sf::Vector2f(0, 0),
-                        sf::Vector2f RightVelocity = sf::Vector2f(0, 0),
-                        sf::Vector2f DownVelocity = sf::Vector2f(0, 0),
-                        sf::Vector2f LeftVelocity = sf::Vector2f(0, 0))
-    {
-        this->upVelocity = UpVelocity;
-        this->rightVelocity = RightVelocity;
-        this->downVelocity = DownVelocity;
-        this->leftVelocity = LeftVelocity;
-    }
+    sf::Vector2f up =    {0.0,-1.0};
+    sf::Vector2f right = {1.f, 0.f};
+    sf::Vector2f down =  {0.0, 1.0};
+    sf::Vector2f left =  {-1.f, 0.f};
+    sf::Vector2f facingDirection = {1.f, 0.f};
+    CKeyboardControlled(float Acceleration, float MaxSpeed, float Damping = 0.95f)
+    :acceleration(Acceleration),maxSpeed(MaxSpeed),damping(Damping){};
 };
 
 struct CCamera

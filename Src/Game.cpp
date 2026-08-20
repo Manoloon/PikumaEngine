@@ -106,11 +106,12 @@ void Game::Update()
         // the subscribing would be frame by frame
         // TODO : this should be handle out of update
         registry->GetSystem<SDamage>().SubscribeToEvents(eventBus);
-        registry->GetSystem<SInput>().SubscribeToEvents(eventBus);
+        //registry->GetSystem<SInput>().SubscribeToEvents(eventBus);
         registry->GetSystem<SProjectileEmitter>().SubscribeToEvent(eventBus);
 
         //run this at the end of the frame.
         registry->Update();
+        registry->GetSystem<SInput>().Update(DeltaTimeSecond);
         registry->GetSystem<SMovement>().Update(DeltaTimeSecond);
         registry->GetSystem<SCamera>().Update(DeltaTime);
         registry->GetSystem<SAnimation>().Update();

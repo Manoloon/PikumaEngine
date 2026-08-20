@@ -7,5 +7,5 @@ const int MAP_COLUMNS = 25;
 const int MAP_ROWS = 20;
 
 // Player
-const float PLAYER_VELOCITY = 6.0;
+const float PLAYER_VELOCITY = 1.0;
 extern float CurrentGameFPS;

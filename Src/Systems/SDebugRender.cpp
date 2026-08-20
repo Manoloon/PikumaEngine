@@ -6,17 +6,17 @@ SDebugRender::SDebugRender()
     RequireComponent<CBoxCollision>();
 }
 
-void SDebugRender::Update(sf::RenderWindow &window,const CCamera& camera, sf::Color color) const
+void SDebugRender::Update(sf::RenderWindow &window, const CCamera &camera, sf::Color color) const
 {
+    const sf::Vector2f screenCenter = {window.getView().getSize().x / 2.f, window.getView().getSize().y / 2.f};
     for (auto entity : GetSystemEntities())
     {
         const auto &transform = entity.GetComponent<CTransform>();
         const auto &collider = entity.GetComponent<CBoxCollision>();
-        const sf::Vector2f screenCenter = {window.getView().getSize().x/2.f,window.getView().getSize().y/2.f};
+
         sf::RectangleShape body;
-        float LocalWidth = collider.size.x * transform.scale.x;
-        float LocalHeight = collider.size.y * transform.scale.y;
-        body.setSize({LocalWidth, LocalHeight});
+
+        body.setSize(collider.size);
         body.setPosition(transform.position + collider.offset - camera.position + screenCenter);
         body.setOutlineColor(color);
         body.setFillColor(sf::Color::Transparent);

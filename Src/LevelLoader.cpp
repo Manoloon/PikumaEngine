@@ -147,10 +147,7 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     Player.AddComponent<CCamera>();
     //velocity,loopFrequency,lifeSpan,damagePercentage,bIsFriendly,lastEmissionTime;
     Player.AddComponent<CShootEmitter>(sf::Vector2f(40.f,40.f),0,10000,10,true);
-    Player.AddComponent<CKeyboardControlled>(sf::Vector2f(0, -PLAYER_VELOCITY),
-                                             sf::Vector2f(PLAYER_VELOCITY,0),
-                                             sf::Vector2f(0,PLAYER_VELOCITY),
-                                             sf::Vector2f(-PLAYER_VELOCITY,0));
+    Player.AddComponent<CKeyboardControlled>(500,300,0.95);
     Player.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
     Entity chop2 = registry->CreateEntity();
     chop2.Group("Enemies");
