@@ -32,7 +32,7 @@ void SProjectileEmitter::onKeyPressed(KeyPressedEvent &event)
             projectilePosition.y += transform.scale.y * Sprite.spriteRect.size.y * 0.5f;
         }
         // Determine direction from rigidbody
-        sf::Vector2f dir = {1.f, 0.f};
+        sf::Vector2f dir = {0.f, 0.f};
         if (rigidBody.velocity.x != 0.f)
             dir.x = (rigidBody.velocity.x > 0.f) ? 1.f : -1.f;
         if (rigidBody.velocity.y != 0.f)

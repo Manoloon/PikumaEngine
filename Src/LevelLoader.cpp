@@ -113,9 +113,9 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     const std::string_view map = "../assets/tilemaps/jungle.map";
     ParseNewMap(registry,map);
 
-    Entity Title = registry->CreateEntity();
-    Title.Group("UI");
-    Title.AddComponent<CTextComponent>(sf::Vector2f(ScreenResWidth/2.f,10),"The Engine!","pico8-font-5",sf::Color::White);
+    // Entity Title = registry->CreateEntity();
+    // Title.Group("UI");
+    // Title.AddComponent<CTextComponent>(sf::Vector2f(10,10),"The Engine!","pico8-font-5",sf::Color::White);
 
     Entity Tank = registry->CreateEntity();
     Tank.Group("Enemies");
@@ -145,7 +145,8 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     Player.AddComponent<CAnimation>(2, 6);
     Player.AddComponent<CHealth>(100);
     Player.AddComponent<CCamera>();
-    Player.AddComponent<CShootEmitter>(sf::Vector2f(40.f,40.f),0,1000,10,true);
+    //velocity,loopFrequency,lifeSpan,damagePercentage,bIsFriendly,lastEmissionTime;
+    Player.AddComponent<CShootEmitter>(sf::Vector2f(40.f,40.f),0,10000,10,true);
     Player.AddComponent<CKeyboardControlled>(sf::Vector2f(0, -PLAYER_VELOCITY),
                                              sf::Vector2f(PLAYER_VELOCITY,0),
                                              sf::Vector2f(0,PLAYER_VELOCITY),

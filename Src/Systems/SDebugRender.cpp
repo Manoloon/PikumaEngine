@@ -12,11 +12,12 @@ void SDebugRender::Update(sf::RenderWindow &window,const CCamera& camera, sf::Co
     {
         const auto &transform = entity.GetComponent<CTransform>();
         const auto &collider = entity.GetComponent<CBoxCollision>();
+        const sf::Vector2f screenCenter = {window.getView().getSize().x/2.f,window.getView().getSize().y/2.f};
         sf::RectangleShape body;
         float LocalWidth = collider.size.x * transform.scale.x;
         float LocalHeight = collider.size.y * transform.scale.y;
         body.setSize({LocalWidth, LocalHeight});
-        body.setPosition(transform.position + collider.offset - camera.position);
+        body.setPosition(transform.position + collider.offset - camera.position + screenCenter);
         body.setOutlineColor(color);
         body.setFillColor(sf::Color::Transparent);
         body.setOutlineThickness(3.f);

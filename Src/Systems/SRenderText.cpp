@@ -18,17 +18,18 @@ void SRenderText::Draw(sf::RenderWindow& window,AssetStore* assetStore,const CCa
     {
         const auto textcomp = entity.GetComponent<CTextComponent>();
         const sf::Font* font = assetStore->GetFont(textcomp.AssetID);
+        const sf::Vector2f screenCenter = {window.getView().getSize().x/2.f,window.getView().getSize().y/2.f};
         sf::Text text(*font);
         text.setString(textcomp.Text);
         text.setCharacterSize(textcomp.Size);
         text.setFillColor(textcomp.Color);
         if(textcomp.IsFixed)
         {
-            text.setPosition(cameraActor.position);
+            text.setPosition(cameraActor.position + screenCenter);
         }
         else
         {
-            text.setPosition(textcomp.Position);
+            text.setPosition(textcomp.Position + screenCenter);
         }
         window.draw(text);
     }

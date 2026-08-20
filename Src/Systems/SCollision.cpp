@@ -28,26 +28,18 @@ void SCollision::Update([[maybe_unused]] float DeltaTime, std::unique_ptr<EventB
         const auto &aTransform = entityA.GetComponent<CTransform>();
         const auto &aCollision = entityA.GetComponent<CBoxCollision>();
 
-        for (auto j = i; j != Entities.end(); ++j)
+        for (auto j = std::next(i); j != Entities.end(); ++j)
         {
             auto entityB = *j;
             const auto &bTransform = entityB.GetComponent<CTransform>();
             const auto &bCollision = entityB.GetComponent<CBoxCollision>();
-            // same entity
-            if (entityA == entityB)
-            {
-                continue;
-            }
+
             // check collision
             if (CheckAABBCollision(aTransform.position + aCollision.offset, aCollision.size, bTransform.position + bCollision.offset, bCollision.size))
             {
                 Logger::Info("SCollision : Update : Entity " + std::to_string(entityA.GetId()) + " collided with entity " + std::to_string(entityB.GetId()));
                 HitColor = sf::Color::Red;
                 eventBus->EmitEvent<CollisionEvent>(entityA, entityB);
-            }
-            else
-            {
-                HitColor = sf::Color::Green;
             }
         }
     }
