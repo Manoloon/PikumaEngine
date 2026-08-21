@@ -43,4 +43,5 @@ public:
     const CCamera* CameraActor;
     static float mapWidth;
     static float mapHeight;
+    static sf::Vector2u viewSize;
 };

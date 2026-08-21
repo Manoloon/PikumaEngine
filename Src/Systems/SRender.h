@@ -11,7 +11,8 @@
 
 class SRender : public System
 {
-public:
+  bool CouldBeCull(const sf::Vector2f& EntityPosition,const sf::Vector2f& EntityScale,const sf::IntRect& EntitySprite, const CCamera& Camera) const;
+  public:
     SRender();
     static bool CompareByIndex(const Entity &a,const Entity &b);
   /**
@@ -22,4 +23,5 @@ public:
   */
     void Update(sf::RenderWindow& window,AssetStore* assetStore,
                                     const CCamera& camera) const;
+    bool bCullActivated = true;
 };

@@ -47,19 +47,21 @@ struct CRigidBody
 struct CSprite
 {
     std::string_view assetId;
-    sf::Vector2f scale;
+    sf::Vector2f spriteSize;
     ERenderLayers renderLayer;
     bool bIsUI;
     sf::IntRect spriteRect;
-
     explicit CSprite(std::string_view AssetId = "",
-                     sf::Vector2f Scale = sf::Vector2f(1, 1),
+                     sf::Vector2f SpriteSize = {32.f, 32.f},
                      ERenderLayers RenderLayers = ERenderLayers::L_PLAYER,
                      bool isUI = false,
-                     sf::Vector2f RectPos = sf::Vector2f(0, 0))
-        : assetId(AssetId), scale(Scale), renderLayer(RenderLayers), bIsUI(isUI),
+                     sf::Vector2f RectPos = {0.f, 0.f})
+        : assetId(AssetId), 
+            spriteSize(SpriteSize), 
+            renderLayer(RenderLayers), 
+            bIsUI(isUI),
           spriteRect({static_cast<int>(RectPos.x), static_cast<int>(RectPos.y)},
-                     {static_cast<int>(scale.x), static_cast<int>(scale.y)}) {};
+                     {static_cast<int>(spriteSize.x), static_cast<int>(spriteSize.y)}) {};
 };
 /**
 * \brief component for actors with animation.
@@ -117,8 +119,9 @@ struct CKeyboardControlled
 
 struct CCamera
 {
-    sf::Vector2f position;
-    sf::Vector2f size;
+    sf::Vector2f position ={0.0f,0.0f};
+    sf::Vector2u viewSize = {200,200};
+    CCamera(sf::Vector2f Position, sf::Vector2u ViewSize):position(Position),viewSize(ViewSize){};
 };
 
 /**

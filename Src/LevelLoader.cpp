@@ -84,20 +84,23 @@ void LevelLoader::ParseNewMap(Registry* registry, const std::string_view newMap)
             {
                 char ch[2]={0,0};
                 mapFile.get(ch[0]);
-                int srcRectY=std::atoi(&ch[0]) * (int)TILE_SIZE;
+                const int srcRectY=std::atoi(&ch[0]) * static_cast<int>(TILE_SIZE);
                 mapFile.get(ch[0]);
-                int srcRectX=std::atoi(&ch[0]) * (int)TILE_SIZE;
+                const int srcRectX=std::atoi(&ch[0]) * static_cast<int>(TILE_SIZE);
                 mapFile.ignore();
 
                 Entity tile = registry->CreateEntity();
                 // TODO : enum groups
                 tile.Group("tiles");
-                tile.AddComponent<CTransform>(sf::Vector2f(x * (TILE_SCALE * TILE_SIZE),
-                                                              y * (TILE_SCALE * TILE_SIZE)),
+                const float tileWorldSize = TILE_SCALE * TILE_SIZE;
+                const sf::Vector2f tilePosition = {x * tileWorldSize,
+                                                   y * tileWorldSize};
+
+                tile.AddComponent<CTransform>(tilePosition,
                                               sf::Vector2f(TILE_SCALE,TILE_SCALE),
                                               sf::degrees(0.0f));
                 tile.AddComponent<CSprite>("tilemap-texture",
-                                           sf::Vector2f(TILE_SIZE,TILE_SIZE),
+                                           sf::Vector2f(tileWorldSize,tileWorldSize),
                                            ERenderLayers::L_TILEMAP, false,
                                            sf::Vector2f(srcRectX,srcRectY));
             }
@@ -105,6 +108,7 @@ void LevelLoader::ParseNewMap(Registry* registry, const std::string_view newMap)
         mapFile.close();
         Game::mapWidth = MAP_COLUMNS * TILE_SIZE * TILE_SCALE;
         Game::mapHeight = MAP_ROWS * TILE_SIZE * TILE_SCALE;
+        Game::viewSize = {200,200};
 }
 
 void LevelLoader::LoadLevel(Registry* registry,int LevelID)
@@ -134,17 +138,18 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     Truck.AddComponent<CTransform>(sf::Vector2f(200, 50), sf::Vector2f(1.0, 1.0), sf::degrees(0.f));
     Truck.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     Truck.AddComponent<CShootEmitter>(sf::Vector2f(40,0),100,1000,false);
-    Truck.AddComponent<CSprite>("truck-texture", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
+    Truck.AddComponent<CSprite>("truck-ford-right-texture", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
     Truck.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
 
     Entity Player = registry->CreateEntity();
     Player.Tag("Player");
-    Player.AddComponent<CTransform>(sf::Vector2f(ScreenResWidth/2.f, 300), sf::Vector2f(1.0, 1.0), sf::degrees(0.f));
+    const sf::Vector2f newPos = sf::Vector2f(ScreenResWidth/2.f, 300);
+    Player.AddComponent<CTransform>(newPos, sf::Vector2f(1.0, 1.0), sf::degrees(0.f));
     Player.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     Player.AddComponent<CSprite>("chopper-texture", sf::Vector2f(32.f, 32.f), ERenderLayers::L_PLAYER);
     Player.AddComponent<CAnimation>(2, 6);
     Player.AddComponent<CHealth>(100);
-    Player.AddComponent<CCamera>();
+    Player.AddComponent<CCamera>(newPos,Game::viewSize);
     //velocity,loopFrequency,lifeSpan,damagePercentage,bIsFriendly,lastEmissionTime;
     Player.AddComponent<CShootEmitter>(sf::Vector2f(40.f,40.f),0,10000,10,true);
     Player.AddComponent<CKeyboardControlled>(500,300,0.95);

@@ -7,33 +7,20 @@ SCamera::SCamera()
     RequireComponent<CTransform>();
 }
 
-void SCamera::BeginPlay()
+void SCamera::BeginPlay(const Registry* registry)
 {
-    const auto locEntities = GetSystemEntities();
-    Logger::Info("SCamera entities: " + std::to_string(locEntities.size()));
-    for (const auto& entity : GetSystemEntities())
-    {
-        Logger::Info("Camera entity found");
-        PlayerCamera = &entity.GetComponent<CCamera>();
-        break;
-    }
+    CameraTarget = registry->GetEntityByTag(TargetID);
 }
 
-void SCamera::Update(sf::Time DeltaTime)
+void SCamera::Update()
 {
-    for (const auto &entity : GetSystemEntities())
-    {
-        const auto &transform = entity.GetComponent<CTransform>();
-
-        PlayerCamera->position = transform.position;
-
-        PlayerCamera->position.x = std::clamp(PlayerCamera->position.x, PlayerCamera->size.x/2.f, Game::mapWidth - PlayerCamera->size.x/2.f);
-        PlayerCamera->position.y = std::clamp(PlayerCamera->position.y, PlayerCamera->size.y/2.f, Game::mapHeight - PlayerCamera->size.y/2.f);
-        break;
-    }
-}
-
-const CCamera *SCamera::GetCamera() const
-{
-    return PlayerCamera;
+    const auto &transform = CameraTarget->GetComponent<CTransform>();
+  
+    auto camera = &CameraTarget->GetComponent<CCamera>(); 
+    camera->position = transform.position;
+    Logger::Info("Camera at position " + std::to_string(camera->position.x) + " : " + std::to_string(camera->position.y));
+    const float HalfCameraWidth = CameraTarget->GetComponent<CCamera>().viewSize.x / 2.f;
+    const float HalfCameraHeight = CameraTarget->GetComponent<CCamera>().viewSize.y / 2.f;
+    camera->position.x = std::clamp(camera->position.x, HalfCameraWidth, Game::mapWidth - HalfCameraWidth);
+    camera->position.y = std::clamp(camera->position.y, HalfCameraHeight, Game::mapHeight - HalfCameraHeight);
 }

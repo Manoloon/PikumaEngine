@@ -23,6 +23,7 @@
 
 float Game::mapWidth;
 float Game::mapHeight;
+sf::Vector2u Game::viewSize;
 
 Game::Game()
 {
@@ -74,8 +75,8 @@ void Game::BeginPlay()
     levelLoader->SetupAndLoad(registry.get(),assetStore.get(),luaState,1);
     registry->Update();
     auto& cameraSystem = registry->GetSystem<SCamera>();
-    cameraSystem.BeginPlay();
-    CameraActor = cameraSystem.GetCamera();
+    cameraSystem.BeginPlay(registry.get());
+    CameraActor = &registry->GetEntityByTag("Player").GetComponent<CCamera>();
     if(CameraActor == nullptr)
     {
         Logger::Error("Camera actor nullptr");
@@ -113,7 +114,7 @@ void Game::Update()
         registry->Update();
         registry->GetSystem<SInput>().Update(DeltaTimeSecond);
         registry->GetSystem<SMovement>().Update(DeltaTimeSecond);
-        registry->GetSystem<SCamera>().Update(DeltaTime);
+        registry->GetSystem<SCamera>().Update();
         registry->GetSystem<SAnimation>().Update();
         registry->GetSystem<SCollision>().Update(DeltaTimeSecond, eventBus);
         registry->GetSystem<SProjectileEmitter>().Update(DeltaTimeSecond,registry);

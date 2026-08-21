@@ -5,15 +5,16 @@
 
 #include "../ECS/ECS.h"
 #include "../Game.h"
+#include <optional>
 
 class CCamera;
 
 class SCamera : public System
-{
-    CCamera* PlayerCamera = nullptr;
+{ 
+    std::optional<Entity> CameraTarget;
 public:
     SCamera();
-    void BeginPlay();
-    void Update(sf::Time DeltaTime);
-    const CCamera* GetCamera() const;
+    void BeginPlay(const Registry* registry);
+    void Update();
+    std::string TargetID = "Player";
 };

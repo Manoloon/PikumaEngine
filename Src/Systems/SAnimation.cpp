@@ -15,7 +15,7 @@ void SAnimation::Update()
 
         animation.currentFrame++;
         int frame = (animation.currentFrame / animation.frameRateSpeed) % animation.numFrames;
-        const int FrameW = static_cast<int>(sprite.scale.x);
+        const int FrameW = static_cast<int>(sprite.spriteSize.x);
         auto rect = sprite.spriteRect;
         rect.position.x = frame * FrameW;
         sprite.spriteRect = rect;

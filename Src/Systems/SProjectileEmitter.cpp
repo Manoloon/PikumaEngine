@@ -34,7 +34,7 @@ void SProjectileEmitter::onKeyPressed(KeyPressedEvent &event)
             dir.y = (rigidBody.velocity.y > 0.f) ? 1.f : -1.f;
         if (dir == sf::Vector2f(0.f, 0.f))
             dir = {1.f,0.f}; // default shot dir
-        dir.normalized();
+        dir = dir.normalized();
         if (entity.HasComponent<CSprite>())
         {
             const CSprite &Sprite = entity.GetComponent<CSprite>();
