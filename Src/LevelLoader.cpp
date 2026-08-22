@@ -120,10 +120,10 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
     // Entity Title = registry->CreateEntity();
     // Title.Group("UI");
     // Title.AddComponent<CTextComponent>(sf::Vector2f(10,10),"The Engine!","pico8-font-5",sf::Color::White);
-
+    const sf::Vector2f newPos = sf::Vector2f(ScreenResWidth/2.f, 300);
     Entity Tank = registry->CreateEntity();
     Tank.Group("Enemies");
-    Tank.AddComponent<CTransform>(sf::Vector2f(10, 50), sf::Vector2f(2.0, 2.0), sf::degrees(0.f));
+    Tank.AddComponent<CTransform>(newPos, sf::Vector2f(2.0, 2.0), sf::degrees(0.f));
     Tank.AddComponent<CRigidBody>(sf::Vector2f(10.f, 0.f));
     Tank.AddComponent<CShootEmitter>(sf::Vector2f(50,10),100,1000,false);
     Tank.AddComponent<CSprite>("tank-tiger-right-texture", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
@@ -143,7 +143,7 @@ void LevelLoader::LoadLevel(Registry* registry,int LevelID)
 
     Entity Player = registry->CreateEntity();
     Player.Tag("Player");
-    const sf::Vector2f newPos = sf::Vector2f(ScreenResWidth/2.f, 300);
+    
     Player.AddComponent<CTransform>(newPos, sf::Vector2f(1.0, 1.0), sf::degrees(0.f));
     Player.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
     Player.AddComponent<CSprite>("chopper-texture", sf::Vector2f(32.f, 32.f), ERenderLayers::L_PLAYER);

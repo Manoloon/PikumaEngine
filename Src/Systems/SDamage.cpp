@@ -15,11 +15,11 @@ void SDamage::onCollision(CollisionEvent &event)
     std::unique_ptr<Entity> a = std::make_unique<Entity>(event.EntityA);
     std::unique_ptr<Entity> b = std::make_unique<Entity>(event.EntityB);
     // Hit On Enemies
-    if(a->BelongToGroup("projectiles") && b->HasComponent<CHealth>())
+    if(a->BelongToGroup("projectile") && b->HasComponent<CHealth>())
     {
         OnProjectileHitsOther(a,b);
     }
-    else if(a->HasComponent<CHealth>() && b->BelongToGroup("projectiles"))
+    else if(a->HasComponent<CHealth>() && b->BelongToGroup("projectile"))
     {
         OnProjectileHitsOther(b,a);
     }

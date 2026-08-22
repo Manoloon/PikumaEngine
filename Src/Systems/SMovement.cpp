@@ -54,16 +54,42 @@ void SMovement::Update(float DeltaTime)
     for (auto entity : GetSystemEntities())
     {
         auto &transform = entity.GetComponent<CTransform>();
-        const auto &rigidBody = entity.GetComponent<CRigidBody>();
+        auto &rigidBody = entity.GetComponent<CRigidBody>();
 
+        if (entity.HasTag("Player"))
+        {
+            auto &keyboard = entity.GetComponent<CKeyboardControlled>();
+            const auto &input = keyboard.inputDirection;
 
+            if (input.lengthSquared() > 0.f)
+            {
+                rigidBody.velocity += input * keyboard.acceleration * DeltaTime;
+
+                Logger::Info("player velocity " + std::to_string(rigidBody.velocity.x) + " : " +
+                             std::to_string(rigidBody.velocity.y));
+
+                const float maxSpeedSquared = keyboard.maxSpeed * keyboard.maxSpeed;
+                if (rigidBody.velocity.lengthSquared() > maxSpeedSquared)
+                {
+                    rigidBody.velocity = rigidBody.velocity.normalized() * keyboard.maxSpeed;
+                }
+            }
+            else
+            {
+                rigidBody.velocity *= std::pow(keyboard.damping, DeltaTime * 60.f);
+                if (rigidBody.velocity.lengthSquared() < 0.01f)
+                {
+                    rigidBody.velocity = {0.f, 0.f};
+                }
+            }
+        }
         transform.position.x += rigidBody.velocity.x * DeltaTime;
         transform.position.y += rigidBody.velocity.y * DeltaTime;
 
         bool bOutOfBounds = (transform.position.x < 0 || transform.position.x > Game::mapWidth ||
                              transform.position.y < 0 || transform.position.y > Game::mapHeight);
 
-        if (bOutOfBounds && !entity.HasTag("Player"))
+        if (bOutOfBounds)
         {
             entity.Destroy();
         }

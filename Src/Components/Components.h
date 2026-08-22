@@ -112,6 +112,7 @@ struct CKeyboardControlled
     sf::Vector2f right = {1.f, 0.f};
     sf::Vector2f down =  {0.0, 1.0};
     sf::Vector2f left =  {-1.f, 0.f};
+    sf::Vector2f inputDirection = {0.f,0.f};
     sf::Vector2f facingDirection = {1.f, 0.f};
     CKeyboardControlled(float Acceleration, float MaxSpeed, float Damping = 0.95f)
     :acceleration(Acceleration),maxSpeed(MaxSpeed),damping(Damping){};

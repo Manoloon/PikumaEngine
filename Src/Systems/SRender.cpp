@@ -60,11 +60,6 @@ void SRender::Update(sf::RenderWindow &window, AssetStore *assetStore, const CCa
         {
             sprite.setPosition(transformComp.position);
         }
-        if(entity.HasTag("Player"))
-        {
-            Logger::Info("player at position " + std::to_string(transformComp.position.x) + 
-                                            " : " + std::to_string(transformComp.position.y));
-        }
         sprite.setRotation(transformComp.rotation);
         sprite.setScale(transformComp.scale);
         window.draw(sprite);

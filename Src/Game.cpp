@@ -37,6 +37,7 @@ void Game::Run()
 {
     Preload();
     BeginPlay();
+    PostLoad();
     while (isRunning)
     {
         Inputs();
@@ -87,7 +88,9 @@ void Game::BeginPlay()
     DeltaTime = sf::seconds(1.f / FPS);
 }
 
-void Game::PostLoad() {}
+void Game::PostLoad() 
+{
+}
 
 void Game::Update()
 {
@@ -107,15 +110,14 @@ void Game::Update()
         // the subscribing would be frame by frame
         // TODO : this should be handle out of update
         registry->GetSystem<SDamage>().SubscribeToEvents(eventBus);
-        //registry->GetSystem<SInput>().SubscribeToEvents(eventBus);
         registry->GetSystem<SProjectileEmitter>().SubscribeToEvent(eventBus);
 
         //run this at the end of the frame.
         registry->Update();
         registry->GetSystem<SInput>().Update(DeltaTimeSecond);
         registry->GetSystem<SMovement>().Update(DeltaTimeSecond);
-        registry->GetSystem<SCamera>().Update();
         registry->GetSystem<SAnimation>().Update();
+        registry->GetSystem<SCamera>().Update();
         registry->GetSystem<SCollision>().Update(DeltaTimeSecond, eventBus);
         registry->GetSystem<SProjectileEmitter>().Update(DeltaTimeSecond,registry);
         timeSinceLastTick -= DeltaTime;
