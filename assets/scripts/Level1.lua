@@ -1,3 +1,14 @@
+
+-- Night Day maps 
+local curent_hour = os.date("*t").hour;
+local current_map_assetID
+if  curent_hour > 9 and curent_hour < 19 then
+    current_map_assetID = "tilemap-texture"
+else
+    current_map_assetID = "tilemap-night-texture"
+end
+--
+
 -- Define a table with the start values of the first level
 Level = {
     ----------------------------------------------------
@@ -6,6 +17,7 @@ Level = {
     assets = {
         [0] =
         { type = "texture", id = "tilemap-texture",             file = "./assets/tilemaps/jungle.png" },
+        { type = "texture", id = "tilemap-night-texture",       file = "./assets/tilemaps/jungle-night.png" },
         { type = "texture", id = "chopper-texture",             file = "./assets/images/chopper-green-spritesheet.png" },
         { type = "texture", id = "su27-texture",                file = "./assets/images/su27-spritesheet.png" },
         { type = "texture", id = "f22-texture",                 file = "./assets/images/f22-spritesheet.png" },
@@ -84,7 +96,7 @@ Level = {
     ----------------------------------------------------
     tilemap = {
         map_file = "./assets/tilemaps/jungle.map",
-        texture_asset_id = "tilemap-texture",
+        texture_asset_id = current_map_assetID,
         num_rows = 20,
         num_cols = 25,
         tile_size = 32,
