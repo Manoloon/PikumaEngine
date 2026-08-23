@@ -9,7 +9,5 @@ class SInput: public System
 {
 public:
     SInput();
-    // consider a per frame pooling of iskeypressed
-    // add momentum using acceleration max speed and velocity decay
     void Update(float deltaTime);
 };

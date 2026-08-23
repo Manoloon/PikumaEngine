@@ -17,7 +17,9 @@ void SDebugRender::Update(sf::RenderWindow &window, const CCamera &camera, sf::C
         sf::RectangleShape body;
 
         body.setSize(collider.size);
+        body.setOrigin({0.f,0.f});
         body.setPosition(transform.position + collider.offset - camera.position + screenCenter);
+
         body.setOutlineColor(color);
         body.setFillColor(sf::Color::Transparent);
         body.setOutlineThickness(3.f);

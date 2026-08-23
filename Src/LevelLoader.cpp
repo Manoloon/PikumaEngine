@@ -62,7 +62,6 @@ void LevelLoader::LoadSettings(sol::state& LuaState,AssetStore* assetStore, int 
     //// Level Assets
 }
 
-
 void LevelLoader::ParseNewMap(Registry* registry, const std::string_view newMap)
 {
     if(newMap.empty())

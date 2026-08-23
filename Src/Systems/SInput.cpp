@@ -31,29 +31,5 @@ void SInput::Update(float deltaTime)
             keyboard.inputDirection = keyboard.inputDirection.normalized();
             keyboard.facingDirection = keyboard.inputDirection;
         }
-
-        // if(inputDir != sf::Vector2f(0.0,0.0))
-        // {
-        //     inputDir = inputDir.normalized();
-        //     keyboard.facingDirection = inputDir;
-        //     rigidBody.velocity = inputDir * keyboard.acceleration * deltaTime;
-        //     const float speed = rigidBody.velocity.length();
-        //     if(speed > keyboard.maxSpeed)
-        //     {
-        //         rigidBody.velocity = rigidBody.velocity.normalized() * keyboard.maxSpeed;
-        //     }
-
-        //     // Update sprite direction based on last pressed axis
-        //     if (inputDir.y < 0) sprite.spriteRect.position.y = sprite.spriteRect.size.y * 0; // Up
-        //     else if (inputDir.y > 0) sprite.spriteRect.position.y = sprite.spriteRect.size.y * 2; // Down
-        //     else if (inputDir.x < 0) sprite.spriteRect.position.y = sprite.spriteRect.size.y * 3; // Left
-        //     else if (inputDir.x > 0) sprite.spriteRect.position.y = sprite.spriteRect.size.y * 1; // Right
-        // }
-        // else
-        // {
-        //     rigidBody.velocity *= std::pow(keyboard.damping,deltaTime * 60.f);
-        //     if(rigidBody.velocity.lengthSquared() < 0.01f)
-        //         rigidBody.velocity = {0.0,0.0};
-        // }
     }
 }

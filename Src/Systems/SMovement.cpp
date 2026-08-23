@@ -65,9 +65,6 @@ void SMovement::Update(float DeltaTime)
             {
                 rigidBody.velocity += input * keyboard.acceleration * DeltaTime;
 
-                Logger::Info("player velocity " + std::to_string(rigidBody.velocity.x) + " : " +
-                             std::to_string(rigidBody.velocity.y));
-
                 const float maxSpeedSquared = keyboard.maxSpeed * keyboard.maxSpeed;
                 if (rigidBody.velocity.lengthSquared() > maxSpeedSquared)
                 {
