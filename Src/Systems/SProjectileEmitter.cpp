@@ -22,18 +22,12 @@ void SProjectileEmitter::onKeyPressed(KeyPressedEvent &event)
         {
             CShootEmitter &shootEmitter = entity.GetComponent<CShootEmitter>();
             const CTransform &transform = entity.GetComponent<CTransform>();
-            const CRigidBody &rigidBody = entity.GetComponent<CRigidBody>();
+            //const CRigidBody &rigidBody = entity.GetComponent<CRigidBody>();
+            const auto& keyboard = entity.GetComponent<CKeyboardControlled>();
             sf::Vector2f projectilePosition = transform.position;
 
             // Determine direction from rigidbody
-            sf::Vector2f dir = {0.f, 0.f};
-            if (rigidBody.velocity.x != 0.f)
-                dir.x = (rigidBody.velocity.x > 0.f) ? 1.f : -1.f;
-            if (rigidBody.velocity.y != 0.f)
-                dir.y = (rigidBody.velocity.y > 0.f) ? 1.f : -1.f;
-            if (dir == sf::Vector2f(0.f, 0.f))
-                dir = {1.f, 0.f}; // default shot dir
-            dir = dir.normalized();
+            sf::Vector2f dir = keyboard.facingDirection;
             if (entity.HasComponent<CSprite>())
             {
                 const CSprite &Sprite = entity.GetComponent<CSprite>();
@@ -43,8 +37,8 @@ void SProjectileEmitter::onKeyPressed(KeyPressedEvent &event)
                 projectilePosition = playerCenter + dir * 32.0f;
             }
 
-
-            sf::Vector2f projectileVelocity = {shootEmitter.velocity.x * dir.x, shootEmitter.velocity.y * dir.y};
+            sf::Vector2f projectileVelocity = shootEmitter.velocity.length() * dir;
+            
             //create projectile
             Entity projectile = entity.registry->CreateEntity();
             const sf::Vector2f projectileScale = {2.f, 2.f};

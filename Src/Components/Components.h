@@ -121,7 +121,7 @@ struct CKeyboardControlled
 struct CCamera
 {
     sf::Vector2f position ={0.0f,0.0f};
-    sf::Vector2u viewSize = {200,200};
+    sf::Vector2u viewSize = {640,360};
     CCamera(sf::Vector2f Position, sf::Vector2u ViewSize):position(Position),viewSize(ViewSize){};
 };
 

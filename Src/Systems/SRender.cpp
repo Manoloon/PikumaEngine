@@ -11,12 +11,12 @@ bool SRender::CompareByIndex(const Entity &a, const Entity &b)
     return a.GetComponent<CSprite>().renderLayer < b.GetComponent<CSprite>().renderLayer;
 }
 
-void SRender::Update(sf::RenderWindow &window, AssetStore *assetStore, const CCamera &camera) const
+void SRender::Update(sf::RenderWindow &window, AssetStore *assetStore, const CCamera &camera)
 {
     std::vector<Entity> newEntities = GetSystemEntities();
-    newEntities.reserve(GetSystemEntities().size());
     std::vector<Entity> rendereableEntities{};
-    // TODO : Culling here
+    CameraViewRender(window,camera);
+    // 
     for (const auto &entity : newEntities)
     {
         if (!entity.HasComponent<CTransform>() || !entity.HasComponent<CSprite>())
@@ -31,15 +31,16 @@ void SRender::Update(sf::RenderWindow &window, AssetStore *assetStore, const CCa
         const auto curPos = entity.GetComponent<CTransform>().position;
         const auto curScale = entity.GetComponent<CTransform>().scale;
         const auto curSprite = entity.GetComponent<CSprite>().spriteRect;
+        
         if (CouldBeCull(curPos, curScale, curSprite, camera))
         {
             continue;
         }
         rendereableEntities.emplace_back(entity);
     }
+    // render the not culled actors
     std::sort(rendereableEntities.begin(), rendereableEntities.end(), CompareByIndex);
-    const sf::Vector2f screenCenter = {window.getView().getSize().x / 2.f, window.getView().getSize().y / 2.f};
-
+  
     for (auto entity : rendereableEntities)
     {
         CTransform &transformComp = entity.GetComponent<CTransform>();
@@ -49,16 +50,10 @@ void SRender::Update(sf::RenderWindow &window, AssetStore *assetStore, const CCa
         auto texture = assetStore->GetTexture(spriteComp.assetId);
         sf::Sprite sprite(*texture);
         sprite.setTextureRect(spriteComp.spriteRect);
-        if (spriteComp.bIsUI)
-        {
-            sprite.setPosition(transformComp.position);
-        }
-        else
-        {
-            sprite.setPosition(transformComp.position - camera.position + screenCenter);
-        }
+        sprite.setPosition(transformComp.position);
         sprite.setRotation(transformComp.rotation);
         sprite.setScale(transformComp.scale);
+
         window.draw(sprite);
     }
 }
@@ -69,8 +64,24 @@ bool SRender::CouldBeCull(const sf::Vector2f &EntityPosition,
                           const sf::IntRect &EntitySprite,
                           const CCamera &Camera) const
 {
-    return (EntityPosition.x + (EntityScale.x * EntitySprite.size.x) < Camera.position.x ||
-            EntityPosition.x > Camera.position.x + Camera.viewSize.x ||
-            EntityPosition.y + (EntityScale.y * EntitySprite.size.y) < Camera.position.y ||
-            EntityPosition.y > Camera.position.y + Camera.viewSize.y);
+    const float halfWidth = Camera.viewSize.x * 0.5f;
+    const float halfHeight = Camera.viewSize.y * 0.5f;
+    const float left = Camera.position.x - halfWidth;
+    const float right = Camera.position.x + halfWidth;
+    const float top = Camera.position.y - halfHeight;
+    const float bottom = Camera.position.y + halfHeight;
+
+    const float entityRight = EntityPosition.x + EntityScale.x * EntitySprite.size.x;
+    const float entityBottom = EntityPosition.y + EntityScale.y * EntitySprite.size.y;
+
+    return entityRight < left || EntityPosition.x > right ||
+            entityBottom < top ||EntityPosition.y > bottom;
+}
+
+void SRender::CameraViewRender(sf::RenderWindow &window, const CCamera &camera)
+{
+    sf::View cameraView;
+    cameraView.setCenter(camera.position);
+    cameraView.setSize(static_cast<sf::Vector2f>(camera.viewSize));
+    window.setView(cameraView);
 }

@@ -107,7 +107,7 @@ void LevelLoader::ParseNewMap(Registry* registry, const std::string_view newMap)
         mapFile.close();
         Game::mapWidth = MAP_COLUMNS * TILE_SIZE * TILE_SCALE;
         Game::mapHeight = MAP_ROWS * TILE_SIZE * TILE_SCALE;
-        Game::viewSize = {200,200};
+        Game::viewSize = {640,360};
 }
 
 void LevelLoader::LoadLevel(Registry* registry,int LevelID)

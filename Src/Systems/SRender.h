@@ -12,6 +12,7 @@
 class SRender : public System
 {
   bool CouldBeCull(const sf::Vector2f& EntityPosition,const sf::Vector2f& EntityScale,const sf::IntRect& EntitySprite, const CCamera& Camera) const;
+  void CameraViewRender(sf::RenderWindow& window,const CCamera& camera);
   public:
     SRender();
     static bool CompareByIndex(const Entity &a,const Entity &b);
@@ -22,6 +23,6 @@ class SRender : public System
   * \remarks If a new login session is created, then LoginSessions.AfterKeyAdded is raised.</remarks>
   */
     void Update(sf::RenderWindow& window,AssetStore* assetStore,
-                                    const CCamera& camera) const;
+                                    const CCamera& camera);
     bool bCullActivated = true;
 };
