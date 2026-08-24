@@ -18,11 +18,10 @@ void SProjectileEmitter::onKeyPressed(KeyPressedEvent &event)
 
     for (auto entity : GetSystemEntities())
     {
-        if (entity.HasTag("Player"))
+        if (entity.HasTag("Player") && entity.HasComponent<CKeyboardControlled>())
         {
             CShootEmitter &shootEmitter = entity.GetComponent<CShootEmitter>();
             const CTransform &transform = entity.GetComponent<CTransform>();
-            //const CRigidBody &rigidBody = entity.GetComponent<CRigidBody>();
             const auto& keyboard = entity.GetComponent<CKeyboardControlled>();
             sf::Vector2f projectilePosition = transform.position;
 

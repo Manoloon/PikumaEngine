@@ -34,7 +34,7 @@ void SRenderDebugGUI::Update(sf::RenderWindow &window,
                                           sf::Vector2f(NewScale, NewScale),
                                           sf::radians(NewRotation));
             Tank.AddComponent<CRigidBody>(sf::Vector2f(NewXSpeed, NewYSpeed));
-            Tank.AddComponent<CShootEmitter>(sf::Vector2f(50, 10), 1000, 1000, false);
+            //Tank.AddComponent<CShootEmitter>(sf::Vector2f(50, 10), 1000, 1000, false);
             Tank.AddComponent<CSprite>("tank-image",
                                        sf::Vector2f(32.f * NewScale, 32.f * NewScale),
                                        ERenderLayers::L_ENEMIES);

@@ -9,5 +9,5 @@ class SInput: public System
 {
 public:
     SInput();
-    void Update(float deltaTime);
+    void Update();
 };

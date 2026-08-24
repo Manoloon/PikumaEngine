@@ -10,6 +10,7 @@
 #include <unordered_map>
 #include <typeindex>
 #include <memory>
+#include <stdexcept>
 #include <deque>
 #include "Logger.h"
 #include "../Components/Components.h"
@@ -194,8 +195,14 @@ public:
 
     T& Get(int EntityId) 
     { 
-        int index = IdToIndex[EntityId];
-        return static_cast<T&>(Data[index]); 
+        //int index = IdToIndex[EntityId];
+        //return static_cast<T&>(Data[index]); 
+        auto it = IdToIndex.find(EntityId);
+        if(it == IdToIndex.end())
+        {
+            throw std::runtime_error("ECS : " + std::to_string(EntityId) + " does not  have this component" + typeid(T).name());
+        }
+        return Data[it->second];
     }
 
     T &operator[](unsigned int index) { return Data[index]; }

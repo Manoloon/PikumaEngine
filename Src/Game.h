@@ -29,7 +29,7 @@ class Game
     bool isRunning =false;
     bool bDebug= false;
     
-    sf::Vector2u screenResolution ={800,600};
+    sf::Vector2u screenResolution ={800,450};
 public:   
     Game();
     void Run();

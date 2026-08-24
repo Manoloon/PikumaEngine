@@ -71,30 +71,25 @@ void Registry::RemoveEntityTag(Entity entity)
 
 void Registry::GroupEntity(Entity entity,const std::string& group)
 {
-    Logger::Info("Registry: GroupEntity group to add : " + group);
-    entitiesPerGroup.emplace(group,std::set<Entity>());
+    //Logger::Info("Registry::GroupEntity group to add : " + group);
     entitiesPerGroup[group].emplace(entity);
-    Logger::Info("Registry: GroupEntity groupPerEntity to add id: " + std::to_string(entity.GetId()) + " group: " + group);
-    groupPerEntity.emplace(entity.GetId(),group);
+    //Logger::Info("Registry::GroupEntity groupPerEntity to add id: " + std::to_string(entity.GetId()) + " group: " + group);
+    groupPerEntity[entity.GetId()] = group;
 }
 
 bool Registry::EntityBelongToGroup(const Entity& entity,const std::string& group) const
 {
     if(entitiesPerGroup.empty())
     {
-        Logger::Error("Registry: EntitiesPerGroup is Empty");
+        Logger::Error("Registry::EntitiesPerGroup is Empty");
         return false;
     }
     if(entitiesPerGroup.find(group) == entitiesPerGroup.end())
     {
-       Logger::Error("Registry: EntitiesPerGroup dont have a group name");
-       std::cout << std::endl;
-       std::cout << group << std::endl;
+       //Logger::Error("Registry::EntitiesPerGroup dont have a group name" + group);
         return false; 
     }
-    auto groupEntities = entitiesPerGroup.at(group);
-    // TODO : See this if we can use the id
-    std::string idString = std::to_string(entity.GetId());
+    const auto& groupEntities = entitiesPerGroup.at(group);
     return groupEntities.find(entity) != groupEntities.end();
 }
 

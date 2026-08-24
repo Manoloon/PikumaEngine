@@ -6,14 +6,10 @@ SInput::SInput()
     RequireComponent<CKeyboardControlled>();
 }
 
-void SInput::Update(float deltaTime)
+void SInput::Update()
 {
     for (auto entity : GetSystemEntities())
     {
-        if(!entity.HasComponent<CKeyboardControlled>())
-        {
-            return;
-        }
         auto& keyboard = entity.GetComponent<CKeyboardControlled>();
         keyboard.inputDirection = {0.f,0.f};
 

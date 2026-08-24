@@ -77,12 +77,13 @@ void Game::BeginPlay()
     registry->Update();
     auto& cameraSystem = registry->GetSystem<SCamera>();
     cameraSystem.BeginPlay(registry.get());
-    CameraActor = &registry->GetEntityByTag("Player").GetComponent<CCamera>();
-    if(CameraActor == nullptr)
+    auto player = registry->GetEntityByTag("Player");
+    if(!player.HasComponent<CCamera>())
     {
-        Logger::Error("Camera actor nullptr");
+        Logger::Error("Game::BeginPlay : Failed to get the CCamera from the player");
         return;
     }
+    CameraActor = &player.GetComponent<CCamera>();
     // Fix time step
     timeSinceLastTick = sf::Time::Zero;
     DeltaTime = sf::seconds(1.f / FPS);
@@ -114,25 +115,35 @@ void Game::Update()
 
         //run this at the end of the frame.
         registry->Update();
-        registry->GetSystem<SInput>().Update(DeltaTimeSecond);
+        registry->GetSystem<SInput>().Update();
         registry->GetSystem<SMovement>().Update(DeltaTimeSecond);
         registry->GetSystem<SAnimation>().Update();
         registry->GetSystem<SCamera>().Update();
         registry->GetSystem<SCollision>().Update(DeltaTimeSecond, eventBus);
         registry->GetSystem<SProjectileEmitter>().Update(DeltaTimeSecond,registry);
+
         timeSinceLastTick -= DeltaTime;
-    }  
+    }
     CurrentGameFPS = 1.f / elapsedTime.asSeconds();
 }
 void Game::Draw()
 {
     window.clear(sf::Color(18,33,43));
+    
+    // World render
     registry->GetSystem<SRender>().Update(window, assetStore.get(), *CameraActor);
-    registry->GetSystem<SRenderText>().Draw(window,assetStore.get(),*CameraActor);
+
     if(bDebug)
     {
         registry->GetSystem<SDebugRender>().
                 Update(window,*CameraActor,registry->GetSystem<SCollision>().GetHitColor());
+    }
+
+    // UI / screen space render
+    //window.setView(window.getDefaultView());
+    registry->GetSystem<SRenderText>().Draw(window,assetStore.get(),*CameraActor);
+    if(bDebug)
+    {
         registry->GetSystem<SRenderDebugGUI>().Update(window,DeltaTime,registry,*CameraActor);
     }
     window.display();
