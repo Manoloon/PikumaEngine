@@ -58,7 +58,7 @@ void SMovement::Update(float DeltaTime)
 
         if (entity.HasTag("Player"))
         {
-            auto &keyboard = entity.GetComponent<CKeyboardControlled>();
+            const auto &keyboard = entity.GetComponent<CKeyboardControlled>();
             const auto &input = keyboard.inputDirection;
 
             if (input.lengthSquared() > 0.f)
