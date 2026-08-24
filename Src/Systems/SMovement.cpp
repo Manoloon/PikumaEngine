@@ -79,6 +79,27 @@ void SMovement::Update(float DeltaTime)
                     rigidBody.velocity = {0.f, 0.f};
                 }
             }
+            transform.position += rigidBody.velocity * DeltaTime;
+            // check bounds
+            const auto& sprite = entity.GetComponent<CSprite>();
+            const float entityWidth = sprite.spriteRect.size.x * transform.scale.x;
+            const float entityHeight = sprite.spriteRect.size.y * transform.scale.y;
+
+            transform.position.x = std::clamp(transform.position.x,0.f,Game::mapWidth - entityWidth);
+            transform.position.y = std::clamp(transform.position.y,0.f,Game::mapHeight - entityHeight);
+            // Stop velocity when hitting the boundary
+            if (transform.position.x <= 0.f ||
+                transform.position.x >= Game::mapWidth - entityWidth)
+            {
+                rigidBody.velocity.x = 0.f;
+            }
+
+            if (transform.position.y <= 0.f ||
+                transform.position.y >= Game::mapHeight - entityHeight)
+            {
+                rigidBody.velocity.y = 0.f;
+            }
+            continue;
         }
         transform.position.x += rigidBody.velocity.x * DeltaTime;
         transform.position.y += rigidBody.velocity.y * DeltaTime;
@@ -86,7 +107,7 @@ void SMovement::Update(float DeltaTime)
         bool bOutOfBounds = (transform.position.x < 0 || transform.position.x > Game::mapWidth ||
                              transform.position.y < 0 || transform.position.y > Game::mapHeight);
 
-        if (bOutOfBounds)
+        if (bOutOfBounds && entity.HasTag("projectile"))
         {
             entity.Destroy();
         }

@@ -75,6 +75,9 @@ void LevelLoader::LoadSettings(sol::state &LuaState, AssetStore *assetStore, int
     Logger::Info("tileSize " + std::to_string(tileSize));
     tileScale = map["scale"];
     Logger::Info("tileScale" + std::to_string(tileScale));
+    /// level tilemap
+
+    
 }
 
 void LevelLoader::ParseNewMap(Registry *registry, int LevelNum)
