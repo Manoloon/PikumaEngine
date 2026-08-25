@@ -11,20 +11,28 @@ ERenderLayers LevelLoader::ParseRenderLayer(int layer)
     switch (layer)
     {
     case 0:
+        Logger::Warning(std::to_string(layer) + " layer :" + "L_BACKGROUND");
         return ERenderLayers::L_BACKGROUND;
     case 1:
+    Logger::Warning(std::to_string(layer) + " layer :" + "L_TILEMAP");
         return ERenderLayers::L_TILEMAP;
     case 2:
+    Logger::Warning(std::to_string(layer) + " layer :" + "L_OBSTACLES");
         return ERenderLayers::L_OBSTACLES;
     case 3:
+    Logger::Warning(std::to_string(layer) + " layer :" + "L_ENEMIES");
         return ERenderLayers::L_ENEMIES;
     case 4:
+    Logger::Warning(std::to_string(layer) + " layer :" + "L_PROJECTILE");
         return ERenderLayers::L_PROJECTILE;
     case 5:
+    Logger::Warning(std::to_string(layer) + " layer :" + "L_PLAYER");
         return ERenderLayers::L_PLAYER;
     case 6:
+    Logger::Warning(std::to_string(layer) + " layer :" + "L_FOREGROUND");
         return ERenderLayers::L_FOREGROUND;
     case 7:
+    Logger::Warning(std::to_string(layer) + " layer :" + "L_GUI");
         return ERenderLayers::L_GUI;
     default:
         Logger::Error("Invalid render layer: " +  std::to_string(layer));
@@ -128,7 +136,6 @@ void LevelLoader::LoadEntities(Registry *registry)
         {
             sol::table comps = *hasComponent;
             // Transform
-            Logger::Info(std::to_string(it) + " Parsing transform");
             if (HasTable(comps, "transform"))
             {
                 // TODO :ver si hace falta un get_or
@@ -140,7 +147,6 @@ void LevelLoader::LoadEntities(Registry *registry)
                 newEntity.AddComponent<CTransform>(newPos, newScale, sf::degrees(newRot));
             }
             // Rigidbody
-            Logger::Info(std::to_string(it)  + " Parsing rigidbody");
             if (HasTable(comps, "rigidbody"))
             {
                 sol::table rigidbody = comps["rigidbody"];
@@ -148,7 +154,6 @@ void LevelLoader::LoadEntities(Registry *registry)
                     sf::Vector2f(rigidbody["velocity"]["x"].get_or(0.f), rigidbody["velocity"]["y"].get_or(0.f)));
             }
             // Sprite
-            Logger::Info(std::to_string(it)  + " Parsing sprite");
             if (HasTable(comps, "sprite"))
             {
                 sol::table table = comps["sprite"];
@@ -162,14 +167,12 @@ void LevelLoader::LoadEntities(Registry *registry)
                     sf::Vector2f(table["src_rect_x"].get_or(0.f), table["src_rect_y"].get_or(0.f)));
             }
             // Animation
-            Logger::Info(std::to_string(it)  + " Parsing animation");
             if (HasTable(comps, "animation"))
             {
                 sol::table table = comps["animation"];
                 newEntity.AddComponent<CAnimation>(table["num_frames"], table["speed_rate"], table["should_loop"].get_or(true));
             }
             // Collision
-            Logger::Info(std::to_string(it)  + "Parsing boxcollider");
             if (HasTable(comps, "boxcollider"))
             {
                 sol::table table = comps["boxcollider"];
@@ -178,13 +181,11 @@ void LevelLoader::LoadEntities(Registry *registry)
                     sf::Vector2f(table["offset"]["x"].get_or(0.f), table["offset"]["y"].get_or(0.f)));
             }
             // Health
-            Logger::Info(std::to_string(it)  + " Parsing health");
             if (HasTable(comps, "health"))
             {
                 newEntity.AddComponent<CHealth>(entity["components"]["health"]["health_percentage"].get_or(100));
             }
             // Projectile Emitter
-            Logger::Info(std::to_string(it)  + " Parsing projectile_emitter");
             if (HasTable(comps, "projectile_emitter"))
             {
 
@@ -197,7 +198,6 @@ void LevelLoader::LoadEntities(Registry *registry)
                     entity["components"]["projectile_emitter"]["friendly"].get_or(false));
             }
             // Keyboard Controller
-            Logger::Info(std::to_string(it)  + " Parsing keyboard_controller");
             if (HasTable(comps, "keyboard_controller"))
             {
                 newEntity.AddComponent<CKeyboardControlled>(entity["components"]["keyboard_controller"]["acceleration"],
@@ -205,7 +205,6 @@ void LevelLoader::LoadEntities(Registry *registry)
                                                             entity["components"]["keyboard_controller"]["damping"]);
             }
             // Camera
-            Logger::Info(std::to_string(it)  + " Parsing camera_follow");
             if (HasTable(comps, "camera_follow"))
             {
                 newEntity.AddComponent<CCamera>(
@@ -253,7 +252,7 @@ void LevelLoader::ParseNewMap(Registry *registry, int LevelNum)
             tile.AddComponent<CTransform>(tilePosition, sf::Vector2f(tileScale, tileScale), sf::degrees(0.0f));
             tile.AddComponent<CSprite>(tilemapAssetID,
                                        sf::Vector2f(tileSize, tileSize),
-                                       ERenderLayers::L_TILEMAP,
+                                       ERenderLayers::L_BACKGROUND,
                                        false,
                                        sf::Vector2f(srcRectX, srcRectY));
         }

@@ -8,7 +8,10 @@ SRender::SRender()
 
 bool SRender::CompareByIndex(const Entity &a, const Entity &b)
 {
-    return a.GetComponent<CSprite>().renderLayer < b.GetComponent<CSprite>().renderLayer;
+    using layerType = std::underlying_type_t<ERenderLayers>;
+    const auto layerA = static_cast<layerType>(a.GetComponent<CSprite>().renderLayer);
+    const auto layerB = static_cast<layerType>(b.GetComponent<CSprite>().renderLayer);
+    return layerA < layerB;
 }
 
 void SRender::Update(sf::RenderWindow &window, AssetStore *assetStore, const CCamera &camera)

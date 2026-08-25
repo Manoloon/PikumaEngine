@@ -204,7 +204,7 @@ Level = {
                     texture_asset_id = "radar-texture",
                     width = 64,
                     height = 64,
-                    z_index = 10,
+                    z_index = 7,
                     fixed = true
                 },
                 animation = {
@@ -258,7 +258,7 @@ Level = {
                     texture_asset_id = "tank-tiger-right-texture",
                     width = 32,
                     height = 32,
-                    z_index = 2
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 25,
@@ -290,7 +290,7 @@ Level = {
                     texture_asset_id = "tank-panther-up-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -322,7 +322,7 @@ Level = {
                     texture_asset_id = "tank-tiger-down-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 20,
@@ -354,7 +354,7 @@ Level = {
                     texture_asset_id = "tank-panther-left-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 25,
@@ -386,7 +386,7 @@ Level = {
                     texture_asset_id = "tank-panther-right-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 25,
@@ -418,7 +418,7 @@ Level = {
                     texture_asset_id = "tank-panther-left-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 25,
@@ -450,7 +450,7 @@ Level = {
                     texture_asset_id = "tank-panther-right-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 25,
@@ -482,7 +482,7 @@ Level = {
                     texture_asset_id = "tank-panther-down-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -514,7 +514,7 @@ Level = {
                     texture_asset_id = "tank-panther-down-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -546,7 +546,7 @@ Level = {
                     texture_asset_id = "tank-panther-killed-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 }
             }
         },
@@ -563,7 +563,7 @@ Level = {
                     texture_asset_id = "tank-panther-left-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 20,
@@ -595,7 +595,7 @@ Level = {
                     texture_asset_id = "tank-tiger-down-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 18,
@@ -627,7 +627,7 @@ Level = {
                     texture_asset_id = "tank-tiger-left-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 25,
@@ -659,7 +659,7 @@ Level = {
                     texture_asset_id = "tank-tiger-right-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 25,
@@ -691,7 +691,7 @@ Level = {
                     texture_asset_id = "tank-panther-down-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -723,7 +723,7 @@ Level = {
                     texture_asset_id = "tank-panther-up-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -755,7 +755,7 @@ Level = {
                     texture_asset_id = "tank-panther-up-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -787,7 +787,7 @@ Level = {
                     texture_asset_id = "tank-panther-up-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -819,7 +819,7 @@ Level = {
                     texture_asset_id = "tank-panther-up-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -851,7 +851,7 @@ Level = {
                     texture_asset_id = "tank-panther-up-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -883,7 +883,7 @@ Level = {
                     texture_asset_id = "tank-panther-right-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 22,
@@ -915,7 +915,7 @@ Level = {
                     texture_asset_id = "tank-tiger-left-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 25,
@@ -947,7 +947,7 @@ Level = {
                     texture_asset_id = "tank-tiger-down-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 19,
@@ -979,7 +979,7 @@ Level = {
                     texture_asset_id = "tank-tiger-up-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 18,
@@ -1011,7 +1011,7 @@ Level = {
                     texture_asset_id = "tank-panther-down-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -1043,7 +1043,7 @@ Level = {
                     texture_asset_id = "tank-panther-killed-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 }
             }
         },
@@ -1060,7 +1060,7 @@ Level = {
                     texture_asset_id = "truck-ford-down-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 12,
@@ -1085,7 +1085,7 @@ Level = {
                     texture_asset_id = "truck-ford-down-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 12,
@@ -1110,7 +1110,7 @@ Level = {
                     texture_asset_id = "truck-ford-down-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 12,
@@ -1135,7 +1135,7 @@ Level = {
                     texture_asset_id = "truck-ford-down-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 12,
@@ -1160,7 +1160,7 @@ Level = {
                     texture_asset_id = "truck-ford-down-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 12,
@@ -1185,7 +1185,7 @@ Level = {
                     texture_asset_id = "truck-ford-down-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 12,
@@ -1210,7 +1210,7 @@ Level = {
                     texture_asset_id = "truck-ford-up-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 12,
@@ -1235,7 +1235,7 @@ Level = {
                     texture_asset_id = "truck-ford-up-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 12,
@@ -1260,7 +1260,7 @@ Level = {
                     texture_asset_id = "truck-ford-up-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 12,
@@ -1285,7 +1285,7 @@ Level = {
                     texture_asset_id = "truck-ford-left-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 25,
@@ -1310,7 +1310,7 @@ Level = {
                     texture_asset_id = "truck-ford-left-texture",
                     width = 32,
                     height = 32,
-                    z_index = 2
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 25,
@@ -1335,7 +1335,7 @@ Level = {
                     texture_asset_id = "sam-tank-left-texture",
                     width = 32,
                     height = 32,
-                    z_index = 2
+                    z_index = 3
                 },
                 animation = {
                     num_frames = 2,
@@ -1371,7 +1371,7 @@ Level = {
                     texture_asset_id = "sam-tank-left-texture",
                     width = 32,
                     height = 32,
-                    z_index = 2
+                    z_index = 3
                 },
                 animation = {
                     num_frames = 2,
@@ -1407,7 +1407,7 @@ Level = {
                     texture_asset_id = "sam-tank-left-texture",
                     width = 32,
                     height = 32,
-                    z_index = 2
+                    z_index = 3
                 },
                 animation = {
                     num_frames = 2,
@@ -1443,7 +1443,7 @@ Level = {
                     texture_asset_id = "sam-tank-left-texture",
                     width = 32,
                     height = 32,
-                    z_index = 2
+                    z_index = 3
                 },
                 animation = {
                     num_frames = 2,
@@ -1479,7 +1479,7 @@ Level = {
                     texture_asset_id = "sam-truck-right-texture",
                     width = 32,
                     height = 32,
-                    z_index = 2
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -1511,7 +1511,7 @@ Level = {
                     texture_asset_id = "sam-truck-right-texture",
                     width = 32,
                     height = 32,
-                    z_index = 2
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -1543,7 +1543,7 @@ Level = {
                     texture_asset_id = "sam-truck-right-texture",
                     width = 32,
                     height = 32,
-                    z_index = 2
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -1575,7 +1575,7 @@ Level = {
                     texture_asset_id = "sam-truck-right-texture",
                     width = 32,
                     height = 32,
-                    z_index = 2
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -1607,7 +1607,7 @@ Level = {
                     texture_asset_id = "sam-truck-right-texture",
                     width = 32,
                     height = 32,
-                    z_index = 2
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -1639,7 +1639,7 @@ Level = {
                     texture_asset_id = "sam-truck-right-texture",
                     width = 32,
                     height = 32,
-                    z_index = 2
+                    z_index = 3
                 },
                 boxcollider = {
                     width = 17,
@@ -1670,7 +1670,7 @@ Level = {
                     texture_asset_id = "tree5-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 2
                 },
             }
         },
@@ -1686,7 +1686,7 @@ Level = {
                     texture_asset_id = "tree5-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 2
                 },
             }
         },
@@ -1702,7 +1702,7 @@ Level = {
                     texture_asset_id = "tree6-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 2
                 },
             }
         },
@@ -1718,7 +1718,7 @@ Level = {
                     texture_asset_id = "tree14-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 2
                 },
             }
         },
@@ -1734,7 +1734,7 @@ Level = {
                     texture_asset_id = "tree17-texture",
                     width = 17,
                     height = 20,
-                    z_index = 1
+                    z_index = 2
                 },
             }
         },
@@ -1750,7 +1750,7 @@ Level = {
                     texture_asset_id = "tree17-texture",
                     width = 17,
                     height = 20,
-                    z_index = 1
+                    z_index = 2
                 },
             }
         },
@@ -1782,7 +1782,7 @@ Level = {
                     texture_asset_id = "tree10-texture",
                     width = 31,
                     height = 32,
-                    z_index = 1
+                    z_index = 2
                 },
             }
         },
@@ -1862,7 +1862,7 @@ Level = {
                     texture_asset_id = "obstacles7-texture",
                     width = 16,
                     height = 16,
-                    z_index = 3
+                    z_index = 2
                 },
             }
         },
@@ -1894,7 +1894,7 @@ Level = {
                     texture_asset_id = "obstacles7-texture",
                     width = 16,
                     height = 16,
-                    z_index = 1
+                    z_index = 2
                 },
             }
         },
@@ -2038,7 +2038,7 @@ Level = {
                     texture_asset_id = "obstacles2-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 2
                 },
             }
         },
@@ -2054,7 +2054,7 @@ Level = {
                     texture_asset_id = "obstacles2-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 2
                 },
             }
         },
@@ -2150,7 +2150,7 @@ Level = {
                     texture_asset_id = "obstacles7-texture",
                     width = 16,
                     height = 16,
-                    z_index = 1
+                    z_index = 2
                 },
             }
         },
@@ -2166,7 +2166,7 @@ Level = {
                     texture_asset_id = "obstacles7-texture",
                     width = 16,
                     height = 16,
-                    z_index = 1
+                    z_index = 2
                 },
             }
         },
@@ -2182,7 +2182,7 @@ Level = {
                     texture_asset_id = "obstacles1-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 2
                 },
             }
         },
@@ -2198,7 +2198,7 @@ Level = {
                     texture_asset_id = "obstacles1-texture",
                     width = 32,
                     height = 32,
-                    z_index = 1
+                    z_index = 2
                 },
             }
         },
