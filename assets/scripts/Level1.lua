@@ -124,7 +124,7 @@ Level = {
                     texture_asset_id = "chopper-texture",
                     width = 32,
                     height = 32,
-                    z_index = 4,
+                    z_index = 5,
                     fixed = false,
                     src_rect_x = 0,
                     src_rect_y = 0
@@ -142,20 +142,20 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 200, y = 200 },
-                    projectile_duration = 10, -- seconds
+                    velocity = { x = 200, y = 200 },
                     repeat_frequency = 0, -- seconds
+                    duration = 10, -- seconds
                     hit_percentage_damage = 10,
                     friendly = true
                 },
                 keyboard_controller = {
-                    up_velocity = { x = 0, y = -50 },
-                    right_velocity = { x = 50, y = 0 },
-                    down_velocity = { x = 0, y = 50 },
-                    left_velocity = { x = -50, y = 0 }
+                    acceleration = 500,
+                    max_speed = 300,
+                    damping = 0.95
                 },
                 camera_follow = {
-                    follow = true
+                    position = { x = 242, y = 110 },
+                    view_size = {width = 640, height = 360}
                 }
             }
         },

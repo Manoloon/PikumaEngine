@@ -18,7 +18,7 @@ void SProjectileEmitter::onKeyPressed(KeyPressedEvent &event)
 
     for (auto entity : GetSystemEntities())
     {
-        if (entity.HasTag("Player") && entity.HasComponent<CKeyboardControlled>())
+        if (entity.HasTag("player") && entity.HasComponent<CKeyboardControlled>())
         {
             CShootEmitter &shootEmitter = entity.GetComponent<CShootEmitter>();
             const CTransform &transform = entity.GetComponent<CTransform>();
@@ -77,7 +77,7 @@ void SProjectileEmitter::Update(float DeltaTime, std::unique_ptr<Registry> &Regi
             projectilePosition.y += transform.scale.y * Sprite.spriteRect.size.y * 0.5f;
         }
         // TODO : Ver esto if(entity.BelongToGroup())
-        // if(entity.HasTag("Player")) return;
+        // if(entity.HasTag("player")) return;
         // Entity projectile = Registry->CreateEntity();
         // // TODO : this should be in an enum
         // projectile.Group("projectile");

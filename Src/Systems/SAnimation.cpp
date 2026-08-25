@@ -12,7 +12,7 @@ void SAnimation::Update()
     {
         auto& animation = entity.GetComponent<CAnimation>();
         auto& sprite = entity.GetComponent<CSprite>();
-        if(entity.HasTag("Player"))
+        if(entity.HasTag("player"))
         {
             auto& keyboard = entity.GetComponent<CKeyboardControlled>();
                    //     // Update sprite direction based on last pressed axis

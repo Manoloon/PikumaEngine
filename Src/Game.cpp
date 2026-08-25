@@ -77,7 +77,7 @@ void Game::BeginPlay()
     registry->Update();
     auto& cameraSystem = registry->GetSystem<SCamera>();
     cameraSystem.BeginPlay(registry.get());
-    auto player = registry->GetEntityByTag("Player");
+    auto player = registry->GetEntityByTag("player");
     if(!player.HasComponent<CCamera>())
     {
         Logger::Error("Game::BeginPlay : Failed to get the CCamera from the player");

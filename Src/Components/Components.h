@@ -46,7 +46,7 @@ struct CRigidBody
 */
 struct CSprite
 {
-    std::string_view assetId;
+    std::string assetId;
     sf::Vector2f spriteSize;
     ERenderLayers renderLayer;
     bool bIsUI;
@@ -56,7 +56,7 @@ struct CSprite
                      ERenderLayers RenderLayers = ERenderLayers::L_PLAYER,
                      bool isUI = false,
                      sf::Vector2f RectPos = {0.f, 0.f})
-        : assetId(AssetId), 
+        : assetId(std::move(AssetId)), 
             spriteSize(SpriteSize), 
             renderLayer(RenderLayers), 
             bIsUI(isUI),

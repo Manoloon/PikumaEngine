@@ -6,6 +6,38 @@
 #include <fstream>
 #include <sol/sol.hpp>
 
+ERenderLayers LevelLoader::ParseRenderLayer(int layer)
+{
+    switch (layer)
+    {
+    case 0:
+        return ERenderLayers::L_BACKGROUND;
+    case 1:
+        return ERenderLayers::L_TILEMAP;
+    case 2:
+        return ERenderLayers::L_OBSTACLES;
+    case 3:
+        return ERenderLayers::L_ENEMIES;
+    case 4:
+        return ERenderLayers::L_PROJECTILE;
+    case 5:
+        return ERenderLayers::L_PLAYER;
+    case 6:
+        return ERenderLayers::L_FOREGROUND;
+    case 7:
+        return ERenderLayers::L_GUI;
+    default:
+        Logger::Error("Invalid render layer: " +  std::to_string(layer));
+        return ERenderLayers::L_GUI;
+    }
+}
+
+bool LevelLoader::HasTable(const sol::table &table, const char *key)
+{
+    sol::object object = table[key];
+    return object.valid() && object.get_type() == sol::type::table;
+}
+
 void LevelLoader::LoadSettings(sol::state &LuaState, AssetStore *assetStore, int LevelNumber)
 {
     const std::string scriptfile = "./assets/scripts/Level" + std::to_string(LevelNumber) + ".lua";
@@ -19,7 +51,7 @@ void LevelLoader::LoadSettings(sol::state &LuaState, AssetStore *assetStore, int
     }
 
     LuaState.safe_script_file(scriptfile.data());
-    sol::table levelTable = LuaState["Level"];
+    levelTable = LuaState["Level"];
     if (!levelTable.valid())
     {
         Logger::Error("Level table not found");
@@ -64,20 +96,126 @@ void LevelLoader::LoadSettings(sol::state &LuaState, AssetStore *assetStore, int
     /// level Tilemap
     sol::table map = levelTable["tilemap"];
     mapFile = map["map_file"];
-    Logger::Info("map file " + mapFile);
     tilemapAssetID = map["texture_asset_id"];
-    Logger::Info("tilemapAssetID " + tilemapAssetID);
     numRows = map["num_rows"];
-    Logger::Info("num_rows " + std::to_string(numRows));
     numCols = map["num_cols"];
-    Logger::Info("num_cols " + std::to_string(numCols));
     tileSize = map["tile_size"];
-    Logger::Info("tileSize " + std::to_string(tileSize));
     tileScale = map["scale"];
-    Logger::Info("tileScale" + std::to_string(tileScale));
     /// level tilemap
+}
 
-    
+void LevelLoader::LoadEntities(Registry *registry)
+{
+    sol::table entities = levelTable["entities"];
+    for (int it = 0;; it++)
+    {
+        sol::optional<sol::table> hasEntity = entities[it];
+        if (hasEntity == sol::nullopt)
+        {
+            break;
+        }
+        sol::table entity = *hasEntity;
+        Entity newEntity = registry->CreateEntity();
+        // Tag
+        sol::optional<std::string> tag = entity["tag"];
+        if (tag != sol::nullopt)
+        {
+            newEntity.Tag(*tag);
+        }
+        // components
+        sol::optional<sol::table> hasComponent = entity["components"];
+        if (hasComponent != sol::nullopt)
+        {
+            sol::table comps = *hasComponent;
+            // Transform
+            Logger::Info(std::to_string(it) + " Parsing transform");
+            if (HasTable(comps, "transform"))
+            {
+                // TODO :ver si hace falta un get_or
+                const sf::Vector2f newPos = {comps["transform"]["position"]["x"].get_or(0.f),
+                                             comps["transform"]["position"]["y"].get_or(0.f)};
+                const sf::Vector2f newScale = {comps["transform"]["scale"]["x"].get_or(1.f),
+                                               comps["transform"]["scale"]["y"].get_or(1.f)};
+                const float newRot = comps["transform"]["rotation"].get_or(0.f);
+                newEntity.AddComponent<CTransform>(newPos, newScale, sf::degrees(newRot));
+            }
+            // Rigidbody
+            Logger::Info(std::to_string(it)  + " Parsing rigidbody");
+            if (HasTable(comps, "rigidbody"))
+            {
+                sol::table rigidbody = comps["rigidbody"];
+                newEntity.AddComponent<CRigidBody>(
+                    sf::Vector2f(rigidbody["velocity"]["x"].get_or(0.f), rigidbody["velocity"]["y"].get_or(0.f)));
+            }
+            // Sprite
+            Logger::Info(std::to_string(it)  + " Parsing sprite");
+            if (HasTable(comps, "sprite"))
+            {
+                sol::table table = comps["sprite"];
+                const std::string asset_id = table["texture_asset_id"];
+                int layer = table["z_index"];
+                newEntity.AddComponent<CSprite>(
+                    asset_id,
+                    sf::Vector2f(table["width"].get_or(32.f), table["height"].get_or(32.f)),
+                    ParseRenderLayer(layer),
+                    table["fixed"].get_or(false),
+                    sf::Vector2f(table["src_rect_x"].get_or(0.f), table["src_rect_y"].get_or(0.f)));
+            }
+            // Animation
+            Logger::Info(std::to_string(it)  + " Parsing animation");
+            if (HasTable(comps, "animation"))
+            {
+                sol::table table = comps["animation"];
+                newEntity.AddComponent<CAnimation>(table["num_frames"], table["speed_rate"], table["should_loop"].get_or(true));
+            }
+            // Collision
+            Logger::Info(std::to_string(it)  + "Parsing boxcollider");
+            if (HasTable(comps, "boxcollider"))
+            {
+                sol::table table = comps["boxcollider"];
+                newEntity.AddComponent<CBoxCollision>(
+                    sf::Vector2f(table["width"].get_or(1.f), table["height"].get_or(1.f)),
+                    sf::Vector2f(table["offset"]["x"].get_or(0.f), table["offset"]["y"].get_or(0.f)));
+            }
+            // Health
+            Logger::Info(std::to_string(it)  + " Parsing health");
+            if (HasTable(comps, "health"))
+            {
+                newEntity.AddComponent<CHealth>(entity["components"]["health"]["health_percentage"].get_or(100));
+            }
+            // Projectile Emitter
+            Logger::Info(std::to_string(it)  + " Parsing projectile_emitter");
+            if (HasTable(comps, "projectile_emitter"))
+            {
+
+                newEntity.AddComponent<CShootEmitter>(
+                    sf::Vector2f(entity["components"]["projectile_emitter"]["velocity"]["x"].get_or(100.f),
+                                 entity["components"]["projectile_emitter"]["velocity"]["y"].get_or(100.f)),
+                    entity["components"]["projectile_emitter"]["repeat_frequency"].get_or(0),
+                    entity["components"]["projectile_emitter"]["duration"].get_or(10),
+                    entity["components"]["projectile_emitter"]["hit_percentage_damage"].get_or(10000.f),
+                    entity["components"]["projectile_emitter"]["friendly"].get_or(false));
+            }
+            // Keyboard Controller
+            Logger::Info(std::to_string(it)  + " Parsing keyboard_controller");
+            if (HasTable(comps, "keyboard_controller"))
+            {
+                newEntity.AddComponent<CKeyboardControlled>(entity["components"]["keyboard_controller"]["acceleration"],
+                                                            entity["components"]["keyboard_controller"]["max_speed"],
+                                                            entity["components"]["keyboard_controller"]["damping"]);
+            }
+            // Camera
+            Logger::Info(std::to_string(it)  + " Parsing camera_follow");
+            if (HasTable(comps, "camera_follow"))
+            {
+                newEntity.AddComponent<CCamera>(
+                    sf::Vector2f(entity["components"]["camera_follow"]["position"]["x"].get_or(0.f),
+                                 entity["components"]["camera_follow"]["position"]["y"].get_or(0.f)),
+                    sf::Vector2u(entity["components"]["camera_follow"]["view_size"]["width"].get_or(200),
+                                 entity["components"]["camera_follow"]["view_size"]["height"].get_or(200)));
+            }
+        }
+    }
 }
 
 void LevelLoader::ParseNewMap(Registry *registry, int LevelNum)
@@ -112,7 +250,7 @@ void LevelLoader::ParseNewMap(Registry *registry, int LevelNum)
 
             const sf::Vector2f tilePosition = {x * tileWorldSize, y * tileWorldSize};
 
-            tile.AddComponent<CTransform>(tilePosition, sf::Vector2f(tileScale,tileScale), sf::degrees(0.0f));
+            tile.AddComponent<CTransform>(tilePosition, sf::Vector2f(tileScale, tileScale), sf::degrees(0.0f));
             tile.AddComponent<CSprite>(tilemapAssetID,
                                        sf::Vector2f(tileSize, tileSize),
                                        ERenderLayers::L_TILEMAP,
@@ -129,83 +267,7 @@ void LevelLoader::ParseNewMap(Registry *registry, int LevelNum)
 void LevelLoader::LoadLevel(Registry *registry, int LevelID)
 {
     ParseNewMap(registry, LevelID);
-
-    // Entity Title = registry->CreateEntity();
-    // Title.Group("UI");
-    // Title.AddComponent<CTextComponent>(sf::Vector2f(10,10),"The Engine!","pico8-font-5",sf::Color::White);
-    const sf::Vector2f newPos = sf::Vector2f(ScreenResWidth / 2.f, 300);
-    Entity Tank = registry->CreateEntity();
-    Tank.Group("Enemies");
-    Tank.AddComponent<CTransform>(newPos, sf::Vector2f(2.0, 2.0), sf::degrees(0.f));
-    Tank.AddComponent<CRigidBody>(sf::Vector2f(10.f, 0.f));
-    Tank.AddComponent<CShootEmitter>(sf::Vector2f(50, 10), 100, 1000, false);
-    Tank.AddComponent<CSprite>("tank-tiger-right-texture", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
-    Tank.AddComponent<CHealth>(100);
-    std::string TankhealthText = std::to_string(Tank.GetComponent<CHealth>().Health);
-    sf::Vector2f Tankpos = {Tank.GetComponent<CTransform>().position.x,
-                            Tank.GetComponent<CTransform>().position.y - 10};
-    Tank.AddComponent<CTextComponent>(Tankpos, TankhealthText, "pico8-font-5", sf::Color::Green, 5, false);
-    Tank.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
-
-    Entity Truck = registry->CreateEntity();
-    Truck.Group("Enemies");
-    Truck.AddComponent<CTransform>(sf::Vector2f(200, 50), sf::Vector2f(1.0, 1.0), sf::degrees(0.f));
-    Truck.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
-    Truck.AddComponent<CShootEmitter>(sf::Vector2f(40, 0), 100, 1000, false);
-    Truck.AddComponent<CSprite>("truck-ford-right-texture", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
-    Truck.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
-
-    Entity Player = registry->CreateEntity();
-    Player.Tag("Player");
-    Player.AddComponent<CTransform>(newPos, sf::Vector2f(1.0, 1.0), sf::degrees(0.f));
-    Player.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
-    Player.AddComponent<CSprite>("chopper-texture", sf::Vector2f(32.f, 32.f), ERenderLayers::L_PLAYER);
-    Player.AddComponent<CAnimation>(2, 6);
-    Player.AddComponent<CHealth>(100);
-    Player.AddComponent<CCamera>(newPos, Game::viewSize);
-    //velocity,loopFrequency,lifeSpan,damagePercentage,bIsFriendly,lastEmissionTime;
-    Player.AddComponent<CShootEmitter>(sf::Vector2f(40.f, 40.f), 0, 10000, 10, true);
-    Player.AddComponent<CKeyboardControlled>(500, 300, 0.95);
-    Player.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
-
-    Entity chop2 = registry->CreateEntity();
-    chop2.Group("Enemies");
-    chop2.AddComponent<CTransform>(sf::Vector2f(150, 150), sf::Vector2f(2.0, 2.0), sf::degrees(0.f));
-    chop2.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
-    chop2.AddComponent<CSprite>("chopper-texture", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
-    chop2.AddComponent<CAnimation>(2, 12);
-    chop2.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
-
-    Entity chop1 = registry->CreateEntity();
-    chop1.Group("Enemies");
-    chop1.AddComponent<CTransform>(sf::Vector2f(250, 250), sf::Vector2f(1.0, 1.0), sf::degrees(0.f));
-    chop1.AddComponent<CRigidBody>(sf::Vector2f(0.f, 0.f));
-    chop1.AddComponent<CSprite>("chopper-texture", sf::Vector2f(32.f, 32.f), ERenderLayers::L_ENEMIES);
-    chop1.AddComponent<CAnimation>(2, 2);
-    chop1.AddComponent<CHealth>();
-    std::string healthText = std::to_string(chop1.GetComponent<CHealth>().Health);
-    sf::Vector2f chop1pos = {chop1.GetComponent<CTransform>().position.x,
-                             chop1.GetComponent<CTransform>().position.y - 10};
-    chop1.AddComponent<CTextComponent>(chop1pos, healthText, "pico8-font-5", sf::Color::Green, 5);
-    chop1.AddComponent<CBoxCollision>(sf::Vector2f(32.f, 32.f));
-
-    Entity tree = registry->CreateEntity();
-    tree.Group("Obstacles");
-    tree.AddComponent<CTransform>(sf::Vector2f(5.f, 50.f));
-    tree.AddComponent<CSprite>("tree2-texture", sf::Vector2f(16.f, 32.f), ERenderLayers::L_OBSTACLES);
-    tree.AddComponent<CBoxCollision>(sf::Vector2f(16.f, 32.f));
-
-    Entity tree2 = registry->CreateEntity();
-    tree2.Group("Obstacles");
-    tree2.AddComponent<CTransform>(sf::Vector2f(100.f, 50.f));
-    tree2.AddComponent<CSprite>("tree1-texture", sf::Vector2f(16.f, 32.f), ERenderLayers::L_OBSTACLES);
-    tree2.AddComponent<CBoxCollision>(sf::Vector2f(16.f, 32.f));
-
-    Entity UI_Radar = registry->CreateEntity();
-    UI_Radar.Group("UI");
-    UI_Radar.AddComponent<CTransform>(sf::Vector2f(ScreenResWidth - 100.f, 50.f));
-    UI_Radar.AddComponent<CSprite>("radar-texture", sf::Vector2f(64.f, 64.f), ERenderLayers::L_GUI, true);
-    UI_Radar.AddComponent<CAnimation>(8, 5);
+    LoadEntities(registry);
 }
 
 void LevelLoader::SetupAndLoad(Registry *registry, AssetStore *assetStore, sol::state &LuaState, int LevelID)

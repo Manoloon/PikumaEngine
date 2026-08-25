@@ -16,5 +16,5 @@ public:
     SCamera();
     void BeginPlay(const Registry* registry);
     void Update();
-    std::string TargetID = "Player";
+    std::string TargetID = "player";
 };

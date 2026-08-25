@@ -32,7 +32,6 @@ void SMovement::OnEnemyHitsObstacle(Entity enemy, Entity obstacle)
     if (enemy.HasComponent<CRigidBody>() && enemy.HasComponent<CSprite>())
     {
         auto &rigidbody = enemy.GetComponent<CRigidBody>();
-        auto &sprite = enemy.GetComponent<CSprite>();
 
         if (rigidbody.velocity.x != 0)
         {
@@ -56,7 +55,7 @@ void SMovement::Update(float DeltaTime)
         auto &transform = entity.GetComponent<CTransform>();
         auto &rigidBody = entity.GetComponent<CRigidBody>();
 
-        if (entity.HasTag("Player"))
+        if (entity.HasTag("player"))
         {
             const auto &keyboard = entity.GetComponent<CKeyboardControlled>();
             const auto &input = keyboard.inputDirection;
