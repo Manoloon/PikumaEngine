@@ -19,6 +19,7 @@
 #include "Systems/SProjectileEmitter.h"
 #include "Systems/SDebugRender.h"
 #include "Systems/SRenderText.h"
+#include "Systems/SScript.h"
 #include "LevelLoader.h"
 
 float Game::mapWidth;
@@ -30,7 +31,7 @@ Game::Game()
     registry = std::make_unique<Registry>();
     assetStore = std::make_unique<AssetStore>();
     eventBus = std::make_unique<EventBus>();   
-    Logger::Warning("Game Constructor Called");
+    Logger::Info("Game Constructor Called");
 }
 
 void Game::Run()
@@ -49,15 +50,6 @@ void Game::Preload()
 {
     window.create(sf::VideoMode(screenResolution),"Game");
     luaState.open_libraries(sol::lib::base, sol::lib::math, sol::lib::os);
-    //imgui
-    if (!ImGui::SFML::Init(window)) {
-        // Handle initialization failure
-        return; // Or any other appropriate action
-    }
-}
-
-void Game::BeginPlay()
-{
     registry->AddSystem<SMovement>();
     registry->AddSystem<SRender>();
     registry->AddSystem<SAnimation>();
@@ -69,12 +61,23 @@ void Game::BeginPlay()
     registry->AddSystem<SProjectileEmitter>();
     registry->AddSystem<SRenderDebugGUI>();
     registry->AddSystem<SRenderText>();
-
+    registry->AddSystem<SScript>();
+    registry->GetSystem<SScript>().CreateBindings(luaState);
     window.setFramerateLimit(frameRate);
-    isRunning =true;
     auto levelLoader = std::make_unique<LevelLoader>();
     levelLoader->SetupAndLoad(registry.get(),assetStore.get(),luaState,1);
     registry->Update();
+    //imgui
+    if (!ImGui::SFML::Init(window)) {
+        // Handle initialization failure
+        return; // Or any other appropriate action
+    }
+    Logger::Info("Game::Preload Finished");
+}
+
+void Game::BeginPlay()
+{
+    isRunning =true;
     auto& cameraSystem = registry->GetSystem<SCamera>();
     cameraSystem.BeginPlay(registry.get());
     auto player = registry->GetEntityByTag("player");
@@ -87,10 +90,12 @@ void Game::BeginPlay()
     // Fix time step
     timeSinceLastTick = sf::Time::Zero;
     DeltaTime = sf::seconds(1.f / FPS);
+    Logger::Info("Game::BeginPlay Finished");
 }
 
 void Game::PostLoad() 
 {
+    Logger::Info("Game::Postload Finished");
 }
 
 void Game::Update()
@@ -121,7 +126,7 @@ void Game::Update()
         registry->GetSystem<SCamera>().Update();
         registry->GetSystem<SCollision>().Update(DeltaTimeSecond, eventBus);
         registry->GetSystem<SProjectileEmitter>().Update(DeltaTimeSecond,registry);
-
+        registry->GetSystem<SScript>().Update();
         timeSinceLastTick -= DeltaTime;
     }
     CurrentGameFPS = 1.f / elapsedTime.asSeconds();
@@ -154,6 +159,7 @@ void Game::EndPlay()
     isRunning = false;
     ImGui::SFML::Shutdown();
     window.close();
+    Logger::Info("Game::EndPlay Finished");
 }
 
 void Game::Inputs()

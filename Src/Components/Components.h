@@ -5,6 +5,7 @@
 
 #include "../Enums/EngineEnums.h"
 #include <SFML/Graphics.hpp>
+#include <sol/sol.hpp>
 #include <SFML/System/Vector2.hpp>
 /**
 * \brief Component for actors with presence in the world.
@@ -184,4 +185,10 @@ struct CTextComponent
     Color(color),
     Size(size),
     IsFixed(isFixed){}
+};
+
+struct CScript
+{
+    sol::function function; 
+    CScript(sol::function Function = sol::lua_nil){this->function = Function;}
 };

@@ -13,6 +13,7 @@ end
 Level = {
     ----------------------------------------------------
     -- Table to define the list of assets
+    -- number of assets : 72
     ----------------------------------------------------
     assets = {
         [0] =
@@ -104,12 +105,13 @@ Level = {
     },
 
     ----------------------------------------------------
-    -- table to define entities and their components
+    -- table to define entities and their components 
+    -- Number of entities = 120
     ----------------------------------------------------
     entities = {
         [0] =
         {
-            -- Player
+            -- Player 1
             tag = "player",
             components = {
                 transform = {
@@ -160,7 +162,7 @@ Level = {
             }
         },
         {
-            -- Takeoff base
+            -- Takeoff base 2
             components = {
                 transform = {
                     position = { x = 240, y = 113 },
@@ -176,7 +178,7 @@ Level = {
             }
         },
         {
-            -- Landing base
+            -- Landing base 3
             components = {
                 transform = {
                     position = { x = 1396, y = 493 },
@@ -192,7 +194,7 @@ Level = {
             }
         },
         {
-            -- Radar UI animation
+            -- Radar UI animation 4
             group = "ui",
             components = {
                 transform = {
@@ -214,7 +216,7 @@ Level = {
             }
         },
         {
-            -- Runway
+            -- Runway 5
             components = {
                 transform = {
                     position = { x = 940, y = 65 },
@@ -230,7 +232,7 @@ Level = {
             }
         },
         {
-            -- Runway
+            -- Runway 6
             components = {
                 transform = {
                     position = { x = 470, y = 385 },
@@ -246,7 +248,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 7
             group = "enemies",
             components = {
                 transform = {
@@ -278,7 +280,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 8
             group = "enemies",
             components = {
                 transform = {
@@ -310,7 +312,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 9
             group = "enemies",
             components = {
                 transform = {
@@ -342,7 +344,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 10
             group = "enemies",
             components = {
                 transform = {
@@ -374,7 +376,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 11
             group = "enemies",
             components = {
                 transform = {
@@ -406,7 +408,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 12
             group = "enemies",
             components = {
                 transform = {
@@ -438,7 +440,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 13
             group = "enemies",
             components = {
                 transform = {
@@ -470,7 +472,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 14
             group = "enemies",
             components = {
                 transform = {
@@ -502,7 +504,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 15
             group = "enemies",
             components = {
                 transform = {
@@ -534,7 +536,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 16
             group = "enemies",
             components = {
                 transform = {
@@ -551,7 +553,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 17
             group = "enemies",
             components = {
                 transform = {
@@ -583,7 +585,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 18
             group = "enemies",
             components = {
                 transform = {
@@ -615,7 +617,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 19
             group = "enemies",
             components = {
                 transform = {
@@ -647,7 +649,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 20
             group = "enemies",
             components = {
                 transform = {
@@ -679,7 +681,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 21
             group = "enemies",
             components = {
                 transform = {
@@ -711,7 +713,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 22
             group = "enemies",
             components = {
                 transform = {
@@ -743,7 +745,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 23
             group = "enemies",
             components = {
                 transform = {
@@ -775,7 +777,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 24
             group = "enemies",
             components = {
                 transform = {
@@ -807,7 +809,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 25
             group = "enemies",
             components = {
                 transform = {
@@ -839,7 +841,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 26
             group = "enemies",
             components = {
                 transform = {
@@ -871,7 +873,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 27
             group = "enemies",
             components = {
                 transform = {
@@ -903,7 +905,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 28
             group = "enemies",
             components = {
                 transform = {
@@ -935,7 +937,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 29
             group = "enemies",
             components = {
                 transform = {
@@ -967,7 +969,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 30
             group = "enemies",
             components = {
                 transform = {
@@ -999,7 +1001,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 31
             group = "enemies",
             components = {
                 transform = {
@@ -1031,7 +1033,7 @@ Level = {
             }
         },
         {
-            -- Tank
+            -- Tank 32
             group = "enemies",
             components = {
                 transform = {
@@ -1048,7 +1050,7 @@ Level = {
             }
         },
         {
-            -- Truck
+            -- Truck 33
             group = "enemies",
             components = {
                 transform = {
@@ -1073,7 +1075,7 @@ Level = {
             }
         },
         {
-            -- Truck
+            -- Truck 34
             group = "enemies",
             components = {
                 transform = {
@@ -1098,7 +1100,7 @@ Level = {
             }
         },
         {
-            -- Truck
+            -- Truck 35
             group = "enemies",
             components = {
                 transform = {
@@ -1123,7 +1125,7 @@ Level = {
             }
         },
         {
-            -- Truck
+            -- Truck 36
             group = "enemies",
             components = {
                 transform = {
@@ -1148,7 +1150,7 @@ Level = {
             }
         },
         {
-            -- Truck
+            -- Truck 37
             group = "enemies",
             components = {
                 transform = {
@@ -1173,7 +1175,7 @@ Level = {
             }
         },
         {
-            -- Truck
+            -- Truck 38
             group = "enemies",
             components = {
                 transform = {
@@ -1198,7 +1200,7 @@ Level = {
             }
         },
         {
-            -- Truck
+            -- Truck 39
             group = "enemies",
             components = {
                 transform = {
@@ -1223,7 +1225,7 @@ Level = {
             }
         },
         {
-            -- Truck
+            -- Truck 40
             group = "enemies",
             components = {
                 transform = {
@@ -1248,7 +1250,7 @@ Level = {
             }
         },
         {
-            -- Truck
+            -- Truck 41
             group = "enemies",
             components = {
                 transform = {
@@ -1273,7 +1275,7 @@ Level = {
             }
         },
         {
-            -- Truck
+            -- Truck 42
             group = "enemies",
             components = {
                 transform = {
@@ -1298,7 +1300,7 @@ Level = {
             }
         },
         {
-            -- Truck
+            -- Truck 43
             group = "enemies",
             components = {
                 transform = {
@@ -1323,7 +1325,7 @@ Level = {
             }
         },
         {
-            -- SAM Tank
+            -- SAM Tank 44
             group = "enemies",
             components = {
                 transform = {
@@ -1359,7 +1361,7 @@ Level = {
             }
         },
         {
-            -- SAM Tank
+            -- SAM Tank 45
             group = "enemies",
             components = {
                 transform = {
@@ -1395,7 +1397,7 @@ Level = {
             }
         },
         {
-            -- SAM Tank
+            -- SAM Tank 46
             group = "enemies",
             components = {
                 transform = {
@@ -1431,7 +1433,7 @@ Level = {
             }
         },
         {
-            -- SAM Tank
+            -- SAM Tank 47
             group = "enemies",
             components = {
                 transform = {
@@ -1467,7 +1469,7 @@ Level = {
             }
         },
         {
-            -- SAM Truck
+            -- SAM Truck 48
             group = "enemies",
             components = {
                 transform = {
@@ -1499,7 +1501,7 @@ Level = {
             }
         },
         {
-            -- SAM Truck
+            -- SAM Truck 49
             group = "enemies",
             components = {
                 transform = {
@@ -1531,7 +1533,7 @@ Level = {
             }
         },
         {
-            -- SAM Truck
+            -- SAM Truck 5
             group = "enemies",
             components = {
                 transform = {
@@ -1563,7 +1565,7 @@ Level = {
             }
         },
         {
-            -- SAM Truck
+            -- SAM Truck 51
             group = "enemies",
             components = {
                 transform = {
@@ -1595,7 +1597,7 @@ Level = {
             }
         },
         {
-            -- SAM Truck
+            -- SAM Truck 52
             group = "enemies",
             components = {
                 transform = {
@@ -1627,7 +1629,7 @@ Level = {
             }
         },
         {
-            -- SAM Truck
+            -- SAM Truck 53
             group = "enemies",
             components = {
                 transform = {
@@ -1659,7 +1661,7 @@ Level = {
             }
         },
         {
-            -- Vegetation
+            -- Vegetation 54
             components = {
                 transform = {
                     position = { x = 115, y = 633 },
@@ -1675,7 +1677,7 @@ Level = {
             }
         },
         {
-            -- Vegetation
+            -- Vegetation 55
             components = {
                 transform = {
                     position = { x = 117, y = 650 },
@@ -1691,7 +1693,7 @@ Level = {
             }
         },
         {
-            -- Vegetation
+            -- Vegetation 56
             components = {
                 transform = {
                     position = { x = 318, y = 490 },
@@ -1707,7 +1709,7 @@ Level = {
             }
         },
         {
-            -- Vegetation
+            -- Vegetation 57
             components = {
                 transform = {
                     position = { x = 668, y = 526 },
@@ -1723,7 +1725,7 @@ Level = {
             }
         },
         {
-            -- Vegetation
+            -- Vegetation 58
             components = {
                 transform = {
                     position = { x = 1018, y = 738 },
@@ -1739,7 +1741,7 @@ Level = {
             }
         },
         {
-            -- Vegetation
+            -- Vegetation 59
             components = {
                 transform = {
                     position = { x = 1034, y = 738 },
@@ -1755,7 +1757,7 @@ Level = {
             }
         },
         {
-            -- Vegetation
+            -- Vegetation 60
             components = {
                 transform = {
                     position = { x = 1028, y = 745 },
@@ -1771,7 +1773,7 @@ Level = {
             }
         },
         {
-            -- Vegetation
+            -- Vegetation 61
             components = {
                 transform = {
                     position = { x = 1390, y = 440 },
@@ -1787,7 +1789,7 @@ Level = {
             }
         },
         {
-            -- Vegetation
+            -- Vegetation 62
             components = {
                 transform = {
                     position = { x = 1400, y = 445 },
@@ -1803,7 +1805,7 @@ Level = {
             }
         },
         {
-            -- Vegetation
+            -- Vegetation 63
             components = {
                 transform = {
                     position = { x = 1365, y = 290 },
@@ -1819,7 +1821,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 64
             components = {
                 transform = {
                     position = { x = 669, y = 549 },
@@ -1835,7 +1837,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 65
             components = {
                 transform = {
                     position = { x = 685, y = 549 },
@@ -1851,7 +1853,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 66
             components = {
                 transform = {
                     position = { x = 315, y = 505 },
@@ -1867,7 +1869,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 67
             components = {
                 transform = {
                     position = { x = 330, y = 507 },
@@ -1883,7 +1885,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 68
             components = {
                 transform = {
                     position = { x = 438, y = 390 },
@@ -1899,7 +1901,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 69
             components = {
                 transform = {
                     position = { x = 449, y = 408 },
@@ -1915,7 +1917,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 70
             components = {
                 transform = {
                     position = { x = 431, y = 416 },
@@ -1931,7 +1933,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 71
             components = {
                 transform = {
                     position = { x = 940, y = 695 },
@@ -1947,7 +1949,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 72
             components = {
                 transform = {
                     position = { x = 955, y = 705 },
@@ -1963,7 +1965,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 73
             components = {
                 transform = {
                     position = { x = 1085, y = 507 },
@@ -1979,7 +1981,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 74
             components = {
                 transform = {
                     position = { x = 1075, y = 527 },
@@ -1995,7 +1997,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 75
             components = {
                 transform = {
                     position = { x = 1075, y = 547 },
@@ -2011,7 +2013,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 76
             components = {
                 transform = {
                     position = { x = 1085, y = 567 },
@@ -2027,7 +2029,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 77
             components = {
                 transform = {
                     position = { x = 1355, y = 449 },
@@ -2043,7 +2045,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 78
             components = {
                 transform = {
                     position = { x = 1430, y = 446 },
@@ -2059,7 +2061,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 79
             components = {
                 transform = {
                     position = { x = 1435, y = 195 },
@@ -2075,7 +2077,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 80
             components = {
                 transform = {
                     position = { x = 1425, y = 215 },
@@ -2091,7 +2093,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 81
             components = {
                 transform = {
                     position = { x = 1425, y = 235 },
@@ -2107,7 +2109,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 82
             components = {
                 transform = {
                     position = { x = 1425, y = 255 },
@@ -2123,7 +2125,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 83
             components = {
                 transform = {
                     position = { x = 1435, y = 275 },
@@ -2139,7 +2141,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 84
             components = {
                 transform = {
                     position = { x = 1360, y = 310 },
@@ -2155,7 +2157,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 85
             components = {
                 transform = {
                     position = { x = 1380, y = 312 },
@@ -2171,7 +2173,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 86
             components = {
                 transform = {
                     position = { x = 1330, y = 212 },
@@ -2187,7 +2189,7 @@ Level = {
             }
         },
         {
-            -- Obstacles
+            -- Obstacles 87
             components = {
                 transform = {
                     position = { x = 1360, y = 232 },
@@ -2203,7 +2205,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 88
             components = {
                 transform = {
                     position = { x = 630, y = 405 },
@@ -2219,7 +2221,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 89
             components = {
                 transform = {
                     position = { x = 497, y = 450 },
@@ -2235,7 +2237,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 90
             components = {
                 transform = {
                     position = { x = 572, y = 560 },
@@ -2251,7 +2253,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 91
             components = {
                 transform = {
                     position = { x = 114, y = 980 },
@@ -2267,7 +2269,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 92
             components = {
                 transform = {
                     position = { x = 114, y = 1030 },
@@ -2283,7 +2285,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 93
             components = {
                 transform = {
                     position = { x = 883, y = 490 },
@@ -2299,7 +2301,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 94
             components = {
                 transform = {
                     position = { x = 113, y = 851 },
@@ -2315,7 +2317,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 95
             components = {
                 transform = {
                     position = { x = 750, y = 630 },
@@ -2331,7 +2333,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 96
             components = {
                 transform = {
                     position = { x = 800, y = 630 },
@@ -2347,7 +2349,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 97
             components = {
                 transform = {
                     position = { x = 856, y = 115 },
@@ -2363,7 +2365,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 98
             components = {
                 transform = {
                     position = { x = 900, y = 115 },
@@ -2379,7 +2381,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 99
             components = {
                 transform = {
                     position = { x = 1117, y = 530 },
@@ -2395,7 +2397,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 100
             components = {
                 transform = {
                     position = { x = 755, y = 440 },
@@ -2411,7 +2413,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 101
             components = {
                 transform = {
                     position = { x = 810, y = 440 },
@@ -2427,7 +2429,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 102
             components = {
                 transform = {
                     position = { x = 1390, y = 690 },
@@ -2443,7 +2445,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 103
             components = {
                 transform = {
                     position = { x = 1425, y = 690 },
@@ -2459,7 +2461,7 @@ Level = {
             }
         },
         {
-            -- Army
+            -- Army 104
             components = {
                 transform = {
                     position = { x = 1465, y = 690 },
@@ -2475,7 +2477,7 @@ Level = {
             }
         },
         {
-            -- Boat
+            -- Boat 105
             components = {
                 transform = {
                     position = { x = 80, y = 520 },
@@ -2491,7 +2493,7 @@ Level = {
             }
         },
         {
-            -- Boat
+            -- Boat 106
             components = {
                 transform = {
                     position = { x = 80, y = 790 },
@@ -2507,7 +2509,7 @@ Level = {
             }
         },
         {
-            -- Boat
+            -- Boat 107
             components = {
                 transform = {
                     position = { x = 345, y = 423 },
@@ -2523,7 +2525,7 @@ Level = {
             }
         },
         {
-            -- Boat
+            -- Boat 108
             components = {
                 transform = {
                     position = { x = 1510, y = 460 },
@@ -2539,7 +2541,7 @@ Level = {
             }
         },
         {
-            -- Carrier
+            -- Carrier 109
             components = {
                 transform = {
                     position = { x = 670, y = 150 },
@@ -2555,7 +2557,7 @@ Level = {
             }
         },
         {
-            -- Carrier
+            -- Carrier 110
             components = {
                 transform = {
                     position = { x = 300, y = 975 },
@@ -2571,7 +2573,7 @@ Level = {
             }
         },
         {
-            -- F-22 fighter jet
+            -- F-22 fighter jet  111
             group = "enemies",
             components = {
                 transform = {
@@ -2600,7 +2602,7 @@ Level = {
             }
         },
         {
-            -- SU-27 fighter jet
+            -- SU-27 fighter jet  112
             group = "enemies",
             components = {
                 transform = {
@@ -2632,7 +2634,7 @@ Level = {
             }
         },
         {
-            -- Bomber plane
+            -- Bomber plane 113
             group = "enemies",
             components = {
                 transform = {
@@ -2661,7 +2663,7 @@ Level = {
             }
         },
         {
-            -- FW190 plane
+            -- FW190 plane 114
             group = "enemies",
             components = {
                 transform = {
@@ -2693,7 +2695,7 @@ Level = {
             }
         },
         {
-            -- UPF7 plane
+            -- UPF7 plane 115
             group = "enemies",
             components = {
                 transform = {
@@ -2714,7 +2716,7 @@ Level = {
             }
         },
         {
-            -- UPF7 plane
+            -- UPF7 plane 116
             group = "enemies",
             components = {
                 transform = {
@@ -2735,7 +2737,7 @@ Level = {
             }
         },
         {
-            -- UPF7 plane
+            -- UPF7 plane 117
             group = "enemies",
             components = {
                 transform = {
@@ -2755,9 +2757,8 @@ Level = {
                 }
             }
         },
-        --[[
         {
-            -- SU-27 fighter jet
+            -- SU-27 fighter jet 118
             group = "enemies",
             components = {
                 transform = {
@@ -2772,7 +2773,7 @@ Level = {
                     texture_asset_id = "su27-texture",
                     width = 32,
                     height = 32,
-                    z_index = 5
+                    z_index = 3
                 },
                 animation = {
                     num_frames = 2,
@@ -2795,8 +2796,8 @@ Level = {
                 on_update_script = {
                     [0] =
                     function(entity, delta_time, ellapsed_time)
-                        -- print("Executing the SU-27 fighter jet Lua script!")
-
+                        print("Executing the SU-27 fighter jet Lua script!")
+                        --[[
                         -- this function makes the fighter jet move up and down the map shooting projectiles
                         local current_position_x, current_position_y = get_position(entity)
                         local current_velocity_x, current_velocity_y = get_velocity(entity)
@@ -2815,13 +2816,13 @@ Level = {
                         else
                             set_rotation(entity, 180) -- point down
                             set_projectile_velocity(entity, 0, 200) -- shoot projectiles down
-                        end
+                        end  --]]
                     end
                 }
             }
         },
         {
-            -- F-22 fighter jet
+            -- F-22 fighter jet 119
             group = "enemies",
             components = {
                 transform = {
@@ -2836,7 +2837,7 @@ Level = {
                     texture_asset_id = "f22-texture",
                     width = 32,
                     height = 32,
-                    z_index = 5
+                    z_index = 3
                 },
                 animation = {
                     num_frames = 2,
@@ -2859,17 +2860,16 @@ Level = {
                 on_update_script = {
                     [0] =
                     function(entity, delta_time, ellapsed_time)
-                        -- print("Executing BF-109 Lua script!")
-
+                        print("Executing F-22 Lua script!")
+                        --[[
                         -- change the position of the the airplane to follow a sine wave movement
                         local new_x = ellapsed_time * 0.09
                         local new_y = 200 + (math.sin(ellapsed_time * 0.001) * 50)
-                        set_position(entity, new_x, new_y) -- set the new position
+                        set_position(entity, new_x, new_y) -- set the new position --]]
                     end
                 }
             }
         }
-        --]]
     }
 }
 

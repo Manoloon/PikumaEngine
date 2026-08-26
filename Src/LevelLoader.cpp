@@ -11,31 +11,31 @@ ERenderLayers LevelLoader::ParseRenderLayer(int layer)
     switch (layer)
     {
     case 0:
-        Logger::Warning(std::to_string(layer) + " layer :" + "L_BACKGROUND");
+    //Logger::Warning(std::to_string(layer) + " layer :" + "L_BACKGROUND");
         return ERenderLayers::L_BACKGROUND;
     case 1:
-    Logger::Warning(std::to_string(layer) + " layer :" + "L_TILEMAP");
+    //Logger::Warning(std::to_string(layer) + " layer :" + "L_TILEMAP");
         return ERenderLayers::L_TILEMAP;
     case 2:
-    Logger::Warning(std::to_string(layer) + " layer :" + "L_OBSTACLES");
+    //Logger::Warning(std::to_string(layer) + " layer :" + "L_OBSTACLES");
         return ERenderLayers::L_OBSTACLES;
     case 3:
-    Logger::Warning(std::to_string(layer) + " layer :" + "L_ENEMIES");
+    //Logger::Warning(std::to_string(layer) + " layer :" + "L_ENEMIES");
         return ERenderLayers::L_ENEMIES;
     case 4:
-    Logger::Warning(std::to_string(layer) + " layer :" + "L_PROJECTILE");
+    //Logger::Warning(std::to_string(layer) + " layer :" + "L_PROJECTILE");
         return ERenderLayers::L_PROJECTILE;
     case 5:
-    Logger::Warning(std::to_string(layer) + " layer :" + "L_PLAYER");
+    //Logger::Warning(std::to_string(layer) + " layer :" + "L_PLAYER");
         return ERenderLayers::L_PLAYER;
     case 6:
-    Logger::Warning(std::to_string(layer) + " layer :" + "L_FOREGROUND");
+    //Logger::Warning(std::to_string(layer) + " layer :" + "L_FOREGROUND");
         return ERenderLayers::L_FOREGROUND;
     case 7:
-    Logger::Warning(std::to_string(layer) + " layer :" + "L_GUI");
+    //Logger::Warning(std::to_string(layer) + " layer :" + "L_GUI");
         return ERenderLayers::L_GUI;
     default:
-        Logger::Error("Invalid render layer: " +  std::to_string(layer));
+    //Logger::Error("Invalid render layer: " +  std::to_string(layer));
         return ERenderLayers::L_GUI;
     }
 }
@@ -120,6 +120,7 @@ void LevelLoader::LoadEntities(Registry *registry)
         sol::optional<sol::table> hasEntity = entities[it];
         if (hasEntity == sol::nullopt)
         {
+            Logger::Warning("Finished Entity at index " + std::to_string(it));
             break;
         }
         sol::table entity = *hasEntity;
@@ -212,6 +213,13 @@ void LevelLoader::LoadEntities(Registry *registry)
                                  entity["components"]["camera_follow"]["position"]["y"].get_or(0.f)),
                     sf::Vector2u(entity["components"]["camera_follow"]["view_size"]["width"].get_or(200),
                                  entity["components"]["camera_follow"]["view_size"]["height"].get_or(200)));
+            }
+            // Scripting
+            if (HasTable(comps, "on_update_script"))
+            {
+                sol::function func = comps["on_update_script"]["0"];
+                Logger::Info("Script comp : func is valid? " + std::to_string(func.valid()));
+                newEntity.AddComponent<CScript>(func);
             }
         }
     }
