@@ -2860,10 +2860,13 @@ Level = {
                     [0] =
                     function(entity, delta_time, ellapsed_time)
                         --print("Executing F-22 Lua script!")
-                        
                         -- change the position of the the airplane to follow a sine wave movement
-                        local new_x = ellapsed_time * 0.09
-                        local new_y = 200 + (math.sin(ellapsed_time * 0.001) * 50)
+                        local current_position_x, current_position_y = get_position(entity)
+                        local speed = 90.0
+                        local new_x = current_position_x + delta_time * speed
+                        print("Executing F-22 ellapsed_time:" .. ellapsed_time)
+                        local new_y = 100 + math.sin(ellapsed_time * 0.9) * 50
+                        print("Executing F-22 :" .. new_y)
                         set_position(entity, new_x, new_y) -- set the new position
                     end
                 }

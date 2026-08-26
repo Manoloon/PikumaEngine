@@ -5,7 +5,7 @@
 #include "../ECS/ECS.h"
 
 std::tuple<double,double> GetEntityPosition(Entity entity);
-void SetEntityPosition(Entity entity, float x, float y);
+void SetEntityPosition(Entity entity, double x, double y);
 
 std::tuple<double,double> GetEntityVelocity(Entity entity);
 void SetEntityVelocity(Entity entity, double x, double y);

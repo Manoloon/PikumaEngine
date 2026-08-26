@@ -19,6 +19,7 @@ class Game
     sf::Clock gameClock;
     sf::Time DeltaTime;
     sf::Time timeSinceLastTick;
+    sf::Time totalElapsedTime = sf::Time::Zero;
 
     int frameRate = 60;
     std::unique_ptr<Registry> registry;

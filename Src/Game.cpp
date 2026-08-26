@@ -100,8 +100,9 @@ void Game::PostLoad()
 
 void Game::Update()
 {
-    sf::Time elapsedTime = gameClock.restart();
-    timeSinceLastTick += elapsedTime;
+    sf::Time frameTime = gameClock.restart();
+    totalElapsedTime += frameTime; 
+    timeSinceLastTick += frameTime;
     const sf::Time MaxAccumulateTime = sf::seconds(0.25f);
     if(timeSinceLastTick > MaxAccumulateTime)
     {
@@ -126,10 +127,10 @@ void Game::Update()
         registry->GetSystem<SCamera>().Update();
         registry->GetSystem<SCollision>().Update(DeltaTimeSecond, eventBus);
         registry->GetSystem<SProjectileEmitter>().Update(DeltaTimeSecond,registry);
-        registry->GetSystem<SScript>().Update(DeltaTimeSecond,elapsedTime.asSeconds());
+        registry->GetSystem<SScript>().Update(DeltaTimeSecond,totalElapsedTime.asSeconds());
         timeSinceLastTick -= DeltaTime;
     }
-    CurrentGameFPS = 1.f / elapsedTime.asSeconds();
+    CurrentGameFPS = 1.f / totalElapsedTime.asSeconds();
 }
 void Game::Draw()
 {

@@ -51,7 +51,7 @@ std::tuple<double, double> GetEntityPosition(Entity entity)
     return {transform.position.x,transform.position.y};
 }
 
-void SetEntityPosition(Entity entity, float x, float y)
+void SetEntityPosition(Entity entity, double x, double y)
 {
     if(!entity.HasComponent<CTransform>())
     {
@@ -59,7 +59,8 @@ void SetEntityPosition(Entity entity, float x, float y)
         return;
     }
     auto& transform = entity.GetComponent<CTransform>();
-    transform.position = {x,y};
+      Logger::Error("SScript::SetEntityPosition :" + std::to_string(x) + " :" + std::to_string(y));
+    transform.position = {static_cast<float>(x),static_cast<float>(y)};
 }
 
 std::tuple<double, double> GetEntityVelocity(Entity entity)
@@ -81,7 +82,7 @@ void SetEntityVelocity(Entity entity, double x, double y)
         return;
     }
     auto& rigidbody = entity.GetComponent<CRigidBody>();
-    rigidbody.velocity = {x,y};
+    rigidbody.velocity = {static_cast<float>(x),static_cast<float>(y)};
 }
 
 double GetEntityRotation(Entity entity)
@@ -89,7 +90,7 @@ double GetEntityRotation(Entity entity)
     if(!entity.HasComponent<CTransform>())
     {
         Logger::Error("SScript::GetEntityRotation : entity has NOT CTransform");
-        return 0.0f;
+        return 0.0;
     }
     auto& transform = entity.GetComponent<CTransform>();
     return transform.rotation.asDegrees();
@@ -111,7 +112,7 @@ std::tuple<double, double> GetProjectileVelocity(Entity entity)
    if(!entity.HasComponent<CShootEmitter>())
     {
         Logger::Error("SScript::GetProjectileVelocity : entity has NOT CShootEmitter");
-        return {0.f,0.f};
+        return {0.0,0.0};
     }
     auto& projectile = entity.GetComponent<CShootEmitter>();
     return {projectile.velocity.x,projectile.velocity.y};
@@ -124,5 +125,5 @@ void SetProjectileVelocity(Entity entity, double x, double y)
         Logger::Error("SScript::SetProjectileVelocity : entity has NOT CShootEmitter");
     }
     auto& projectile = entity.GetComponent<CShootEmitter>();
-    projectile.velocity = {x,y};
+    projectile.velocity = {static_cast<float>(x),static_cast<float>(y)};
 }
