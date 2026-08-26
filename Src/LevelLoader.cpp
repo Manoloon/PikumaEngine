@@ -217,7 +217,7 @@ void LevelLoader::LoadEntities(Registry *registry)
             // Scripting
             if (HasTable(comps, "on_update_script"))
             {
-                sol::function func = comps["on_update_script"]["0"];
+                sol::function func = comps["on_update_script"][0];
                 Logger::Info("Script comp : func is valid? " + std::to_string(func.valid()));
                 newEntity.AddComponent<CScript>(func);
             }

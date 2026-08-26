@@ -189,6 +189,6 @@ struct CTextComponent
 
 struct CScript
 {
-    sol::function function; 
-    CScript(sol::function Function = sol::lua_nil){this->function = Function;}
+    sol::protected_function function; 
+    CScript(sol::protected_function Function = sol::lua_nil){this->function = Function;}
 };

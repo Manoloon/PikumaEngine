@@ -126,7 +126,7 @@ void Game::Update()
         registry->GetSystem<SCamera>().Update();
         registry->GetSystem<SCollision>().Update(DeltaTimeSecond, eventBus);
         registry->GetSystem<SProjectileEmitter>().Update(DeltaTimeSecond,registry);
-        registry->GetSystem<SScript>().Update();
+        registry->GetSystem<SScript>().Update(DeltaTimeSecond,elapsedTime.asSeconds());
         timeSinceLastTick -= DeltaTime;
     }
     CurrentGameFPS = 1.f / elapsedTime.asSeconds();
