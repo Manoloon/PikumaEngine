@@ -157,7 +157,7 @@ Level = {
                 },
                 camera_follow = {
                     position = { x = 242, y = 110 },
-                    view_size = {width = 1280, height = 640}
+                    view_size = {width = 640, height = 360}
                 }
             }
         },
@@ -271,8 +271,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 100, y = 0 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 100, y = 0 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 20,
                     friendly = false
@@ -303,8 +303,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 0, y = -50 },
-                    projectile_duration = 4, -- seconds
+                    velocity = { x = 0, y = -100 },
+                    duration = 4, -- seconds
                     repeat_frequency = 2, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -335,8 +335,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 0, y = 20 },
-                    projectile_duration = 3, -- seconds
+                    velocity = { x = 0, y = 40 },
+                    duration = 3, -- seconds
                     repeat_frequency = 3, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -367,8 +367,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = -50, y = 0 },
-                    projectile_duration = 3, -- seconds
+                    velocity = { x = -50, y = 0 },
+                    duration = 3, -- seconds
                     repeat_frequency = 3, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -399,8 +399,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 60, y = 0 },
-                    projectile_duration = 4, -- seconds
+                    velocity = { x = 60, y = 0 },
+                    duration = 4, -- seconds
                     repeat_frequency = 4, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -431,8 +431,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = -60, y = 0 },
-                    projectile_duration = 4, -- seconds
+                    velocity = { x = -60, y = 0 },
+                    duration = 4, -- seconds
                     repeat_frequency = 4, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -463,8 +463,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 60, y = 0 },
-                    projectile_duration = 4, -- seconds
+                    velocity = { x = 60, y = 0 },
+                    duration = 4, -- seconds
                     repeat_frequency = 4, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -495,8 +495,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 0, y = 40 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 0, y = 40 },
+                    duration = 2, -- seconds
                     repeat_frequency = 2, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -527,8 +527,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 0, y = 40 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 0, y = 40 },
+                    duration = 2, -- seconds
                     repeat_frequency = 2, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -576,8 +576,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = -40, y = 0 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = -400, y = 0 },
+                    duration = 2, -- seconds
                     repeat_frequency = 2, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -608,8 +608,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 0, y = 100 },
-                    projectile_duration = 5, -- seconds
+                    velocity = { x = 0, y = 100 },
+                    duration = 5, -- seconds
                     repeat_frequency = 5, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -640,8 +640,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = -60, y = 0 },
-                    projectile_duration = 10, -- seconds
+                    velocity = { x = -60, y = 0 },
+                    duration = 10, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -672,8 +672,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 60, y = 0 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 60, y = 0 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -704,8 +704,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 0, y = 100 },
-                    projectile_duration = 4, -- seconds
+                    velocity = { x = 0, y = 100 },
+                    duration = 4, -- seconds
                     repeat_frequency = 2, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -736,8 +736,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 0, y = -200 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 0, y = -200 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -768,8 +768,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 0, y = -200 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 0, y = -200 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -800,8 +800,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 0, y = -200 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 0, y = -200 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -832,8 +832,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 0, y = -200 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 0, y = -200 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -864,8 +864,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 0, y = -200 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 0, y = -200 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -896,8 +896,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 200, y = 0 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 200, y = 0 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -928,8 +928,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = -200, y = 0 },
-                    projectile_duration = 1, -- seconds
+                    velocity = { x = -200, y = 0 },
+                    duration = 1, -- seconds
                     repeat_frequency = 2, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -960,8 +960,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 0, y = 300 },
-                    projectile_duration = 1, -- seconds
+                    velocity = { x = 0, y = 300 },
+                    duration = 1, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -992,8 +992,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 0, y = -100 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 0, y = -100 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -1024,8 +1024,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 0, y = 300 },
-                    projectile_duration = 1, -- seconds
+                    velocity = { x = 0, y = 300 },
+                    duration = 1, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -1341,7 +1341,7 @@ Level = {
                 },
                 animation = {
                     num_frames = 2,
-                    speed_rate = 2 -- fps
+                    speed_rate = 20 -- fps
                 },
                 boxcollider = {
                     width = 17,
@@ -1352,8 +1352,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = -50, y = -50 },
-                    projectile_duration = 3, -- seconds
+                    velocity = { x = -50, y = -50 },
+                    duration = 3, -- seconds
                     repeat_frequency = 2, -- seconds
                     hit_percentage_damage = 5,
                     friendly = false
@@ -1377,7 +1377,7 @@ Level = {
                 },
                 animation = {
                     num_frames = 2,
-                    speed_rate = 2 -- fps
+                    speed_rate = 20 -- fps
                 },
                 boxcollider = {
                     width = 17,
@@ -1388,8 +1388,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = -50, y = -50 },
-                    projectile_duration = 3, -- seconds
+                    velocity = { x = -50, y = -50 },
+                    duration = 3, -- seconds
                     repeat_frequency = 2, -- seconds
                     hit_percentage_damage = 5,
                     friendly = false
@@ -1413,7 +1413,7 @@ Level = {
                 },
                 animation = {
                     num_frames = 2,
-                    speed_rate = 2 -- fps
+                    speed_rate = 20 -- fps
                 },
                 boxcollider = {
                     width = 17,
@@ -1424,8 +1424,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = -100, y = -75 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = -100, y = -75 },
+                    duration = 2, -- seconds
                     repeat_frequency = 2, -- seconds
                     hit_percentage_damage = 5,
                     friendly = false
@@ -1449,7 +1449,7 @@ Level = {
                 },
                 animation = {
                     num_frames = 2,
-                    speed_rate = 2 -- fps
+                    speed_rate = 20 -- fps
                 },
                 boxcollider = {
                     width = 17,
@@ -1460,8 +1460,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = -100, y = -60 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = -100, y = -60 },
+                    duration = 2, -- seconds
                     repeat_frequency = 2, -- seconds
                     hit_percentage_damage = 5,
                     friendly = false
@@ -1492,8 +1492,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 50, y = -50 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 50, y = -50 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 5,
                     friendly = false
@@ -1524,8 +1524,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 50, y = -50 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 50, y = -50 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 5,
                     friendly = false
@@ -1556,8 +1556,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 50, y = -70 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 50, y = -70 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 5,
                     friendly = false
@@ -1588,8 +1588,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 50, y = -70 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 50, y = -70 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 5,
                     friendly = false
@@ -1620,8 +1620,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 50, y = -70 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 50, y = -70 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 5,
                     friendly = false
@@ -1652,8 +1652,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 50, y = -70 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 50, y = -70 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 5,
                     friendly = false
@@ -2787,8 +2787,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 0, y = -100 },
-                    projectile_duration = 2, -- seconds
+                    velocity = { x = 0, y = -100 },
+                    duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -2811,10 +2811,10 @@ Level = {
                         -- set the transform rotation to match going up or down
                         if (current_velocity_y < 0) then
                             set_rotation(entity, 0) -- point up
-                            set_projectile_velocity(entity, 0, -200) -- shoot projectiles up
+                            set_velocity(entity, 0, -200) -- shoot projectiles up
                         else
                             set_rotation(entity, 180) -- point down
-                            set_projectile_velocity(entity, 0, 200) -- shoot projectiles down
+                            set_velocity(entity, 0, 200) -- shoot projectiles down
                         end
                     end
                 }
@@ -2850,8 +2850,8 @@ Level = {
                     health_percentage = 100
                 },
                 projectile_emitter = {
-                    projectile_velocity = { x = 200, y = 0 },
-                    projectile_duration = 1, -- secondsm
+                    velocity = { x = 200, y = 0 },
+                    duration = 1, -- secondsm
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false

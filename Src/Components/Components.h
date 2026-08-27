@@ -92,9 +92,7 @@ struct CBoxCollision
     sf::Vector2f size;
     sf::Vector2f offset;
     explicit CBoxCollision(sf::Vector2f Size = sf::Vector2f(32, 32), sf::Vector2f Offset = sf::Vector2f(0, 0))
-        : size(Size), offset(Offset)
-    {
-    }
+        : size(Size), offset(Offset){}
 };
 /**
 * \brief component for actors controlled by keyboard.
@@ -157,11 +155,13 @@ struct CShootEmitter
 };
 struct CProjectile
 {
+    int  OwnerID = -1;
     bool IsFriendly;
     float DamagePercent;
     float LifeSpan;
     float LifeTime = 0.0;
-    CProjectile(bool isFriendly= false, float damagePercent = 0, float lifeSpan = 0):
+    CProjectile(int ownerID, bool isFriendly= false, float damagePercent = 0, float lifeSpan = 0):
+                                OwnerID(ownerID),
                                 IsFriendly(isFriendly),
                                 DamagePercent(damagePercent),
                                 LifeSpan(lifeSpan){}

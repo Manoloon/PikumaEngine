@@ -15,16 +15,7 @@ void SDamage::onCollision(CollisionEvent &event)
     // SHOULD Change on event to return an uniqueptr
     Entity a = event.EntityA;
     Entity b = event.EntityB;
-
     // Hit On Enemies
-    // if(a.BelongToGroup("projectile") && b.HasComponent<CHealth>())
-    // {
-    //     OnProjectileHitsOther(a,b);
-    // }
-    // else if(a.HasComponent<CHealth>() && b.BelongToGroup("projectile"))
-    // {
-    //     OnProjectileHitsOther(b,a);
-    // }
     if (a.BelongToGroup("projectile") && b.HasTag("player"))
     {
         OnProjectileHitsOther(a, b); // "a" is the projectile, "b" is the player
@@ -54,6 +45,11 @@ void SDamage::OnProjectileHitsOther(Entity Projectile, Entity Other)
         return;
     }
     const auto &projectileComp = Projectile.GetComponent<CProjectile>();
+    if (projectileComp.OwnerID == Other.GetId())
+    {
+        Logger::Info("SDamage:: projectile owner id: " + std::to_string(projectileComp.OwnerID) + " and other id " + std::to_string(Other.GetId()) + " are equal.");
+        return;
+    }
     if(Other.HasTag("player"))
     {
         if (!projectileComp.IsFriendly)

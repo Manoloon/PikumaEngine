@@ -22,7 +22,7 @@ void SProjectileEmitter::onKeyPressed(KeyPressedEvent &event)
         {
             CShootEmitter &shootEmitter = entity.GetComponent<CShootEmitter>();
             const CTransform &transform = entity.GetComponent<CTransform>();
-            const auto& keyboard = entity.GetComponent<CKeyboardControlled>();
+            const auto &keyboard = entity.GetComponent<CKeyboardControlled>();
             sf::Vector2f projectilePosition = transform.position;
 
             // Determine direction from rigidbody
@@ -37,22 +37,22 @@ void SProjectileEmitter::onKeyPressed(KeyPressedEvent &event)
             }
 
             sf::Vector2f projectileVelocity = shootEmitter.velocity.length() * dir;
-            if(shootEmitter.lastEmissionTime < shootEmitter.loopFrequency)
+            if (shootEmitter.lastEmissionTime < shootEmitter.loopFrequency)
             {
                 return;
             }
             //create projectile
             Entity projectile = entity.registry->CreateEntity();
             const sf::Vector2f projectileScale = {4.f, 4.f};
-            const sf::Vector2f projectileCollisionSize = {4.f, 4.f};
             projectile.Group("projectile");
             projectile.AddComponent<CTransform>(projectilePosition, projectileScale, transform.rotation);
             projectile.AddComponent<CRigidBody>(projectileVelocity);
             projectile.AddComponent<CSprite>("bullet-texture", projectileScale, ERenderLayers::L_PROJECTILE);
-            projectile.AddComponent<CBoxCollision>(projectileCollisionSize);
-            projectile.AddComponent<CProjectile>(shootEmitter.bIsFriendly,
-                                                   shootEmitter.damagePercentage,
-                                                   shootEmitter.lifeSpan);
+            projectile.AddComponent<CBoxCollision>(projectileScale);
+            projectile.AddComponent<CProjectile>(entity.GetId(),
+                                                 shootEmitter.bIsFriendly,
+                                                 shootEmitter.damagePercentage,
+                                                 shootEmitter.lifeSpan);
             break;
         }
     }
@@ -64,7 +64,7 @@ void SProjectileEmitter::Update(float DeltaTime, Registry &Registry)
     {
         CShootEmitter &shootEmitter = entity.GetComponent<CShootEmitter>();
         shootEmitter.lastEmissionTime += DeltaTime;
-        if(shootEmitter.loopFrequency == 0)
+        if (shootEmitter.loopFrequency == 0)
         {
             //Logger::Warning("Entity ID : " + std::to_string(entity.GetId()) + "loopFrequency = 0");
             continue;
@@ -82,22 +82,24 @@ void SProjectileEmitter::Update(float DeltaTime, Registry &Registry)
             projectilePosition.x += transform.scale.x * Sprite.spriteRect.size.x * 0.5f;
             projectilePosition.y += transform.scale.y * Sprite.spriteRect.size.y * 0.5f;
         }
-        if(entity.HasTag("player"))
+        if (entity.HasTag("player"))
         {
             continue;
         }
-           
+
         Entity projectile = Registry.CreateEntity();
         // TODO : this should be in an enum
+        const sf::Vector2f projectileScale = {4.f, 4.f};
         projectile.Group("projectile");
         projectile.AddComponent<CTransform>(projectilePosition, transform.scale, transform.rotation);
         projectile.AddComponent<CRigidBody>(shootEmitter.velocity);
-        projectile.AddComponent<CSprite>("bullet-texture", sf::Vector2f(4.f, 4.f), ERenderLayers::L_PROJECTILE);
-        projectile.AddComponent<CBoxCollision>(sf::Vector2f(4.f, 4.f));
-        projectile.AddComponent<CProjectile>(shootEmitter.bIsFriendly,
-                                            shootEmitter.damagePercentage,
-                                            shootEmitter.lifeSpan);
-    // reset the emission.
-    shootEmitter.lastEmissionTime -= shootEmitter.loopFrequency;
+        projectile.AddComponent<CSprite>("bullet-texture", projectileScale, ERenderLayers::L_PROJECTILE);
+        projectile.AddComponent<CBoxCollision>(projectileScale);
+        projectile.AddComponent<CProjectile>(entity.GetId(),
+                                             shootEmitter.bIsFriendly,
+                                             shootEmitter.damagePercentage,
+                                             shootEmitter.lifeSpan);
+        // reset the emission.
+        shootEmitter.lastEmissionTime -= shootEmitter.loopFrequency;
     }
 }

@@ -192,8 +192,8 @@ void LevelLoader::LoadEntities(Registry *registry)
             if (HasTable(comps, "projectile_emitter"))
             {
                 newEntity.AddComponent<CShootEmitter>(
-                    sf::Vector2f(entity["components"]["projectile_emitter"]["velocity"]["x"].get_or(100.f),
-                                 entity["components"]["projectile_emitter"]["velocity"]["y"].get_or(100.f)),
+                    sf::Vector2f(entity["components"]["projectile_emitter"]["velocity"]["x"].get_or(0.f),
+                                 entity["components"]["projectile_emitter"]["velocity"]["y"].get_or(0.f)),
                     entity["components"]["projectile_emitter"]["repeat_frequency"].get_or(0),
                     entity["components"]["projectile_emitter"]["duration"].get_or(10),
                     entity["components"]["projectile_emitter"]["hit_percentage_damage"].get_or(10000.f),

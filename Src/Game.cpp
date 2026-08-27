@@ -134,7 +134,7 @@ void Game::Update()
 
         timeSinceLastTick -= DeltaTime;
     }
-    CurrentGameFPS = 1.f / totalElapsedTime.asSeconds();
+    CurrentGameFPS = 1.f / frameTime.asSeconds();
 }
 void Game::Draw()
 {
@@ -145,8 +145,7 @@ void Game::Draw()
 
     if(bDebug)
     {
-        registry->GetSystem<SDebugRender>().
-                Update(window,*CameraActor,registry->GetSystem<SCollision>().GetHitColor());
+        registry->GetSystem<SDebugRender>().Update(window,*CameraActor,registry->GetSystem<SCollision>().GetHitColor());
     }
 
     // UI / screen space render
