@@ -16,10 +16,10 @@ class SProjectileEmitter : public System
 public:
     SProjectileEmitter();
 
-    void SubscribeToEvent(std::unique_ptr<EventBus>& eventBus);
+    void SubscribeToEvent(EventBus& eventBus);
 
     void onKeyPressed(KeyPressedEvent& event);
  
-    void Update(float DeltaTime,std::unique_ptr<Registry>& Registry);
+    void Update(float DeltaTime,Registry& Registry);
 };
 #endif //PIKUMAENGINE_SPROJECTILEEMITTER_H

@@ -11,31 +11,31 @@ ERenderLayers LevelLoader::ParseRenderLayer(int layer)
     switch (layer)
     {
     case 0:
-    //Logger::Warning(std::to_string(layer) + " layer :" + "L_BACKGROUND");
+        //Logger::Warning(std::to_string(layer) + " layer :" + "L_BACKGROUND");
         return ERenderLayers::L_BACKGROUND;
     case 1:
-    //Logger::Warning(std::to_string(layer) + " layer :" + "L_TILEMAP");
+        //Logger::Warning(std::to_string(layer) + " layer :" + "L_TILEMAP");
         return ERenderLayers::L_TILEMAP;
     case 2:
-    //Logger::Warning(std::to_string(layer) + " layer :" + "L_OBSTACLES");
+        //Logger::Warning(std::to_string(layer) + " layer :" + "L_OBSTACLES");
         return ERenderLayers::L_OBSTACLES;
     case 3:
-    //Logger::Warning(std::to_string(layer) + " layer :" + "L_ENEMIES");
+        //Logger::Warning(std::to_string(layer) + " layer :" + "L_ENEMIES");
         return ERenderLayers::L_ENEMIES;
     case 4:
-    //Logger::Warning(std::to_string(layer) + " layer :" + "L_PROJECTILE");
+        //Logger::Warning(std::to_string(layer) + " layer :" + "L_PROJECTILE");
         return ERenderLayers::L_PROJECTILE;
     case 5:
-    //Logger::Warning(std::to_string(layer) + " layer :" + "L_PLAYER");
+        //Logger::Warning(std::to_string(layer) + " layer :" + "L_PLAYER");
         return ERenderLayers::L_PLAYER;
     case 6:
-    //Logger::Warning(std::to_string(layer) + " layer :" + "L_FOREGROUND");
+        //Logger::Warning(std::to_string(layer) + " layer :" + "L_FOREGROUND");
         return ERenderLayers::L_FOREGROUND;
     case 7:
-    //Logger::Warning(std::to_string(layer) + " layer :" + "L_GUI");
+        //Logger::Warning(std::to_string(layer) + " layer :" + "L_GUI");
         return ERenderLayers::L_GUI;
     default:
-    //Logger::Error("Invalid render layer: " +  std::to_string(layer));
+        //Logger::Error("Invalid render layer: " +  std::to_string(layer));
         return ERenderLayers::L_GUI;
     }
 }
@@ -171,7 +171,9 @@ void LevelLoader::LoadEntities(Registry *registry)
             if (HasTable(comps, "animation"))
             {
                 sol::table table = comps["animation"];
-                newEntity.AddComponent<CAnimation>(table["num_frames"], table["speed_rate"], table["should_loop"].get_or(true));
+                newEntity.AddComponent<CAnimation>(table["num_frames"],
+                                                   table["speed_rate"],
+                                                   table["should_loop"].get_or(true));
             }
             // Collision
             if (HasTable(comps, "boxcollider"))
@@ -189,7 +191,6 @@ void LevelLoader::LoadEntities(Registry *registry)
             // Projectile Emitter
             if (HasTable(comps, "projectile_emitter"))
             {
-
                 newEntity.AddComponent<CShootEmitter>(
                     sf::Vector2f(entity["components"]["projectile_emitter"]["velocity"]["x"].get_or(100.f),
                                  entity["components"]["projectile_emitter"]["velocity"]["y"].get_or(100.f)),

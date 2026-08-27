@@ -145,8 +145,8 @@ Level = {
                 },
                 projectile_emitter = {
                     velocity = { x = 200, y = 200 },
-                    repeat_frequency = 0, -- seconds
-                    duration = 10, -- seconds
+                    repeat_frequency = 1, -- seconds
+                    duration = 3, -- seconds
                     hit_percentage_damage = 10,
                     friendly = true
                 },
@@ -157,7 +157,7 @@ Level = {
                 },
                 camera_follow = {
                     position = { x = 242, y = 110 },
-                    view_size = {width = 640, height = 360}
+                    view_size = {width = 1280, height = 640}
                 }
             }
         },
@@ -2788,7 +2788,7 @@ Level = {
                 },
                 projectile_emitter = {
                     projectile_velocity = { x = 0, y = -100 },
-                    projectile_duration = 5, -- seconds
+                    projectile_duration = 2, -- seconds
                     repeat_frequency = 1, -- seconds
                     hit_percentage_damage = 10,
                     friendly = false
@@ -2864,9 +2864,7 @@ Level = {
                         local current_position_x, current_position_y = get_position(entity)
                         local speed = 90.0
                         local new_x = current_position_x + delta_time * speed
-                        print("Executing F-22 ellapsed_time:" .. ellapsed_time)
                         local new_y = 100 + math.sin(ellapsed_time * 0.9) * 50
-                        print("Executing F-22 :" .. new_y)
                         set_position(entity, new_x, new_y) -- set the new position
                     end
                 }

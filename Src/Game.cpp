@@ -20,6 +20,7 @@
 #include "Systems/SDebugRender.h"
 #include "Systems/SRenderText.h"
 #include "Systems/SScript.h"
+#include "Systems/SProjectile.h"
 #include "LevelLoader.h"
 
 float Game::mapWidth;
@@ -55,6 +56,7 @@ void Game::Preload()
     registry->AddSystem<SAnimation>();
     registry->AddSystem<SCollision>();
     registry->AddSystem<SDebugRender>();
+    registry->AddSystem<SProjectile>();
     registry->AddSystem<SDamage>();
     registry->AddSystem<SInput>();
     registry->AddSystem<SCamera>();
@@ -63,6 +65,7 @@ void Game::Preload()
     registry->AddSystem<SRenderText>();
     registry->AddSystem<SScript>();
     registry->GetSystem<SScript>().CreateBindings(luaState);
+    
     window.setFramerateLimit(frameRate);
     auto levelLoader = std::make_unique<LevelLoader>();
     levelLoader->SetupAndLoad(registry.get(),assetStore.get(),luaState,1);
@@ -116,18 +119,19 @@ void Game::Update()
         eventBus->Reset();
         // the subscribing would be frame by frame
         // TODO : this should be handle out of update
-        registry->GetSystem<SDamage>().SubscribeToEvents(eventBus);
-        registry->GetSystem<SProjectileEmitter>().SubscribeToEvent(eventBus);
-
+        registry->GetSystem<SDamage>().SubscribeToEvents(*eventBus);
+        registry->GetSystem<SProjectileEmitter>().SubscribeToEvent(*eventBus);
         //run this at the end of the frame.
         registry->Update();
         registry->GetSystem<SInput>().Update();
         registry->GetSystem<SMovement>().Update(DeltaTimeSecond);
         registry->GetSystem<SAnimation>().Update();
         registry->GetSystem<SCamera>().Update();
-        registry->GetSystem<SCollision>().Update(DeltaTimeSecond, eventBus);
-        registry->GetSystem<SProjectileEmitter>().Update(DeltaTimeSecond,registry);
+        registry->GetSystem<SProjectile>().Update(DeltaTimeSecond);
+        registry->GetSystem<SCollision>().Update(*eventBus);
+        registry->GetSystem<SProjectileEmitter>().Update(DeltaTimeSecond,*registry);
         registry->GetSystem<SScript>().Update(DeltaTimeSecond,totalElapsedTime.asSeconds());
+
         timeSinceLastTick -= DeltaTime;
     }
     CurrentGameFPS = 1.f / totalElapsedTime.asSeconds();

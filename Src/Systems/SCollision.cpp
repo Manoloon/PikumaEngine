@@ -19,7 +19,7 @@ bool SCollision::CheckAABBCollision(const sf::Vector2f &aPos,
         aPos.y + aSize.y > bPos.y);
 }
 
-void SCollision::Update([[maybe_unused]] float DeltaTime, std::unique_ptr<EventBus> &eventBus)
+void SCollision::Update(EventBus &eventBus)
 {
     auto Entities = GetSystemEntities();
     for (auto i = Entities.begin(); i != Entities.end(); ++i)
@@ -37,9 +37,9 @@ void SCollision::Update([[maybe_unused]] float DeltaTime, std::unique_ptr<EventB
             // check collision
             if (CheckAABBCollision(aTransform.position + aCollision.offset, aCollision.size, bTransform.position + bCollision.offset, bCollision.size))
             {
-                //Logger::Info("SCollision : Update : Entity " + std::to_string(entityA.GetId()) + " collided with entity " + std::to_string(entityB.GetId()));
+                Logger::Info("SCollision : Update : Entity " + std::to_string(entityA.GetId()) + " collided with entity " + std::to_string(entityB.GetId()));
                 HitColor = sf::Color::Red;
-                eventBus->EmitEvent<CollisionEvent>(entityA, entityB);
+                eventBus.EmitEvent<CollisionEvent>(entityA, entityB);
             }
         }
     }

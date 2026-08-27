@@ -27,5 +27,5 @@ public:
     * \param DeltaTime Delta Time in Milliseconds.
     * \param eventBus eventBus pointer
     */
-    void Update([[maybe_unused]] float DeltaTime,std::unique_ptr<EventBus>& eventBus);
+    void Update(EventBus& eventBus);
 };

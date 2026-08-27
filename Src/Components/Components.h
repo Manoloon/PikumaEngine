@@ -138,22 +138,33 @@ struct CCamera
 struct CShootEmitter
 {
     sf::Vector2f velocity;
-    int loopFrequency;
-    int lifeSpan;
-    int damagePercentage;
+    float loopFrequency;
+    float lifeSpan;
+    float damagePercentage;
     bool bIsFriendly;
     float lastEmissionTime;
 
     explicit CShootEmitter(sf::Vector2f Velocity = {0, 0},
-                           int LoopFrequency = 1,
-                           int LifeSpan = 3,
-                           int DamagePercent = 40,
+                           float LoopFrequency = 1.f,
+                           float LifeSpan = 3.f,
+                           float DamagePercent = 40.f,
                            bool IsFriendly = false,
-                           int LastEmissionTime = 0)
+                           float LastEmissionTime = 0.f)
         : velocity(Velocity), loopFrequency(LoopFrequency), lifeSpan(LifeSpan), damagePercentage(DamagePercent),
           bIsFriendly(IsFriendly), lastEmissionTime(LastEmissionTime)
     {
     }
+};
+struct CProjectile
+{
+    bool IsFriendly;
+    float DamagePercent;
+    float LifeSpan;
+    float LifeTime = 0.0;
+    CProjectile(bool isFriendly= false, float damagePercent = 0, float lifeSpan = 0):
+                                IsFriendly(isFriendly),
+                                DamagePercent(damagePercent),
+                                LifeSpan(lifeSpan){}
 };
 /**
 * \brief component for actors that handle Health.

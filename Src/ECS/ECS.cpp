@@ -122,11 +122,11 @@ void System::RemoveEntityFromSystem(Entity EntityRef)
     {
         return;
     }
-    entities.erase(std::remove_if(std::begin(entities),std::end(entities),
-                                  [&EntityRef](Entity other)
-                                  {
-                                    return EntityRef == other;
-                                  }),std::end(entities));
+    entities.erase(std::remove_if(std::begin(entities),std::end(entities),[&EntityRef](Entity other)
+    {
+        return EntityRef == other;
+    }),
+    std::end(entities));
 }
 
 std::vector<Entity> System::GetSystemEntities() const
@@ -187,10 +187,9 @@ void Registry::Update()
             }
         }
 
-        freeEntityIds.push_back(entity.GetId());
-
         RemoveEntityTag(entity);
         RemoveEntityGroup(entity);
+        freeEntityIds.emplace_back(entity.GetId());
     }
     entitiesToDestroy.clear();
 }

@@ -59,7 +59,6 @@ void SetEntityPosition(Entity entity, double x, double y)
         return;
     }
     auto& transform = entity.GetComponent<CTransform>();
-      Logger::Error("SScript::SetEntityPosition :" + std::to_string(x) + " :" + std::to_string(y));
     transform.position = {static_cast<float>(x),static_cast<float>(y)};
 }
 

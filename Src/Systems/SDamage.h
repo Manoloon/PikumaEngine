@@ -14,9 +14,9 @@ class SDamage : public System
 public:
     SDamage();
 
-    void SubscribeToEvents(std::unique_ptr<EventBus>& eventBus);
+    void SubscribeToEvents(EventBus& eventBus);
 
     void onCollision(CollisionEvent& event);
 
-    void OnProjectileHitsOther(std::unique_ptr<Entity>& Projectile, std::unique_ptr<Entity>& Other);
+    void OnProjectileHitsOther(Entity Projectile, Entity Other);
 };

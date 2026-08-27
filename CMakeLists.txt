@@ -32,6 +32,7 @@ set(SOURCES
     ${SRC_DIR}/LevelLoader.cpp
     ${SRC_DIR}/Systems/SRenderText.cpp
     ${SRC_DIR}/Systems/SScript.cpp
+    ${SRC_DIR}/Systems/SProjectile.cpp
     )
 
 add_executable(PikumaEngine main.cpp ${SOURCES})
@@ -79,12 +80,3 @@ target_include_directories(PikumaEngine PRIVATE
 target_link_libraries(PikumaEngine PRIVATE
     "${MINGW64_ROOT}/lib/liblua5.4.dll.a"
 )
-
-# target_include_directories(PikumaEngine PRIVATE
-#     "C:/msys64/mingw64/include"
-#     "C:/msys64/mingw64/include/lua5.4"
-# )
-
-# target_link_libraries(PikumaEngine PRIVATE
-#     "C:/msys64/mingw64/lib/liblua5.4.dll.a"
-# )
