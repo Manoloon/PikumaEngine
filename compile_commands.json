@@ -1,111 +1,123 @@
 [
 {
   "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\Game.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Game.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Game.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/Game.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\Logger.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Logger.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Logger.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/Logger.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\GameGlobals.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\GameGlobals.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/GameGlobals.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/GameGlobals.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\ECS\\ECS.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\ECS\\ECS.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/ECS/ECS.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/ECS/ECS.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\ECS\\AssetStore.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\ECS\\AssetStore.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/ECS/AssetStore.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/ECS/AssetStore.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\Systems\\SAnimation.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SAnimation.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SAnimation.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/Systems/SAnimation.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\Systems\\SCamera.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SCamera.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SCamera.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/Systems/SCamera.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\Systems\\SCollision.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SCollision.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SCollision.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/Systems/SCollision.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\Systems\\SDamage.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SDamage.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SDamage.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/Systems/SDamage.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\Systems\\SInput.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SInput.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SInput.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/Systems/SInput.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\Systems\\SDebugRender.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SDebugRender.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SDebugRender.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/Systems/SDebugRender.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\Systems\\SMovement.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SMovement.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SMovement.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/Systems/SMovement.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\Systems\\SProjectileEmitter.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SProjectileEmitter.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SProjectileEmitter.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/Systems/SProjectileEmitter.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\Systems\\SRender.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SRender.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SRender.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/Systems/SRender.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\Systems\\SRenderDebugGUI.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SRenderDebugGUI.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SRenderDebugGUI.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/Systems/SRenderDebugGUI.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\LevelLoader.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\LevelLoader.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/LevelLoader.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/LevelLoader.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\Systems\\SRenderText.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SRenderText.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SRenderText.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/Systems/SRenderText.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\Systems\\SScript.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SScript.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SScript.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/Systems/SScript.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngineCore.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngineCore.dir\\Src\\Systems\\SProjectile.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SProjectile.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SProjectile.cpp",
+  "output": "CMakeFiles/PikumaEngineCore.dir/Src/Systems/SProjectile.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build",
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\main.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\main.cpp",
   "file": "C:/Coding/cpp/PikumaEngine/main.cpp",
   "output": "CMakeFiles/PikumaEngine.dir/main.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\Game.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Game.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/Game.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/Game.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\Logger.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Logger.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/Logger.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/Logger.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\GameGlobals.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\GameGlobals.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/GameGlobals.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/GameGlobals.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\ECS\\ECS.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\ECS\\ECS.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/ECS/ECS.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/ECS/ECS.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\ECS\\AssetStore.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\ECS\\AssetStore.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/ECS/AssetStore.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/ECS/AssetStore.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\Systems\\SAnimation.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SAnimation.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SAnimation.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/Systems/SAnimation.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\Systems\\SCamera.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SCamera.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SCamera.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/Systems/SCamera.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\Systems\\SCollision.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SCollision.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SCollision.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/Systems/SCollision.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\Systems\\SDamage.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SDamage.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SDamage.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/Systems/SDamage.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\Systems\\SInput.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SInput.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SInput.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/Systems/SInput.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\Systems\\SDebugRender.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SDebugRender.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SDebugRender.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/Systems/SDebugRender.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\Systems\\SMovement.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SMovement.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SMovement.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/Systems/SMovement.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\Systems\\SProjectileEmitter.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SProjectileEmitter.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SProjectileEmitter.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/Systems/SProjectileEmitter.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\Systems\\SRender.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SRender.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SRender.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/Systems/SRender.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\Systems\\SRenderDebugGUI.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SRenderDebugGUI.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SRenderDebugGUI.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/Systems/SRenderDebugGUI.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\LevelLoader.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\LevelLoader.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/LevelLoader.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/LevelLoader.cpp.obj"
-},
-{
-  "directory": "C:/Coding/cpp/PikumaEngine/build",
-  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/PikumaEngine.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\PikumaEngine.dir\\Src\\Systems\\SRenderText.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Src\\Systems\\SRenderText.cpp",
-  "file": "C:/Coding/cpp/PikumaEngine/Src/Systems/SRenderText.cpp",
-  "output": "CMakeFiles/PikumaEngine.dir/Src/Systems/SRenderText.cpp.obj"
 },
 {
   "directory": "C:/Coding/cpp/PikumaEngine/build/_deps/imgui-sfml-build",
@@ -148,5 +160,11 @@
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/ImGui-SFML.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\ImGui-SFML.dir\\__\\imgui-src\\misc\\cpp\\imgui_stdlib.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\build\\_deps\\imgui-src\\misc\\cpp\\imgui_stdlib.cpp",
   "file": "C:/Coding/cpp/PikumaEngine/build/_deps/imgui-src/misc/cpp/imgui_stdlib.cpp",
   "output": "_deps/imgui-sfml-build/CMakeFiles/ImGui-SFML.dir/__/imgui-src/misc/cpp/imgui_stdlib.cpp.obj"
+},
+{
+  "directory": "C:/Coding/cpp/PikumaEngine/build/Tests",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -DIMGUI_USER_CONFIG=\\\"imconfig-SFML.h\\\" -DSFML_STATIC @CMakeFiles/ECS_tests.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -Wpedantic -Wshadow -o CMakeFiles\\ECS_tests.dir\\ECS_unitTests.cpp.obj -c C:\\Coding\\cpp\\PikumaEngine\\Tests\\ECS_unitTests.cpp",
+  "file": "C:/Coding/cpp/PikumaEngine/Tests/ECS_unitTests.cpp",
+  "output": "Tests/CMakeFiles/ECS_tests.dir/ECS_unitTests.cpp.obj"
 }
 ]

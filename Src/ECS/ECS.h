@@ -236,7 +236,7 @@ public:
     void DestroyEntity(Entity entity);
     void AddEntityToSystem(Entity entity);
     void RemoveEntityFromSystems(Entity entity) const;
-
+    
     // tag management
     void TagEntity(Entity entity,const std::string& tag);
     bool EntityHasTag(Entity entity,const std::string& tag) const;

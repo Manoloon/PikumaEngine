@@ -35,9 +35,6 @@ set(SOURCES
     ${SRC_DIR}/Systems/SProjectile.cpp
     )
 
-add_executable(PikumaEngine main.cpp ${SOURCES})
-target_include_directories(PikumaEngine PRIVATE ${SRC_DIR})
-
 # Asset directory copy to build folder
 set(ASSETS_DIR "${CMAKE_SOURCE_DIR}/assets")
 
@@ -51,9 +48,16 @@ add_custom_target(copy_assets ALL
         "${ASSETS_DIR}"
         "${CMAKE_BINARY_DIR}/assets"
 )
+
+find_package(Catch2 3 REQUIRED)
+include(CTest)
+include(Catch)
+add_subdirectory(Tests)
 find_package(SFML 3 REQUIRED COMPONENTS Graphics Window System Audio)
 
-target_link_libraries(PikumaEngine PRIVATE
+add_library(PikumaEngineCore STATIC ${SOURCES})
+target_include_directories(PikumaEngineCore PUBLIC ${SRC_DIR})
+target_link_libraries(PikumaEngineCore PUBLIC
                         ImGui-SFML::ImGui-SFML
                         SFML::Graphics
                         SFML::Window 
@@ -72,11 +76,16 @@ get_filename_component(MINGW64_ROOT
 )
 set(LUA_ROOT "${MINGW64_ROOT}/include/lua5.4")
 
-target_include_directories(PikumaEngine PRIVATE
+
+target_include_directories(PikumaEngineCore PUBLIC
     "${MINGW64_ROOT}/include"
     "${LUA_ROOT}"
 )
 
-target_link_libraries(PikumaEngine PRIVATE
+target_link_libraries(PikumaEngineCore PUBLIC
     "${MINGW64_ROOT}/lib/liblua5.4.dll.a"
 )
+
+add_executable(PikumaEngine main.cpp)
+target_link_libraries(PikumaEngine PRIVATE
+                        PikumaEngineCore)
