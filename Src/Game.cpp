@@ -84,12 +84,12 @@ void Game::BeginPlay()
     auto& cameraSystem = registry->GetSystem<SCamera>();
     cameraSystem.BeginPlay(registry.get());
     auto player = registry->GetEntityByTag("player");
-    if(!player.HasComponent<CCamera>())
+    if(!player || !player->HasComponent<CCamera>())
     {
         Logger::Error("Game::BeginPlay : Failed to get the CCamera from the player");
         return;
     }
-    CameraActor = &player.GetComponent<CCamera>();
+    CameraActor = &player->GetComponent<CCamera>();
     // Fix time step
     timeSinceLastTick = sf::Time::Zero;
     DeltaTime = sf::seconds(1.f / FPS);

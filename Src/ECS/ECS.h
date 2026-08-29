@@ -10,6 +10,7 @@
 #include <unordered_map>
 #include <typeindex>
 #include <memory>
+#include <optional>
 #include <stdexcept>
 #include <deque>
 #include "Logger.h"
@@ -240,7 +241,7 @@ public:
     // tag management
     void TagEntity(Entity entity,const std::string& tag);
     bool EntityHasTag(Entity entity,const std::string& tag) const;
-    Entity GetEntityByTag(const std::string& tag) const;
+    std::optional<Entity> GetEntityByTag(const std::string& tag) const;
     void RemoveEntityTag(Entity entity);
 
     // group management

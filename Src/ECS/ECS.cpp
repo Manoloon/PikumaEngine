@@ -46,16 +46,18 @@ void Registry::TagEntity(Entity entity,const std::string& tag)
 
 bool Registry::EntityHasTag(Entity entity,const std::string& tag) const
 {
-    if (tagPerEntity.find(entity.GetId()) == tagPerEntity.end())
-    {
-        return false;
-    }
-    return entityPerTag.find(tag)->second == entity;
+    auto result = GetEntityByTag(tag);
+    return result.has_value() && *result == entity;
 }
 
-Entity Registry::GetEntityByTag(const std::string& tag) const
+std::optional<Entity> Registry::GetEntityByTag(const std::string& tag) const
 {
-    return entityPerTag.at(tag);
+    auto result = entityPerTag.find(tag);
+    if(result == std::cend(entityPerTag))
+    {
+        return std::nullopt;
+    }
+    return result->second;
 }
 
 void Registry::RemoveEntityTag(Entity entity)
