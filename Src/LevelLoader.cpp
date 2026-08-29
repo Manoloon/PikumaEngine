@@ -131,6 +131,11 @@ void LevelLoader::LoadEntities(Registry *registry)
         {
             newEntity.Tag(*tag);
         }
+        sol::optional<std::string> group = entity["group"];
+        if(group != sol::nullopt)
+        {
+            newEntity.Group(*group);
+        }
         // components
         sol::optional<sol::table> hasComponent = entity["components"];
         if (hasComponent != sol::nullopt)

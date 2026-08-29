@@ -41,13 +41,13 @@ void SDamage::OnProjectileHitsOther(Entity Projectile, Entity Other)
 {
     if (!Projectile.HasComponent<CProjectile>())
     {
-        Logger::Warning("SDamage: OnProjectileHitsOther Projectile dont have CProjectile component");
+       // Logger::Warning("SDamage: OnProjectileHitsOther Projectile dont have CProjectile component");
         return;
     }
     const auto &projectileComp = Projectile.GetComponent<CProjectile>();
     if (projectileComp.OwnerID == Other.GetId())
     {
-        Logger::Info("SDamage:: projectile owner id: " + std::to_string(projectileComp.OwnerID) + " and other id " + std::to_string(Other.GetId()) + " are equal.");
+     //   Logger::Info("SDamage:: projectile owner id: " + std::to_string(projectileComp.OwnerID) + " and other id " + std::to_string(Other.GetId()) + " are equal.");
         return;
     }
     if(Other.HasTag("player"))
@@ -57,6 +57,7 @@ void SDamage::OnProjectileHitsOther(Entity Projectile, Entity Other)
             auto &healthComp = Other.GetComponent<CHealth>();
 
             healthComp.Health -= projectileComp.DamagePercent;
+            Logger::Warning("SDamage:: Player health :" + std::to_string(healthComp.Health));
             if (Other.HasComponent<CTextComponent>())
             {
                 Other.GetComponent<CTextComponent>().Text = std::to_string(healthComp.Health);
@@ -76,6 +77,7 @@ void SDamage::OnProjectileHitsOther(Entity Projectile, Entity Other)
             auto &healthComp = Other.GetComponent<CHealth>();
 
             healthComp.Health -= projectileComp.DamagePercent;
+            Logger::Warning("SDamage:: Enemy health :" + std::to_string(healthComp.Health));
             if (Other.HasComponent<CTextComponent>())
             {
                 Other.GetComponent<CTextComponent>().Text = std::to_string(healthComp.Health);
