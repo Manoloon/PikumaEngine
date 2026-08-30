@@ -40,8 +40,15 @@ bool Entity::BelongToGroup(const std::string& group) const
 
 void Registry::TagEntity(Entity entity,const std::string& tag)
 {
+    int id = entity.GetId();
+    auto found = entityPerTag.find(tag);
+    if(found != nullptr)
+    {
+        throw std::runtime_error("Cant be more than one entity per tag" + tag);
+    }
     entityPerTag.emplace(tag,entity);
-    tagPerEntity.emplace(entity.GetId(),tag);
+
+    tagPerEntity.emplace(id,tag);
 }
 
 bool Registry::EntityHasTag(Entity entity,const std::string& tag) const
@@ -97,8 +104,12 @@ bool Registry::EntityBelongToGroup(const Entity& entity,const std::string& group
 
 std::vector<Entity> Registry::GetEntitiesByGroup(const std::string& group) const
 {
-    auto& setOfEntities = entitiesPerGroup.at(group);
-    return {setOfEntities.begin(),setOfEntities.end()};
+    auto it = entitiesPerGroup.find(group);
+    if(it == std::cend(entitiesPerGroup))
+    {
+        return {};
+    }
+    return {it->second.begin(),it->second.end()};
 }
 
 void Registry::RemoveEntityGroup(Entity entity)
