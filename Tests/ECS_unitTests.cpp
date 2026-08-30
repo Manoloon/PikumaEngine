@@ -1,21 +1,37 @@
 #include <catch2/catch_test_macros.hpp>
 #include <memory>
 #include "../Src/Components/Components.h"
+#include "Systems/SMovement.h"
 #include "../Src/ECS/ECS.h"
 
-std::unique_ptr<Registry> registry = std::make_unique<Registry>();
+struct RegistryFixture
+{
+    std::unique_ptr<Registry> registry = std::make_unique<Registry>();
+};
 
-TEST_CASE("01- Entity creation", "[Entity]")
+TEST_CASE_METHOD(RegistryFixture,"Entity creation", "[Entity]")
 {
     REQUIRE(registry != nullptr);
+    auto entity = registry->CreateEntity();
+    int id = entity.GetId();
+    REQUIRE(id == 0);
 }
+TEST_CASE_METHOD(RegistryFixture,"Entities received different ID", "[Entity]")
+{
+    auto entityA = registry->CreateEntity();
+    auto entityB = registry->CreateEntity();
+    auto entityC = registry->CreateEntity();
 
-TEST_CASE("02- Entity Tag", "[Entity]")
+    REQUIRE(entityA != entityB);
+    REQUIRE(entityB != entityC);
+    REQUIRE(entityC != entityA);
+}
+TEST_CASE_METHOD(RegistryFixture,"Entity Tag", "[Tag]")
 {
     auto entity = registry->CreateEntity();
     entity.Tag("player");
-
     REQUIRE(entity.HasTag("player"));
+
     // adding a second player
     auto entityA = registry->CreateEntity();
     REQUIRE_THROWS(entityA.Tag("player"));
@@ -24,16 +40,26 @@ TEST_CASE("02- Entity Tag", "[Entity]")
     REQUIRE(result.has_value());
     REQUIRE(result == entity);
 }
-
-TEST_CASE("03- Entity Group", "[Entity]")
+TEST_CASE_METHOD(RegistryFixture,"Unknown tag returns no entity", "[Tag]")
+{
+    auto result = registry->GetEntityByTag("player");
+    REQUIRE_FALSE(result.has_value());
+}
+TEST_CASE_METHOD(RegistryFixture,"Entity Group", "[Entity]")
 {
     auto entity = registry->CreateEntity();
     entity.Group("entities");
     REQUIRE(entity.BelongToGroup("entities"));
+    REQUIRE(registry->EntityBelongToGroup(entity,"entities"));
     auto entities = registry->GetEntitiesByGroup("entities");
     REQUIRE_FALSE(entities.empty());
+    registry->RemoveEntityGroup(entity);
+    REQUIRE_FALSE(registry->EntityBelongToGroup(entity,"entities"));
+    REQUIRE_FALSE(entity.BelongToGroup("entities"));
+    entities = registry->GetEntitiesByGroup("entities");
+    REQUIRE(entities.empty());
 }
-TEST_CASE("04-Entity Operators","[Entity]")
+TEST_CASE_METHOD(RegistryFixture,"Entity Operators","[Entity]")
 {
     // adding a second player
     auto entityA = registry->CreateEntity();
@@ -47,7 +73,8 @@ TEST_CASE("04-Entity Operators","[Entity]")
     REQUIRE(other.has_value());
     REQUIRE(entityB.GetId() == other->GetId());
 }
-TEST_CASE("05-Add Component to Entity", "[Entity]")
+
+TEST_CASE_METHOD(RegistryFixture,"Add Component to Entity", "[Entity]")
 {
     auto entity = registry->CreateEntity();
     entity.Group("enemy");
@@ -61,31 +88,52 @@ TEST_CASE("05-Add Component to Entity", "[Entity]")
     REQUIRE(comp.scale == scale);
     REQUIRE(comp.rotation == rot);
 }
-TEST_CASE("07-Remove component from entity", "[Entity]")
-{
-auto entities = registry->GetEntitiesByGroup("enemy");
 
+TEST_CASE_METHOD(RegistryFixture,"Remove component from entity", "[Entity]")
+{
+    auto entity = registry->CreateEntity();
+    entity.Group("enemy");
+    const sf::Vector2f pos = {100,200};
+    const sf::Vector2f scale = {2.0,2.0};
+    const sf::Angle rot = sf::degrees(90.f);
+    entity.AddComponent<CTransform>(pos,scale,rot);
+    REQUIRE(entity.HasComponent<CTransform>());
+
+    auto entities = registry->GetEntitiesByGroup("enemy");
     REQUIRE_FALSE(entities.empty());
 
-    for (auto& entity : entities)
+    for (auto& e : entities)
     {
-        if (entity.HasComponent<CTransform>())
+        if (e.HasComponent<CTransform>())
         {
-            REQUIRE_NOTHROW(entity.RemoveComponent<CTransform>());
-            REQUIRE_FALSE(entity.HasComponent<CTransform>());
+            REQUIRE_NOTHROW(e.RemoveComponent<CTransform>());
+            REQUIRE_FALSE(e.HasComponent<CTransform>());
             return;
         }
     }
-
     FAIL("No enemy with CTransform was found");
 }
-TEST_CASE("08-Destroy player Entity","[Entity]")
+TEST_CASE_METHOD(RegistryFixture,"Destroy player Entity","[Entity]")
 {
-    auto entity = registry->GetEntityByTag("player");
-    REQUIRE(entity.has_value());
-    entity->Destroy();
+    auto entity = registry->CreateEntity();
+    entity.Tag("player");
+
+    auto entityResult = registry->GetEntityByTag("player");
+    REQUIRE(entityResult.has_value());
+    
+    entityResult->Destroy();
     registry->Update();
-    entity = registry->GetEntityByTag("player");
-    REQUIRE_FALSE(entity);
-    REQUIRE_FALSE(entity.has_value());
+    entityResult = registry->GetEntityByTag("player");
+    REQUIRE_FALSE(entityResult);
+    REQUIRE_FALSE(entityResult.has_value());
 }
+// TEST_CASE("09-Add and remove Entity To system","[Entity]")
+// {
+//     auto system = registry->GetSystem<SMovement>();
+
+// }
+// /// TEST SYSTEM
+// TEST_CASE("01-Test Systems - Add, remove , Has? , Get","[System]")
+// {
+
+// }
