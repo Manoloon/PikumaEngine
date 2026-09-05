@@ -69,7 +69,7 @@ void Game::Preload()
     {
         scriptSystem->CreateBindings(luaState);
     }
-    
+    // TODO : Dato que viene desde script
     window.setFramerateLimit(frameRate);
     auto levelLoader = std::make_unique<LevelLoader>();
     levelLoader->SetupAndLoad(registry.get(),assetStore.get(),luaState,2);
@@ -146,6 +146,7 @@ void Game::Update()
 }
 void Game::Draw()
 {
+    // TODO : Traer dato desde script
     window.clear(sf::Color(18,33,43));
     
     // World render

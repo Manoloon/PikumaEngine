@@ -28,6 +28,7 @@ class Game
     sol::state luaState;
 
     bool isRunning =false;
+    // TODO : Dato que viene desde script
     bool bDebug= false;
     
     sf::Vector2u screenResolution ={800,450};
