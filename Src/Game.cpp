@@ -64,7 +64,11 @@ void Game::Preload()
     registry->AddSystem<SRenderDebugGUI>();
     registry->AddSystem<SRenderText>();
     registry->AddSystem<SScript>();
-    registry->GetSystem<SScript>().CreateBindings(luaState);
+    auto scriptSystem = registry->GetSystem<SScript>();
+    if(scriptSystem)
+    {
+        scriptSystem->CreateBindings(luaState);
+    }
     
     window.setFramerateLimit(frameRate);
     auto levelLoader = std::make_unique<LevelLoader>();
@@ -81,8 +85,12 @@ void Game::Preload()
 void Game::BeginPlay()
 {
     isRunning =true;
-    auto& cameraSystem = registry->GetSystem<SCamera>();
-    cameraSystem.BeginPlay(registry.get());
+    auto cameraSystem = registry->GetSystem<SCamera>();
+    if(cameraSystem)
+    {
+        cameraSystem->BeginPlay(registry.get());
+    }
+    
     auto player = registry->GetEntityByTag("player");
     if(!player || !player->HasComponent<CCamera>())
     {
@@ -119,18 +127,18 @@ void Game::Update()
         eventBus->Reset();
         // the subscribing would be frame by frame
         // TODO : this should be handle out of update
-        registry->GetSystem<SDamage>().SubscribeToEvents(*eventBus);
-        registry->GetSystem<SProjectileEmitter>().SubscribeToEvent(*eventBus);
+        registry->GetSystem<SDamage>()->SubscribeToEvents(*eventBus);
+        registry->GetSystem<SProjectileEmitter>()->SubscribeToEvent(*eventBus);
         //run this at the end of the frame.
         registry->Update();
-        registry->GetSystem<SInput>().Update();
-        registry->GetSystem<SMovement>().Update(DeltaTimeSecond);
-        registry->GetSystem<SAnimation>().Update();
-        registry->GetSystem<SCamera>().Update();
-        registry->GetSystem<SProjectile>().Update(DeltaTimeSecond);
-        registry->GetSystem<SCollision>().Update(*eventBus);
-        registry->GetSystem<SProjectileEmitter>().Update(DeltaTimeSecond,*registry);
-        registry->GetSystem<SScript>().Update(DeltaTimeSecond,totalElapsedTime.asSeconds());
+        registry->GetSystem<SInput>()->Update();
+        registry->GetSystem<SMovement>()->Update(DeltaTimeSecond);
+        registry->GetSystem<SAnimation>()->Update();
+        registry->GetSystem<SCamera>()->Update();
+        registry->GetSystem<SProjectile>()->Update(DeltaTimeSecond);
+        registry->GetSystem<SCollision>()->Update(*eventBus);
+        registry->GetSystem<SProjectileEmitter>()->Update(DeltaTimeSecond,*registry);
+        registry->GetSystem<SScript>()->Update(DeltaTimeSecond,totalElapsedTime.asSeconds());
 
         timeSinceLastTick -= DeltaTime;
     }
@@ -141,19 +149,20 @@ void Game::Draw()
     window.clear(sf::Color(18,33,43));
     
     // World render
-    registry->GetSystem<SRender>().Update(window, assetStore.get(), *CameraActor);
+    registry->GetSystem<SRender>()->Update(window, assetStore.get(), *CameraActor);
 
     if(bDebug)
     {
-        registry->GetSystem<SDebugRender>().Update(window,*CameraActor,registry->GetSystem<SCollision>().GetHitColor());
+        registry->GetSystem<SDebugRender>()->Update(window,
+            *CameraActor,registry->GetSystem<SCollision>()->GetHitColor());
     }
 
     // UI / screen space render
     //window.setView(window.getDefaultView());
-    registry->GetSystem<SRenderText>().Draw(window,assetStore.get(),*CameraActor);
+    registry->GetSystem<SRenderText>()->Draw(window,assetStore.get(),*CameraActor);
     if(bDebug)
     {
-        registry->GetSystem<SRenderDebugGUI>().Update(window,DeltaTime,registry,*CameraActor);
+        registry->GetSystem<SRenderDebugGUI>()->Update(window,DeltaTime,registry,*CameraActor);
     }
     window.display();
 }

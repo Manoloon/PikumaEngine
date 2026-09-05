@@ -127,13 +127,16 @@ TEST_CASE_METHOD(RegistryFixture,"Destroy player Entity","[Entity]")
     REQUIRE_FALSE(entityResult);
     REQUIRE_FALSE(entityResult.has_value());
 }
-// TEST_CASE("09-Add and remove Entity To system","[Entity]")
-// {
-//     auto system = registry->GetSystem<SMovement>();
-
-// }
-// /// TEST SYSTEM
-// TEST_CASE("01-Test Systems - Add, remove , Has? , Get","[System]")
-// {
-
-// }
+TEST_CASE_METHOD(RegistryFixture,"Add and remove Systems to a registry","[Entity]")
+{
+    auto system = registry->GetSystem<SMovement>();
+    REQUIRE(system == nullptr);
+    registry->AddSystem<SMovement>();
+    auto system2 = registry->GetSystem<SMovement>();
+    REQUIRE_FALSE(system2 == nullptr);
+    auto result = registry->GetSystem<SMovement>();
+    REQUIRE(result == system2);
+    registry->HasSystem<SMovement>();
+    registry->RemoveSystem<SMovement>();
+    REQUIRE_FALSE(registry->HasSystem<SMovement>());
+}

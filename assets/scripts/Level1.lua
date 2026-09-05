@@ -2585,7 +2585,7 @@ Level = {
                     texture_asset_id = "f22-texture",
                     width = 32,
                     height = 32,
-                    z_index = 4
+                    z_index = 3
                 },
                 animation = {
                     num_frames = 2,
@@ -2617,7 +2617,7 @@ Level = {
                     texture_asset_id = "su27-texture",
                     width = 32,
                     height = 32,
-                    z_index = 5
+                    z_index = 3
                 },
                 animation = {
                     num_frames = 2,
@@ -2646,7 +2646,7 @@ Level = {
                     texture_asset_id = "bomber-texture",
                     width = 32,
                     height = 32,
-                    z_index = 5
+                    z_index = 3
                 },
                 animation = {
                     num_frames = 2,
@@ -2678,7 +2678,7 @@ Level = {
                     texture_asset_id = "fw190-texture",
                     width = 32,
                     height = 32,
-                    z_index = 6
+                    z_index = 3
                 },
                 animation = {
                     num_frames = 3,
@@ -2707,7 +2707,7 @@ Level = {
                     texture_asset_id = "upf7-texture",
                     width = 32,
                     height = 32,
-                    z_index = 5
+                    z_index = 3
                 },
                 animation = {
                     num_frames = 2,
@@ -2728,7 +2728,7 @@ Level = {
                     texture_asset_id = "upf7-texture",
                     width = 32,
                     height = 32,
-                    z_index = 5
+                    z_index = 3
                 },
                 animation = {
                     num_frames = 2,
@@ -2749,7 +2749,7 @@ Level = {
                     texture_asset_id = "upf7-texture",
                     width = 32,
                     height = 32,
-                    z_index = 5
+                    z_index = 3
                 },
                 animation = {
                     num_frames = 2,

@@ -83,13 +83,17 @@ class System
     Signature componentSignature;
     std::vector<Entity> entities;
 public:
+
     void AddEntityToSystem(Entity newEntity);
     void RemoveEntityFromSystem(Entity EntityRef);
-
     std::vector<Entity> GetSystemEntities() const;
 
     const Signature& GetComponentSignature() const;
-
+    
+    bool operator==(const System& other) const 
+    {
+        return this->GetComponentSignature() == other.GetComponentSignature();
+    }
     template<typename TComponent>void RequireComponent();
 };
 ////////////////////////////////////////////////////////////////////////////////
@@ -269,7 +273,7 @@ public:
     template<typename TSystem>
         bool HasSystem() const;
     template<typename TSystem>
-        TSystem& GetSystem() const;
+        TSystem* GetSystem() const;
 };
 
 // Templates //
@@ -331,6 +335,7 @@ bool Registry::HasComponent(Entity entity) const
     return componentSignatures[entityId].test(componentId);
 }
 
+// TODO : what happen if there is no component ?
 template<typename TComponent>
 TComponent& Registry::GetComponent(Entity entity) const
 {
@@ -361,11 +366,15 @@ bool Registry::HasSystem() const
 }
 
 template<typename TSystem>
-TSystem &Registry::GetSystem() const
+TSystem* Registry::GetSystem() const
 {
     auto system = Systems.find(std::type_index(typeid(TSystem)));
+    if(system == Systems.end())
+    {
+        return nullptr;
+    }
     // I need to dereference the iterator of the system I found
-    return *(std::static_pointer_cast<TSystem>(system->second));
+    return std::static_pointer_cast<TSystem>(system->second).get();
 }
 
 template<typename TComponent, typename... TArgs>
