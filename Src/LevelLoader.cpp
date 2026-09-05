@@ -11,31 +11,22 @@ ERenderLayers LevelLoader::ParseRenderLayer(int layer)
     switch (layer)
     {
     case 0:
-        //Logger::Warning(std::to_string(layer) + " layer :" + "L_BACKGROUND");
         return ERenderLayers::L_BACKGROUND;
     case 1:
-        //Logger::Warning(std::to_string(layer) + " layer :" + "L_TILEMAP");
         return ERenderLayers::L_TILEMAP;
     case 2:
-        //Logger::Warning(std::to_string(layer) + " layer :" + "L_OBSTACLES");
         return ERenderLayers::L_OBSTACLES;
     case 3:
-        //Logger::Warning(std::to_string(layer) + " layer :" + "L_ENEMIES");
         return ERenderLayers::L_ENEMIES;
     case 4:
-        //Logger::Warning(std::to_string(layer) + " layer :" + "L_PROJECTILE");
         return ERenderLayers::L_PROJECTILE;
     case 5:
-        //Logger::Warning(std::to_string(layer) + " layer :" + "L_PLAYER");
         return ERenderLayers::L_PLAYER;
     case 6:
-        //Logger::Warning(std::to_string(layer) + " layer :" + "L_FOREGROUND");
         return ERenderLayers::L_FOREGROUND;
     case 7:
-        //Logger::Warning(std::to_string(layer) + " layer :" + "L_GUI");
         return ERenderLayers::L_GUI;
     default:
-        //Logger::Error("Invalid render layer: " +  std::to_string(layer));
         return ERenderLayers::L_GUI;
     }
 }
@@ -90,13 +81,11 @@ void LevelLoader::LoadSettings(sol::state &LuaState, AssetStore *assetStore, int
         if (assetType == "texture")
         {
             assetStore->AddTexture(id, assetFile);
-            //Logger::Info("A new texture added id: " + id + " : " + assetFile);
         }
         else if (assetType == "font")
         {
             int size = (*asset)["font_size"];
             assetStore->AddFont(id, assetFile, size);
-            //Logger::Info("A new Font added id: " + id);
         }
     }
     //// Level Assets
@@ -144,7 +133,6 @@ void LevelLoader::LoadEntities(Registry *registry)
             // Transform
             if (HasTable(comps, "transform"))
             {
-                // TODO :ver si hace falta un get_or
                 const sf::Vector2f newPos = {comps["transform"]["position"]["x"].get_or(0.f),
                                              comps["transform"]["position"]["y"].get_or(0.f)};
                 const sf::Vector2f newScale = {comps["transform"]["scale"]["x"].get_or(1.f),

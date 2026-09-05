@@ -72,7 +72,7 @@ void Game::Preload()
     
     window.setFramerateLimit(frameRate);
     auto levelLoader = std::make_unique<LevelLoader>();
-    levelLoader->SetupAndLoad(registry.get(),assetStore.get(),luaState,1);
+    levelLoader->SetupAndLoad(registry.get(),assetStore.get(),luaState,2);
     registry->Update();
     //imgui
     if (!ImGui::SFML::Init(window)) {
