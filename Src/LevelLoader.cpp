@@ -36,69 +36,10 @@ bool LevelLoader::HasTable(const sol::table &table, const char *key)
     sol::object object = table[key];
     return object.valid() && object.get_type() == sol::type::table;
 }
-
-void LevelLoader::LoadSettings(sol::state &LuaState, AssetStore *assetStore, int LevelNumber)
+// TODO : Falta implementar
+void LevelLoader::LoadGameSettings([[maybe_unused]]sol::state &LuaState,[[maybe_unused]] AssetStore *assetStore, [[maybe_unused]] int LevelNumber)
 {
-    const std::string scriptfile = "./assets/scripts/Level" + std::to_string(LevelNumber) + ".lua";
-    sol::load_result script = LuaState.load_file(scriptfile);
-    if (!script.valid())
-    {
-        sol::error err = script;
-        std::string Message = err.what();
-        Logger::Error(Message);
-        return;
-    }
 
-    LuaState.safe_script_file(scriptfile.data());
-    levelTable = LuaState["Level"];
-    if (!levelTable.valid())
-    {
-        Logger::Error("Level table not found");
-        return;
-    }
-
-    // Assets
-    sol::table assetsTable = levelTable["assets"];
-    if (!assetsTable.valid())
-    {
-        Logger::Error("Assets table not found");
-        return;
-    }
-
-    for (int it = 0;; it++)
-    {
-        sol::optional<sol::table> asset = assetsTable[it];
-        if (!asset)
-        {
-            Logger::Warning("Finished assets at index " + std::to_string(it));
-            break;
-        }
-
-        //TODO : podria usarse un enum
-        std::string assetType = (*asset)["type"];
-        const std::string id = (*asset)["id"];
-        const std::string assetFile = (*asset)["file"];
-        if (assetType == "texture")
-        {
-            assetStore->AddTexture(id, assetFile);
-        }
-        else if (assetType == "font")
-        {
-            int size = (*asset)["font_size"];
-            assetStore->AddFont(id, assetFile, size);
-        }
-    }
-    //// Level Assets
-
-    /// level Tilemap
-    sol::table map = levelTable["tilemap"];
-    mapFile = map["map_file"];
-    tilemapAssetID = map["texture_asset_id"];
-    numRows = map["num_rows"];
-    numCols = map["num_cols"];
-    tileSize = map["tile_size"];
-    tileScale = map["scale"];
-    /// level tilemap
 }
 
 void LevelLoader::LoadEntities(Registry *registry)
@@ -114,22 +55,26 @@ void LevelLoader::LoadEntities(Registry *registry)
         }
         sol::table entity = *hasEntity;
         Entity newEntity = registry->CreateEntity();
+        
         // Tag
         sol::optional<std::string> tag = entity["tag"];
         if (tag != sol::nullopt)
         {
             newEntity.Tag(*tag);
         }
+        // Group
         sol::optional<std::string> group = entity["group"];
         if(group != sol::nullopt)
         {
             newEntity.Group(*group);
         }
+
         // components
         sol::optional<sol::table> hasComponent = entity["components"];
         if (hasComponent != sol::nullopt)
         {
             sol::table comps = *hasComponent;
+
             // Transform
             if (HasTable(comps, "transform"))
             {
@@ -140,6 +85,7 @@ void LevelLoader::LoadEntities(Registry *registry)
                 const float newRot = comps["transform"]["rotation"].get_or(0.f);
                 newEntity.AddComponent<CTransform>(newPos, newScale, sf::degrees(newRot));
             }
+
             // Rigidbody
             if (HasTable(comps, "rigidbody"))
             {
@@ -147,6 +93,7 @@ void LevelLoader::LoadEntities(Registry *registry)
                 newEntity.AddComponent<CRigidBody>(
                     sf::Vector2f(rigidbody["velocity"]["x"].get_or(0.f), rigidbody["velocity"]["y"].get_or(0.f)));
             }
+
             // Sprite
             if (HasTable(comps, "sprite"))
             {
@@ -160,6 +107,7 @@ void LevelLoader::LoadEntities(Registry *registry)
                     table["fixed"].get_or(false),
                     sf::Vector2f(table["src_rect_x"].get_or(0.f), table["src_rect_y"].get_or(0.f)));
             }
+
             // Animation
             if (HasTable(comps, "animation"))
             {
@@ -168,6 +116,7 @@ void LevelLoader::LoadEntities(Registry *registry)
                                                    table["speed_rate"],
                                                    table["should_loop"].get_or(true));
             }
+
             // Collision
             if (HasTable(comps, "boxcollider"))
             {
@@ -176,11 +125,13 @@ void LevelLoader::LoadEntities(Registry *registry)
                     sf::Vector2f(table["width"].get_or(1.f), table["height"].get_or(1.f)),
                     sf::Vector2f(table["offset"]["x"].get_or(0.f), table["offset"]["y"].get_or(0.f)));
             }
+
             // Health
             if (HasTable(comps, "health"))
             {
                 newEntity.AddComponent<CHealth>(entity["components"]["health"]["health_percentage"].get_or(100));
             }
+
             // Projectile Emitter
             if (HasTable(comps, "projectile_emitter"))
             {
@@ -192,6 +143,7 @@ void LevelLoader::LoadEntities(Registry *registry)
                     entity["components"]["projectile_emitter"]["hit_percentage_damage"].get_or(10000.f),
                     entity["components"]["projectile_emitter"]["friendly"].get_or(false));
             }
+
             // Keyboard Controller
             if (HasTable(comps, "keyboard_controller"))
             {
@@ -199,6 +151,7 @@ void LevelLoader::LoadEntities(Registry *registry)
                                                             entity["components"]["keyboard_controller"]["max_speed"],
                                                             entity["components"]["keyboard_controller"]["damping"]);
             }
+
             // Camera
             if (HasTable(comps, "camera_follow"))
             {
@@ -208,6 +161,7 @@ void LevelLoader::LoadEntities(Registry *registry)
                     sf::Vector2u(entity["components"]["camera_follow"]["view_size"]["width"].get_or(200),
                                  entity["components"]["camera_follow"]["view_size"]["height"].get_or(200)));
             }
+            
             // Scripting
             if (HasTable(comps, "on_update_script"))
             {
@@ -219,8 +173,16 @@ void LevelLoader::LoadEntities(Registry *registry)
     }
 }
 
-void LevelLoader::ParseNewMap(Registry *registry, int LevelNum)
+void LevelLoader::ParseNewMap(Registry *registry)
 {
+    /// level Tilemap
+    sol::table map = levelTable["tilemap"];
+    std::string mapFile = map["map_file"];
+    std::string tilemapAssetID = map["texture_asset_id"];
+    int numRows = map["num_rows"];
+    int numCols = map["num_cols"];
+    int tileSize = map["tile_size"];
+    float tileScale = map["scale"];
     if (mapFile.empty())
     {
         Logger::Error("newMap string is empty");
@@ -262,17 +224,87 @@ void LevelLoader::ParseNewMap(Registry *registry, int LevelNum)
     mapFileStream.close();
     Game::mapWidth = numCols * tileWorldSize;
     Game::mapHeight = numRows * tileWorldSize;
+    // TODO : este dato debe venir del loadsettings de lua
     Game::viewSize = {640, 360};
 }
 
-void LevelLoader::LoadLevel(Registry *registry, int LevelID)
+bool LevelLoader::LoadScript(sol::state &LuaState,int LevelNumber)
 {
-    ParseNewMap(registry, LevelID);
+    const std::string scriptfile = "./assets/scripts/Level" + std::to_string(LevelNumber) + ".lua";
+    sol::load_result script = LuaState.load_file(scriptfile);
+    if (!script.valid())
+    {
+        sol::error err = script;
+        std::string Message = err.what();
+        Logger::Error(Message);
+        return false;
+    }
+
+    LuaState.safe_script_file(scriptfile.data());
+    return true;
+}
+
+bool LevelLoader::LoadLevelFromScript(sol::state &LuaState)
+{
+    levelTable = LuaState["Level"];
+    return levelTable.valid();
+}
+
+bool LevelLoader::LoadAssetsFromScript(AssetStore *assetStore)
+{
+    sol::table assetsTable = levelTable["assets"];
+    if(!assetsTable.valid()) 
+    {
+        return false;
+    }
+    for (int it = 0;; it++)
+    {
+        sol::optional<sol::table> asset = assetsTable[it];
+        if (!asset)
+        {
+            Logger::Warning("Finished assets at index " + std::to_string(it));
+            break;
+        }
+
+        //TODO : podria usarse un enum
+        std::string assetType = (*asset)["type"];
+        const std::string id = (*asset)["id"];
+        const std::string assetFile = (*asset)["file"];
+        if (assetType == "texture")
+        {
+            assetStore->AddTexture(id, assetFile);
+        }
+        else if (assetType == "font")
+        {
+            int size = (*asset)["font_size"];
+            assetStore->AddFont(id, assetFile, size);
+        }
+    }
+    return true;
+}
+
+void LevelLoader::LoadLevel(Registry *registry)
+{
+    ParseNewMap(registry);
     LoadEntities(registry);
 }
 
 void LevelLoader::SetupAndLoad(Registry *registry, AssetStore *assetStore, sol::state &LuaState, int LevelID)
 {
-    LoadSettings(LuaState, assetStore, LevelID);
-    LoadLevel(registry, LevelID);
+    if(!LoadScript(LuaState,LevelID))
+    {
+        Logger::Error("LevelLoader::LoadScript : Failed to load Lua script");
+        return;
+    }
+    if(!LoadLevelFromScript(LuaState))
+    {
+        Logger::Error("LevelLoader::LoadLevelFromScript : Failed to load Level From Script");
+        return;
+    }
+    if(!LoadAssetsFromScript(assetStore))
+    {
+        Logger::Error("Assets table not found");
+        return;
+    }
+    LoadLevel(registry);
 }

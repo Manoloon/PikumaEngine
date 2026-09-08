@@ -26,7 +26,7 @@ class Game
     std::unique_ptr<AssetStore> assetStore;
     std::unique_ptr<EventBus> eventBus;
     sol::state luaState;
-
+    sf::Color BackgroundColor = sf::Color(18,33,43);
     bool isRunning =false;
     // TODO : Dato que viene desde script
     bool bDebug= false;

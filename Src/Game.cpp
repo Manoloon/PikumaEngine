@@ -147,7 +147,7 @@ void Game::Update()
 void Game::Draw()
 {
     // TODO : Traer dato desde script
-    window.clear(sf::Color(18,33,43));
+    window.clear(BackgroundColor);
     
     // World render
     registry->GetSystem<SRender>()->Update(window, assetStore.get(), *CameraActor);
